@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1868/new_engine/src/game/phys
+END
+phys_collisionsolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1868/new_engine/src/game/phys/phys_collisionsolver.h
+END
+phys_misc.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1530/new_engine/src/game/phys/phys_misc.h
+END
+phys_collisionsolver.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1868/new_engine/src/game/phys/phys_collisionsolver.cpp
+END

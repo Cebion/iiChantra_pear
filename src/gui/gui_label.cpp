@@ -1,0 +1,21 @@
+#include "StdAfx.h"
+
+#include "gui_label.h"
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+void GuiLabel::Process()
+{
+	this->ProcessSprite();
+}
+
+void GuiLabel::Draw()
+{
+	if (!this->visible)
+		return;
+
+	//this->DrawSprite();
+	this->DrawCaption();
+	this->DrawBorder();
+}

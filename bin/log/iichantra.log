@@ -1,0 +1,14 @@
+[Sat Jan 08 00:08:10 2011] [logLevelInfo] Log file "/iichantra.log" created
+[Sat Jan 08 00:08:10 2011] [INFO] Game path:		H:\iiChantra\Releases\PEAR
+[Sat Jan 08 00:08:10 2011] [INFO] Log path:		H:\iiChantra\Releases\PEAR/log/
+[Sat Jan 08 00:08:10 2011] [INFO] Config path:		H:\iiChantra\Releases\PEAR/config/
+[Sat Jan 08 00:08:10 2011] [INFO] Textures path:	H:\iiChantra\Releases\PEAR/textures/
+[Sat Jan 08 00:08:10 2011] [INFO] Fonts path:		H:\iiChantra\Releases\PEAR/fonts/
+[Sat Jan 08 00:08:10 2011] [INFO] Prototypes path:	H:\iiChantra\Releases\PEAR/proto/
+[Sat Jan 08 00:08:10 2011] [INFO] Scripts path:		H:\iiChantra\Releases\PEAR/scripts/
+[Sat Jan 08 00:08:10 2011] [INFO] Levels path:		H:\iiChantra\Releases\PEAR/levels/
+[Sat Jan 08 00:08:10 2011] [INFO] Sounds path:		H:\iiChantra\Releases\PEAR/sounds/
+[Sat Jan 08 00:08:10 2011] [INFO] Screenshots path:		H:\iiChantra\Releases\PEAR/screenshots/
+[Sat Jan 08 00:08:10 2011] [INFO] Saves path:		H:\iiChantra\Releases\PEAR/saves/
+[Sat Jan 08 00:08:11 2011] [ERROR] Ошибка загрузки описания кадров для текстуры font-dialogue. Используем стандартное.
+[Sat Jan 08 00:08:15 2011] [INFO] Finished logging

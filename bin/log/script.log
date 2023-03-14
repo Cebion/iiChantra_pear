@@ -1,0 +1,4 @@
+[Sat Jan 08 00:08:10 2011] [logLevelInfo] Log file "/script.log" created
+[Sat Jan 08 00:08:11 2011] [INFO] Lua создан.
+[Sat Jan 08 00:08:11 2011] [WARNING] cannot open H:\iiChantra\Releases\PEAR/textures/font-dialogue.lua: No such file or directory
+[Sat Jan 08 00:08:15 2011] [INFO] Finished logging

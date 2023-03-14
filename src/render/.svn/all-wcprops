@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1787/new_engine/src/render
+END
+texture.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1729/new_engine/src/render/texture.cpp
+END
+draw.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1020/new_engine/src/render/draw.h
+END
+image.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1787/new_engine/src/render/image.cpp
+END
+texture.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1674/new_engine/src/render/texture.h
+END
+font.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1752/new_engine/src/render/font.cpp
+END
+renderer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1769/new_engine/src/render/renderer.cpp
+END
+image.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1530/new_engine/src/render/image.h
+END
+types.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1764/new_engine/src/render/types.h
+END
+font.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1721/new_engine/src/render/font.h
+END
+renderer.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1670/new_engine/src/render/renderer.h
+END
+draw.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1298/new_engine/src/render/draw.cpp
+END

@@ -1,0 +1,203 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1936/new_engine/src/game/objects
+END
+weapon.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1530/new_engine/src/game/objects/weapon.h
+END
+object_waypoint.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1764/new_engine/src/game/objects/object_waypoint.cpp
+END
+object_sprite.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1673/new_engine/src/game/objects/object_sprite.h
+END
+object_ribbon.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1764/new_engine/src/game/objects/object_ribbon.cpp
+END
+object_enemy.h
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1679/new_engine/src/game/objects/object_enemy.h
+END
+object_spawner.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1873/new_engine/src/game/objects/object_spawner.h
+END
+object.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1771/new_engine/src/game/objects/object.h
+END
+object_bullet.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1764/new_engine/src/game/objects/object_bullet.cpp
+END
+object_dynamic.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1868/new_engine/src/game/objects/object_dynamic.h
+END
+object_ray.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1533/new_engine/src/game/objects/object_ray.cpp
+END
+object_character.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1778/new_engine/src/game/objects/object_character.cpp
+END
+object_effect.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1802/new_engine/src/game/objects/object_effect.cpp
+END
+object_item.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1673/new_engine/src/game/objects/object_item.cpp
+END
+object_player.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1572/new_engine/src/game/objects/object_player.h
+END
+weapon.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1907/new_engine/src/game/objects/weapon.cpp
+END
+object_physic.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1595/new_engine/src/game/objects/object_physic.h
+END
+object_sprite.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1673/new_engine/src/game/objects/object_sprite.cpp
+END
+object_environment.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1728/new_engine/src/game/objects/object_environment.h
+END
+object_particle_system.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1426/new_engine/src/game/objects/object_particle_system.h
+END
+object_enemy.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1889/new_engine/src/game/objects/object_enemy.cpp
+END
+object_waypoint.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1609/new_engine/src/game/objects/object_waypoint.h
+END
+object_spawner.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1873/new_engine/src/game/objects/object_spawner.cpp
+END
+object_ribbon.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1695/new_engine/src/game/objects/object_ribbon.h
+END
+object.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1936/new_engine/src/game/objects/object.cpp
+END
+object_dynamic.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1868/new_engine/src/game/objects/object_dynamic.cpp
+END
+object_player.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1856/new_engine/src/game/objects/object_player.cpp
+END
+object_bullet.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1679/new_engine/src/game/objects/object_bullet.h
+END
+object_ray.h
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1499/new_engine/src/game/objects/object_ray.h
+END
+object_character.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1764/new_engine/src/game/objects/object_character.h
+END
+object_effect.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1674/new_engine/src/game/objects/object_effect.h
+END
+object_item.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1673/new_engine/src/game/objects/object_item.h
+END
+object_environment.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1831/new_engine/src/game/objects/object_environment.cpp
+END
+object_particle_system.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1530/new_engine/src/game/objects/object_particle_system.cpp
+END

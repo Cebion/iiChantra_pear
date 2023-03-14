@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1894/new_engine/src/gui
+END
+gui_button.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1264/new_engine/src/gui/gui_button.cpp
+END
+gui_picture.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1003/new_engine/src/gui/gui_picture.cpp
+END
+gui_textfield.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1885/new_engine/src/gui/gui_textfield.h
+END
+gui_label.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1387/new_engine/src/gui/gui_label.cpp
+END
+gui.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1805/new_engine/src/gui/gui.cpp
+END
+gui_button.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/612/new_engine/src/gui/gui_button.h
+END
+gui_picture.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/757/new_engine/src/gui/gui_picture.h
+END
+gui_widget.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1894/new_engine/src/gui/gui_widget.cpp
+END
+text_typer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1752/new_engine/src/gui/text_typer.cpp
+END
+gui_label.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/757/new_engine/src/gui/gui_label.h
+END
+gui.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1663/new_engine/src/gui/gui.h
+END
+gui_textfield.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1894/new_engine/src/gui/gui_textfield.cpp
+END
+gui_widget.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1885/new_engine/src/gui/gui_widget.h
+END
+text_typer.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/daIH92KsCr3znqab7jnrAJ/!svn/ver/1737/new_engine/src/gui/text_typer.h
+END
