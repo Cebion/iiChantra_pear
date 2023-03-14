@@ -11,3 +11,8 @@ System requirements:
 • Processor: Celeron 1.5 GHz
 • Video card with 64 MB on board
 • 10 MB free hard disk space
+
+Source code from:
+
+http://iichantra.ru/en/news/
+
