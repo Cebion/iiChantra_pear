@@ -79,12 +79,12 @@ OFILES = 	obj/StdAfx.o \
 BASSLIB = 
 LBITS := $(shell getconf LONG_BIT)
 ifeq ($(LBITS),64)
-	BASSLIB += -lbass_x64
+	BASSLIB += -lbass
 else
 	BASSLIB += -lbass
 endif
 # Используемые библиотеки
-LDLIBS = -llua -lGL -lIL -lSDL -lstdc++ -lSDL_net
+LDLIBS = -llua -lGL -lIL -lSDL -lstdc++ -lSDL_net -ldl
 # Имя целевого исполняемого файла
 TARGET = 
 RELEASE_TARGET = bin/iiChantra.Release

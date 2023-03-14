@@ -26,22 +26,21 @@ using namespace std;
 
 
 
-// Функция, получающая с сервера список файлов для проверки
 std::string hsGetValidationList()
 {
-	std::string content;
+        std::string content;
 
-	map<string, string> params;
-	params.insert(pair<string, string>("version", std::string(HS_TABLE)));
+        map<string, string> params;
+        params.insert(pair<string, string>("version", std::string(HS_TABLE)));
 
-	bool send_result = http_send_request(HS_HOST, HS_VALIDATION_URI, content, "POST", NULL, &params);
+        bool send_result = http_send_request(HS_HOST, HS_VALIDATION_URI, content, "POST", NULL, &params);
 
-	if(!send_result) {
-		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Cannot get validation list: http_send_request failed");
-		return false;
-	}
+        if(!send_result) {
+                sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Cannot get validation list: http_send_request failed");
+                return ""; // return empty string instead of false
+        }
 
-	return content;
+        return content;
 }
 
 bool hsSendScore(const char* nickname, const int score, const int seconds)

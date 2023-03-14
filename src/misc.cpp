@@ -12,6 +12,8 @@
 #endif // WIN32
 
 #include "config.h"
+#include <unistd.h>
+
 
 extern config cfg;
 
