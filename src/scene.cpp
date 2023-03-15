@@ -207,6 +207,11 @@ bool ProcessEvents()
 				}
 #endif // CLOSE_ON_ALT_F4
 
+if (keysym.sym == 0) // if we see the keysym.sym as zero, this is the event that has been causing to exit the game via esc on volume keys press
+        return true; // do nothing with this event, return true means keep running, return false will quit the game.
+
+
+
 				inpmgr.AddEvent((SDL_KeyboardEvent&)event);
 				break;
 			}
