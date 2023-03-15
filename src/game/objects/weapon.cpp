@@ -16,7 +16,7 @@ extern UINT internal_time;
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-// Загрузка оружия из прототипа
+// Р—Р°РіСЂСѓР·РєР° РѕСЂСѓР¶РёСЏ РёР· РїСЂРѕС‚РѕС‚РёРїР°
 BOOL LoadWeaponFromProto(const Proto* proto, Weapon* weapon)
 {
 	if (!proto || !weapon)
@@ -25,7 +25,7 @@ BOOL LoadWeaponFromProto(const Proto* proto, Weapon* weapon)
 	weapon->bullets_count = (USHORT)proto->bullets_count;
 	if (proto->bullets_count <= 0)
 	{
-		// Бесконечный боезапас
+		// Р‘РµСЃРєРѕРЅРµС‡РЅС‹Р№ Р±РѕРµР·Р°РїР°СЃ
 		weapon->is_infinite = true;
 	}
 
@@ -40,7 +40,7 @@ BOOL LoadWeaponFromProto(const Proto* proto, Weapon* weapon)
 	return FALSE;
 }
 
-// Создание оружия
+// РЎРѕР·РґР°РЅРёРµ РѕСЂСѓР¶РёСЏ
 Weapon* CreateWeapon(const Proto* proto)
 {
 	if (!proto)
@@ -69,7 +69,7 @@ extern Opcode::ArraySAP *asap;
 
 //////////////////////////////////////////////////////////////////////////
 
-// Выстрел из оружия
+// Р’С‹СЃС‚СЂРµР» РёР· РѕСЂСѓР¶РёСЏ
 void Weapon::Fire(ObjCharacter* shooter, Vector2 coord)
 {
 	if (!IsReady())
@@ -77,7 +77,7 @@ void Weapon::Fire(ObjCharacter* shooter, Vector2 coord)
 	
 	if ( shots_per_clip > 0 ) clip--;
 
-	// Определение направления стрельбы
+	// РћРїСЂРµРґРµР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ СЃС‚СЂРµР»СЊР±С‹
 	WeaponDirection wd = wdRight;
 	switch (shooter->gunDirection)
 	{
@@ -104,10 +104,10 @@ void Weapon::Fire(ObjCharacter* shooter, Vector2 coord)
 		ob->acc += shooter->acc;
 	}
 	last_reload_tick = internal_time;
-	//bullets_count--; В обработке стрельбы игроком.
+	//bullets_count--; Р’ РѕР±СЂР°Р±РѕС‚РєРµ СЃС‚СЂРµР»СЊР±С‹ РёРіСЂРѕРєРѕРј.
 }
 
-// Проверка на перезаряженность.
+// РџСЂРѕРІРµСЂРєР° РЅР° РїРµСЂРµР·Р°СЂСЏР¶РµРЅРЅРѕСЃС‚СЊ.
 bool Weapon::IsReloaded()
 {
 	if ( clip == 0 && shots_per_clip != 0 ) return false;
@@ -120,7 +120,7 @@ bool Weapon::ClipReloaded(bool hold)
 	return internal_time - last_reload_tick >= clip_reload_time;
 }
 
-// Проверка на готовность оружия к стрельбе
+// РџСЂРѕРІРµСЂРєР° РЅР° РіРѕС‚РѕРІРЅРѕСЃС‚СЊ РѕСЂСѓР¶РёСЏ Рє СЃС‚СЂРµР»СЊР±Рµ
 bool Weapon::IsReady()
 {
 

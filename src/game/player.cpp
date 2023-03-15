@@ -25,11 +25,11 @@ extern game::GameStates game_state;
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-// Вызывается для создания игрока. Сохраняет ссылки на объект игрока.
-// Сам объект создается функцией CreatePlayer из object_player.cpp
+// Р’С‹Р·С‹РІР°РµС‚СЃСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РёРіСЂРѕРєР°. РЎРѕС…СЂР°РЅСЏРµС‚ СЃСЃС‹Р»РєРё РЅР° РѕР±СЉРµРєС‚ РёРіСЂРѕРєР°.
+// РЎР°Рј РѕР±СЉРµРєС‚ СЃРѕР·РґР°РµС‚СЃСЏ С„СѓРЅРєС†РёРµР№ CreatePlayer РёР· object_player.cpp
 ObjPlayer* Player::Create(const char* proto_name, Vector2 coord, const char* start_anim)
 {
-	if (this->first && this->second)		// Если оба игрока созданы
+	if (this->first && this->second)		// Р•СЃР»Рё РѕР±Р° РёРіСЂРѕРєР° СЃРѕР·РґР°РЅС‹
 		return NULL;
 
 	ObjPlayer* plr = CreatePlayer(proto_name, coord, start_anim);
@@ -44,7 +44,7 @@ ObjPlayer* Player::Create(const char* proto_name, Vector2 coord, const char* sta
 			memset(first_proto, 0, strlen(proto_name) + 1);
 			strcpy(first_proto, proto_name);
 
-			revivePoint = coord;		// По умолчанию, буем оживлять в месте создания первого игрока
+			revivePoint = coord;		// РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ, Р±СѓРµРј РѕР¶РёРІР»СЏС‚СЊ РІ РјРµСЃС‚Рµ СЃРѕР·РґР°РЅРёСЏ РїРµСЂРІРѕРіРѕ РёРіСЂРѕРєР°
 		}
 		else
 		{
@@ -53,7 +53,7 @@ ObjPlayer* Player::Create(const char* proto_name, Vector2 coord, const char* sta
 			memset(second_proto, 0, strlen(proto_name) + 1);
 			strcpy(second_proto, proto_name);
 
-			// Второй игрок пока что не доступен для игрового мира и ничего не делает
+			// Р’С‚РѕСЂРѕР№ РёРіСЂРѕРє РїРѕРєР° С‡С‚Рѕ РЅРµ РґРѕСЃС‚СѓРїРµРЅ РґР»СЏ РёРіСЂРѕРІРѕРіРѕ РјРёСЂР° Рё РЅРёС‡РµРіРѕ РЅРµ РґРµР»Р°РµС‚
 			plr->sprite->ClearVisible();
 			plr->SetSleep();
 			plr->ClearBulletCollidable();
@@ -63,7 +63,7 @@ ObjPlayer* Player::Create(const char* proto_name, Vector2 coord, const char* sta
 	return plr;
 }
 
-// Оживляет игрока номер num, задавая тартовую анимацию start_anim
+// РћР¶РёРІР»СЏРµС‚ РёРіСЂРѕРєР° РЅРѕРјРµСЂ num, Р·Р°РґР°РІР°СЏ С‚Р°СЂС‚РѕРІСѓСЋ Р°РЅРёРјР°С†РёСЋ start_anim
 ObjPlayer* Player::Revive(int num, const char* start_anim)
 {
 	char* pname = NULL;
@@ -72,19 +72,19 @@ ObjPlayer* Player::Revive(int num, const char* start_anim)
 	{
 		pname = this->first_proto;
 		if (this->first)
-			return NULL;	// Сложно оживлять живого
+			return NULL;	// РЎР»РѕР¶РЅРѕ РѕР¶РёРІР»СЏС‚СЊ Р¶РёРІРѕРіРѕ
 	}
 	else if (num == 2) 
 	{
 		pname = this->second_proto;
 		if (this->second)
-			return NULL;	// Сложно оживлять живого
+			return NULL;	// РЎР»РѕР¶РЅРѕ РѕР¶РёРІР»СЏС‚СЊ Р¶РёРІРѕРіРѕ
 	}
 	else
-		ASSERT(false);		// Сюда попадать нельзя
+		ASSERT(false);		// РЎСЋРґР° РїРѕРїР°РґР°С‚СЊ РЅРµР»СЊР·СЏ
 
 	if (!pname)
-		return NULL;		// Неизвестно, кого оживлять
+		return NULL;		// РќРµРёР·РІРµСЃС‚РЅРѕ, РєРѕРіРѕ РѕР¶РёРІР»СЏС‚СЊ
 
 	ObjPlayer* plr = CreatePlayer(pname, revivePoint, start_anim);
 
@@ -104,7 +104,7 @@ ObjPlayer* Player::Revive(int num, const char* start_anim)
 		aproto = protoMgr->GetByName(first_proto);
 	}
 
-	// Восстанавливаем второму игроку хейлы тоже
+	// Р’РѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј РІС‚РѕСЂРѕРјСѓ РёРіСЂРѕРєСѓ С…РµР№Р»С‹ С‚РѕР¶Рµ
 	if (another_plr && aproto)
 	{
 		if (another_plr->health < (short)aproto->health)
@@ -129,7 +129,7 @@ ObjPlayer* Player::GetByNum(int num)
 	return plr;
 }
 
-// Вызывается на каждом ходу. Обработка смены игроков вызывается здесь
+// Р’С‹Р·С‹РІР°РµС‚СЃСЏ РЅР° РєР°Р¶РґРѕРј С…РѕРґСѓ. РћР±СЂР°Р±РѕС‚РєР° СЃРјРµРЅС‹ РёРіСЂРѕРєРѕРІ РІС‹Р·С‹РІР°РµС‚СЃСЏ Р·РґРµСЃСЊ
 void Player::Update()
 {
 	if (!this->first && !this->second)
@@ -141,23 +141,23 @@ void Player::Update()
 
 	Changer( false, false );
 
-	// Вот тут можно сделать прием команд управления и передача их объекту
+	// Р’РѕС‚ С‚СѓС‚ РјРѕР¶РЅРѕ СЃРґРµР»Р°С‚СЊ РїСЂРёРµРј РєРѕРјР°РЅРґ СѓРїСЂР°РІР»РµРЅРёСЏ Рё РїРµСЂРµРґР°С‡Р° РёС… РѕР±СЉРµРєС‚Сѓ
 }
 
 
-// Обработка смены игроков
+// РћР±СЂР°Р±РѕС‚РєР° СЃРјРµРЅС‹ РёРіСЂРѕРєРѕРІ
 void Player::Changer( bool forced, bool immediate )
 {
 	if (!(this->current && this->first && this->second))
-		return;		// Некого менять
+		return;		// РќРµРєРѕРіРѕ РјРµРЅСЏС‚СЊ
 
 	if ( !forced )
 	{
 		if (this->change_blocked )
-			return;		// Нельзя менять
+			return;		// РќРµР»СЊР·СЏ РјРµРЅСЏС‚СЊ
 
 		if ( this->current->activity == oatDying || !this->current->IsOnPlane() )
-			return;		// Игрок умирает или не стоит на твёрдой поверхности, нельзя менять
+			return;		// РРіСЂРѕРє СѓРјРёСЂР°РµС‚ РёР»Рё РЅРµ СЃС‚РѕРёС‚ РЅР° С‚РІС‘СЂРґРѕР№ РїРѕРІРµСЂС…РЅРѕСЃС‚Рё, РЅРµР»СЊР·СЏ РјРµРЅСЏС‚СЊ
 
 	}
 	if ( !immediate && (forced || inpmgr.IsProlongedReleased(cakChangePlayer)) )
@@ -224,30 +224,30 @@ void Player::Changer( bool forced, bool immediate )
 			lua_pushinteger(lua, current->id);
 			if (SCRIPT::ExecChunkFromReg(onChangePlayerProcessor, 2))
 			{
-				// В скрипте произошла какая-то ошибка. Будем испльзовать стандартный в следующий раз.
+				// Р’ СЃРєСЂРёРїС‚Рµ РїСЂРѕРёР·РѕС€Р»Р° РєР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР°. Р‘СѓРґРµРј РёСЃРїР»СЊР·РѕРІР°С‚СЊ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РІ СЃР»РµРґСѓСЋС‰РёР№ СЂР°Р·.
 				SCRIPT::RemoveFromRegistry(onChangePlayerProcessor);
 			}
 		}
 	}
 }
 
-// Блокировать смену игроков
+// Р‘Р»РѕРєРёСЂРѕРІР°С‚СЊ СЃРјРµРЅСѓ РёРіСЂРѕРєРѕРІ
 void Player::BlockChange()
 {
 	this->change_blocked = true;
 }
 
-// Разблокировать смену игроков
+// Р Р°Р·Р±Р»РѕРєРёСЂРѕРІР°С‚СЊ СЃРјРµРЅСѓ РёРіСЂРѕРєРѕРІ
 void Player::UnblockChange()
 {
 	this->change_blocked = false;
 }
 
-// Вызывается из деструктора объекта игрока
+// Р’С‹Р·С‹РІР°РµС‚СЃСЏ РёР· РґРµСЃС‚СЂСѓРєС‚РѕСЂР° РѕР±СЉРµРєС‚Р° РёРіСЂРѕРєР°
 void Player::OnDying(ObjPlayer* plr)
 {
 	if (game_state == game::GAME_DESTROYING)
-		return;			// При уничтожении игры уже не надо реагировать на уничтожение объекта
+		return;			// РџСЂРё СѓРЅРёС‡С‚РѕР¶РµРЅРёРё РёРіСЂС‹ СѓР¶Рµ РЅРµ РЅР°РґРѕ СЂРµР°РіРёСЂРѕРІР°С‚СЊ РЅР° СѓРЅРёС‡С‚РѕР¶РµРЅРёРµ РѕР±СЉРµРєС‚Р°
 
 	if ( plr->IsSleep() )
 	{
@@ -262,7 +262,7 @@ void Player::OnDying(ObjPlayer* plr)
 		}
 		if ( plr == this->second )
 			this->second = NULL;
-		return;			// Если удаляется неактивный персонаж - то туда ему и дорога. Это не смерть.
+		return;			// Р•СЃР»Рё СѓРґР°Р»СЏРµС‚СЃСЏ РЅРµР°РєС‚РёРІРЅС‹Р№ РїРµСЂСЃРѕРЅР°Р¶ - С‚Рѕ С‚СѓРґР° РµРјСѓ Рё РґРѕСЂРѕРіР°. Р­С‚Рѕ РЅРµ СЃРјРµСЂС‚СЊ.
 	}
 
 	if (plr == this->current)
@@ -291,16 +291,16 @@ void Player::OnDying(ObjPlayer* plr)
 		//}
 	}
 	else
-		ASSERT(false);		// Не должно сюда попадать
+		ASSERT(false);		// РќРµ РґРѕР»Р¶РЅРѕ СЃСЋРґР° РїРѕРїР°РґР°С‚СЊ
 
 	if (onPlayerDeathProcessor >= 0)
 	{
-		PushObject(lua, plr);			// Передаем в функцию таблицу с информацией об объекте уничтожаемого игрока
-		lua_pushinteger(lua, num);		// Номер уничтожаемого игрока
+		PushObject(lua, plr);			// РџРµСЂРµРґР°РµРј РІ С„СѓРЅРєС†РёСЋ С‚Р°Р±Р»РёС†Сѓ СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ РѕР± РѕР±СЉРµРєС‚Рµ СѓРЅРёС‡С‚РѕР¶Р°РµРјРѕРіРѕ РёРіСЂРѕРєР°
+		lua_pushinteger(lua, num);		// РќРѕРјРµСЂ СѓРЅРёС‡С‚РѕР¶Р°РµРјРѕРіРѕ РёРіСЂРѕРєР°
 
 		if (SCRIPT::ExecChunkFromReg(onPlayerDeathProcessor, 2))
 		{
-			// В скрипте произошла какая-то ошибка. Будем испльзовать стандартный в следующий раз.
+			// Р’ СЃРєСЂРёРїС‚Рµ РїСЂРѕРёР·РѕС€Р»Р° РєР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР°. Р‘СѓРґРµРј РёСЃРїР»СЊР·РѕРІР°С‚СЊ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РІ СЃР»РµРґСѓСЋС‰РёР№ СЂР°Р·.
 			SCRIPT::RemoveFromRegistry(onPlayerDeathProcessor);
 		}
 	}

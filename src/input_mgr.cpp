@@ -12,17 +12,17 @@ extern UINT internal_time;
 
 
 
-// Получает на вход символ unicode и пытается вернуть символ кириллицы из CP1251.
+// РџРѕР»СѓС‡Р°РµС‚ РЅР° РІС…РѕРґ СЃРёРјРІРѕР» unicode Рё РїС‹С‚Р°РµС‚СЃСЏ РІРµСЂРЅСѓС‚СЊ СЃРёРјРІРѕР» РєРёСЂРёР»Р»РёС†С‹ РёР· CP1251.
 __INLINE Uint16 GetCyrillicCP1251(Uint16 symb)
 {
 	if (0x0410 <= symb && symb <= 0x044f)
-		return symb - 0x350;	// Основной алфавит просто тупо сдвинут
+		return symb - 0x350;	// РћСЃРЅРѕРІРЅРѕР№ Р°Р»С„Р°РІРёС‚ РїСЂРѕСЃС‚Рѕ С‚СѓРїРѕ СЃРґРІРёРЅСѓС‚
 	else if (symb == 0x0401)
-		return 0x00a8;			// Ё
+		return 0x00a8;			// РЃ
 	else if (symb == 0x0451)
-		return 0x00b8;			// ё
+		return 0x00b8;			// С‘
 	else
-		return (Uint16)'?';		// Все остальное заменим вопросительными знаками
+		return (Uint16)'?';		// Р’СЃРµ РѕСЃС‚Р°Р»СЊРЅРѕРµ Р·Р°РјРµРЅРёРј РІРѕРїСЂРѕСЃРёС‚РµР»СЊРЅС‹РјРё Р·РЅР°РєР°РјРё
 }
 
 
@@ -50,7 +50,7 @@ InputMgr::InputMgr()
 InputMgr::~InputMgr()
 {
 	FlushEvents();
-	if (event_to_repeat) //Могли не отпустить кнопку.
+	if (event_to_repeat) //РњРѕРіР»Рё РЅРµ РѕС‚РїСѓСЃС‚РёС‚СЊ РєРЅРѕРїРєСѓ.
 		DELETESINGLE(event_to_repeat);
 }
 
@@ -69,8 +69,8 @@ void InputMgr::Process()
 {
 	if ((mouseX != mouseX_last) || (mouseY != mouseY_last))
 	{
-		// Это необходимо скорее для отладки. Сообщение MOUSEMOVED передается окну,
-		// когда то получает фокус.
+		// Р­С‚Рѕ РЅРµРѕР±С…РѕРґРёРјРѕ СЃРєРѕСЂРµРµ РґР»СЏ РѕС‚Р»Р°РґРєРё. РЎРѕРѕР±С‰РµРЅРёРµ MOUSEMOVED РїРµСЂРµРґР°РµС‚СЃСЏ РѕРєРЅСѓ,
+		// РєРѕРіРґР° С‚Рѕ РїРѕР»СѓС‡Р°РµС‚ С„РѕРєСѓСЃ.
 		mouseX_last = mouseX;
 		mouseY_last = mouseY;
 		mouse_moved = true;
@@ -78,13 +78,13 @@ void InputMgr::Process()
 
 	if (repeatingState == rs_waiting && internal_time - repeat_timer >= repeatWaitingTime)
 	{
-		// Дождались, можно повторять
+		// Р”РѕР¶РґР°Р»РёСЃСЊ, РјРѕР¶РЅРѕ РїРѕРІС‚РѕСЂСЏС‚СЊ
 		repeat_timer = internal_time - repeatTime;
 		repeatingState = rs_repeating;
 	}
 	if (repeatingState == rs_repeating && internal_time - repeat_timer >= repeatTime)
 	{
-		// Дождались очередного повторения
+		// Р”РѕР¶РґР°Р»РёСЃСЊ РѕС‡РµСЂРµРґРЅРѕРіРѕ РїРѕРІС‚РѕСЂРµРЅРёСЏ
 		ASSERT(event_to_repeat);
 		repeat_timer = internal_time;
 		InputEvent* new_ev = new InputEvent(*event_to_repeat);
@@ -103,7 +103,7 @@ void InputMgr::AddEvent(SDL_KeyboardEvent &ev)
 
 	if ( ev.keysym.unicode & 0xFF80 )
 	{
-		// Символ, не входящий в нижнюю половину ASCII. Попробуем превратить в кириллицу CP1251.
+		// РЎРёРјРІРѕР», РЅРµ РІС…РѕРґСЏС‰РёР№ РІ РЅРёР¶РЅСЋСЋ РїРѕР»РѕРІРёРЅСѓ ASCII. РџРѕРїСЂРѕР±СѓРµРј РїСЂРµРІСЂР°С‚РёС‚СЊ РІ РєРёСЂРёР»Р»РёС†Сѓ CP1251.
 		ie->kb.symbol = GetCyrillicCP1251(ev.keysym.unicode);
 	}
 	else
@@ -123,7 +123,7 @@ void InputMgr::AddEvent(SDL_KeyboardEvent &ev)
 
 		if (!event_to_repeat || (event_to_repeat && event_to_repeat->kb.key != ie->kb.key))
 		{
-			// Запоминаем событие для повторения
+			// Р—Р°РїРѕРјРёРЅР°РµРј СЃРѕР±С‹С‚РёРµ РґР»СЏ РїРѕРІС‚РѕСЂРµРЅРёСЏ
 			DELETESINGLE(event_to_repeat);
 			event_to_repeat = new InputEvent(*ie);
 			repeatingState = rs_waiting;
@@ -141,7 +141,7 @@ void InputMgr::AddEvent(SDL_KeyboardEvent &ev)
 
 		if (event_to_repeat && event_to_repeat->kb.key == ie->kb.key)
 		{
-			// Отпустили клавишу, которую повторяем. Больше повторять не надо
+			// РћС‚РїСѓСЃС‚РёР»Рё РєР»Р°РІРёС€Сѓ, РєРѕС‚РѕСЂСѓСЋ РїРѕРІС‚РѕСЂСЏРµРј. Р‘РѕР»СЊС€Рµ РїРѕРІС‚РѕСЂСЏС‚СЊ РЅРµ РЅР°РґРѕ
 			repeatingState = rs_none;
 			DELETESINGLE(event_to_repeat);
 		}
@@ -307,7 +307,7 @@ void InputMgr::SetScreenToWindowCoeff(float kx, float ky)
 	scrwinY = ky;
 }
 
-// Очистка списка сохраненных событий ввода
+// РћС‡РёСЃС‚РєР° СЃРїРёСЃРєР° СЃРѕС…СЂР°РЅРµРЅРЅС‹С… СЃРѕР±С‹С‚РёР№ РІРІРѕРґР°
 void InputMgr::FlushEvents()
 {
 	if (events.empty())

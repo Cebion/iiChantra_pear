@@ -23,7 +23,7 @@ ObjEffect* CreateEffect(const char* proto_name, bool fixed, ObjDynamic* origin, 
 
 	if (!(origin && origin->sprite && origin_point < origin->sprite->mpCount))
 	{
-		sLog(DEFAULT_LOG_NAME, logLevelError, "Ïîïûòêà ñîçäàòü ýôôåêò %s íà íåñóùåñòâóþùåé òî÷êå êðåïëåíèÿ %d ó %s (id = %d)", 
+		sLog(DEFAULT_LOG_NAME, logLevelError, "ÐŸÐ¾Ð¿Ñ‹Ñ‚ÐºÐ° ÑÐ¾Ð·Ð´Ð°Ñ‚ÑŒ ÑÑ„Ñ„ÐµÐºÑ‚ %s Ð½Ð° Ð½ÐµÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰ÐµÐ¹ Ñ‚Ð¾Ñ‡ÐºÐµ ÐºÑ€ÐµÐ¿Ð»ÐµÐ½Ð¸Ñ %d Ñƒ %s (id = %d)", 
 			proto_name, origin_point, (origin && origin->sprite) ? origin->sprite->proto_name : "", origin ? origin->id : -1);
 		return NULL;
 	}
@@ -101,7 +101,7 @@ void ObjEffect::Process()
 		if ( flash_stage != 0 )
 		{
 			if (!this->sprite->ocolor)
-				sLog(DEFAULT_LOG_NAME, logLevelError, "ObjEffect::Process() ocolor == NULL, ïðîòîòèï %s", this->sprite->proto_name);
+				sLog(DEFAULT_LOG_NAME, logLevelError, "ObjEffect::Process() ocolor == NULL, Ð¿Ñ€Ð¾Ñ‚Ð¾Ñ‚Ð¸Ð¿ %s", this->sprite->proto_name);
 			else
 				this->sprite->ocolor[0] = RGBAf(1.0, 1.0, 1.0, 0.0) + (flash_target - RGBAf(1.0, 1.0, 1.0, 0.0))*(abs((float)flash_stage)/flash_speed);
 			if ( flash_stage < 0 && flash_stage > -1 ) flash_stage = 0;

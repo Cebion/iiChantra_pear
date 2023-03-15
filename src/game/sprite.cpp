@@ -16,7 +16,7 @@ extern ResourceMgr<Proto> * protoMgr;
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-// Вносит в стек строку
+// Р’РЅРѕСЃРёС‚ РІ СЃС‚РµРє СЃС‚СЂРѕРєСѓ
 void ParametersStack::Push(const char* str)
 {
 	if (this->locked) return;
@@ -27,7 +27,7 @@ void ParametersStack::Push(const char* str)
 	this->top = se;
 }
 
-// Очевидно из названия
+// РћС‡РµРІРёРґРЅРѕ РёР· РЅР°Р·РІР°РЅРёСЏ
 bool ParametersStack::isEmpty()
 {
 	if ( this->top )
@@ -36,7 +36,7 @@ bool ParametersStack::isEmpty()
 		return true;
 }
 
-// Вносит в стек число
+// Р’РЅРѕСЃРёС‚ РІ СЃС‚РµРє С‡РёСЃР»Рѕ
 void ParametersStack::Push(int num)
 {
 	if (this->locked) return;
@@ -47,7 +47,7 @@ void ParametersStack::Push(int num)
 	this->top = se;
 }
 
-// Возвращает элемент стека
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЌР»РµРјРµРЅС‚ СЃС‚РµРєР°
 StackElement* ParametersStack::Pop()
 {
 	if (!top)
@@ -65,7 +65,7 @@ StackElement* ParametersStack::Pop()
 		return se;
 	}
 }
-//Проверяет типы элементов стека на соответствие, сверху вниз.
+//РџСЂРѕРІРµСЂСЏРµС‚ С‚РёРїС‹ СЌР»РµРјРµРЅС‚РѕРІ СЃС‚РµРєР° РЅР° СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ, СЃРІРµСЂС…Сѓ РІРЅРёР·.
 bool ParametersStack::CheckParamTypes(int num, StackElementType first, ...)
 {
 		va_list mark;
@@ -76,13 +76,13 @@ bool ParametersStack::CheckParamTypes(int num, StackElementType first, ...)
 		{
 			if ( !se && setp && setp != stNone && setp != stIntOrNone )
 			{
-				sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Неверный набор параметров в стеке.");
+				sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "РќРµРІРµСЂРЅС‹Р№ РЅР°Р±РѕСЂ РїР°СЂР°РјРµС‚СЂРѕРІ РІ СЃС‚РµРєРµ.");
 				return false;
 			}
 
 			if ( se && se->type != setp && !(se->type == stInt && setp == stIntOrNone) )
 			{
-				sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Неверный набор параметров в стеке.");
+				sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "РќРµРІРµСЂРЅС‹Р№ РЅР°Р±РѕСЂ РїР°СЂР°РјРµС‚СЂРѕРІ РІ СЃС‚РµРєРµ.");
 				return false;
 			}
 /*
@@ -92,14 +92,14 @@ bool ParametersStack::CheckParamTypes(int num, StackElementType first, ...)
 				{
 					if ( !(se->type == stInt && setp == stIntOrNone) )
 					{
-						sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Неверный набор параметров в стеке.");
+						sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "РќРµРІРµСЂРЅС‹Р№ РЅР°Р±РѕСЂ РїР°СЂР°РјРµС‚СЂРѕРІ РІ СЃС‚РµРєРµ.");
 						return false;
 					}
 				}
 			}
 */
-			// TODO: warning: ‘StackElementType’ is promoted to ‘int’ when passed through ‘...’
-			// note: (so you should pass ‘int’ not ‘StackElementType’ to ‘va_arg’)
+			// TODO: warning: вЂStackElementTypeвЂ™ is promoted to вЂintвЂ™ when passed through вЂ...вЂ™
+			// note: (so you should pass вЂintвЂ™ not вЂStackElementTypeвЂ™ to вЂva_argвЂ™)
 			// note: if this code is reached, the program will abort
 			setp = (StackElementType)va_arg( mark, int );
 			if (se) se = se->next;
@@ -108,7 +108,7 @@ bool ParametersStack::CheckParamTypes(int num, StackElementType first, ...)
 		return true;
 }
 
-//Возвращает инт с верхушки стека. Ничего не проверяет, чтобы не дублировать проверку CheckParamTypes
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС‚ СЃ РІРµСЂС…СѓС€РєРё СЃС‚РµРєР°. РќРёС‡РµРіРѕ РЅРµ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚РѕР±С‹ РЅРµ РґСѓР±Р»РёСЂРѕРІР°С‚СЊ РїСЂРѕРІРµСЂРєСѓ CheckParamTypes
 int ParametersStack::PopInt()
 {
 	StackElement* sd = this->Pop();
@@ -116,7 +116,7 @@ int ParametersStack::PopInt()
 	DELETESINGLE(sd);
 	return ret;
 }
-//Возвращает инт из стека. Ничего не проверяет, чтобы не дублировать проверку CheckParamTypes и не удаляет элемент
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС‚ РёР· СЃС‚РµРєР°. РќРёС‡РµРіРѕ РЅРµ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚РѕР±С‹ РЅРµ РґСѓР±Р»РёСЂРѕРІР°С‚СЊ РїСЂРѕРІРµСЂРєСѓ CheckParamTypes Рё РЅРµ СѓРґР°Р»СЏРµС‚ СЌР»РµРјРµРЅС‚
 int ParametersStack::GetInt(int depth)
 {
 	if ( !this->top ) return 0;
@@ -129,7 +129,7 @@ int ParametersStack::GetInt(int depth)
 	return sd->data.intData;
 }
 
-//Возвращает строку с верхушки стека. Ничего не проверяет, чтобы не дублировать проверку CheckParamTypes
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚СЂРѕРєСѓ СЃ РІРµСЂС…СѓС€РєРё СЃС‚РµРєР°. РќРёС‡РµРіРѕ РЅРµ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚РѕР±С‹ РЅРµ РґСѓР±Р»РёСЂРѕРІР°С‚СЊ РїСЂРѕРІРµСЂРєСѓ CheckParamTypes
 const char* ParametersStack::PopString()
 {
 	StackElement* sd = this->Pop();
@@ -138,7 +138,7 @@ const char* ParametersStack::PopString()
 	return ret;
 }
 
-//Возвращает строку с верхушки стека. Ничего не проверяет, чтобы не дублировать проверку CheckParamTypes
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚СЂРѕРєСѓ СЃ РІРµСЂС…СѓС€РєРё СЃС‚РµРєР°. РќРёС‡РµРіРѕ РЅРµ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚РѕР±С‹ РЅРµ РґСѓР±Р»РёСЂРѕРІР°С‚СЊ РїСЂРѕРІРµСЂРєСѓ CheckParamTypes
 std::string ParametersStack::PopStdString()
 {
 	StackElement* sd = this->Pop();
@@ -147,7 +147,7 @@ std::string ParametersStack::PopStdString()
 	return ret;
 }
 
-//Возвращает строку из стека. Ничего не проверяет, чтобы не дублировать проверку CheckParamTypes и не удаляет элемент
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚СЂРѕРєСѓ РёР· СЃС‚РµРєР°. РќРёС‡РµРіРѕ РЅРµ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚РѕР±С‹ РЅРµ РґСѓР±Р»РёСЂРѕРІР°С‚СЊ РїСЂРѕРІРµСЂРєСѓ CheckParamTypes Рё РЅРµ СѓРґР°Р»СЏРµС‚ СЌР»РµРјРµРЅС‚
 const char* ParametersStack::GetString(int depth)
 {
 	if ( !this->top ) return 0;
@@ -181,14 +181,14 @@ void Sprite::SetCurrentFrame(UINT cf)
 	{
 		if (cf >= this->tex->framesCount)
 		{
-			// Если по какой-то причине код попал сюда из ChangeFrame и в a->frames[a->current] явно какая-то НЕХ,
-			// значит был удален прототип со всеми списками кадров. Значит, надо искать, 
-			// какого хрена он удалился пока еще существует этот спрайт.
-			// Если код пришел сюда из api, значит проблемы в скриптах.Ы
+			// Р•СЃР»Рё РїРѕ РєР°РєРѕР№-С‚Рѕ РїСЂРёС‡РёРЅРµ РєРѕРґ РїРѕРїР°Р» СЃСЋРґР° РёР· ChangeFrame Рё РІ a->frames[a->current] СЏРІРЅРѕ РєР°РєР°СЏ-С‚Рѕ РќР•РҐ,
+			// Р·РЅР°С‡РёС‚ Р±С‹Р» СѓРґР°Р»РµРЅ РїСЂРѕС‚РѕС‚РёРї СЃРѕ РІСЃРµРјРё СЃРїРёСЃРєР°РјРё РєР°РґСЂРѕРІ. Р—РЅР°С‡РёС‚, РЅР°РґРѕ РёСЃРєР°С‚СЊ, 
+			// РєР°РєРѕРіРѕ С…СЂРµРЅР° РѕРЅ СѓРґР°Р»РёР»СЃСЏ РїРѕРєР° РµС‰Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ СЌС‚РѕС‚ СЃРїСЂР°Р№С‚.
+			// Р•СЃР»Рё РєРѕРґ РїСЂРёС€РµР» СЃСЋРґР° РёР· api, Р·РЅР°С‡РёС‚ РїСЂРѕР±Р»РµРјС‹ РІ СЃРєСЂРёРїС‚Р°С….Р«
 			sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV,
-				"Попытка указать не существующий на текстуре %s кадр %d (возможно, анимация %s)",
+				"РџРѕРїС‹С‚РєР° СѓРєР°Р·Р°С‚СЊ РЅРµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ РЅР° С‚РµРєСЃС‚СѓСЂРµ %s РєР°РґСЂ %d (РІРѕР·РјРѕР¶РЅРѕ, Р°РЅРёРјР°С†РёСЏ %s)",
 				this->tex->name.c_str(), cf, this->cur_anim.c_str());
-			ASSERT(cf < this->tex->framesCount);	// Тут бы игру не только в дебаге рушить
+			ASSERT(cf < this->tex->framesCount);	// РўСѓС‚ Р±С‹ РёРіСЂСѓ РЅРµ С‚РѕР»СЊРєРѕ РІ РґРµР±Р°РіРµ СЂСѓС€РёС‚СЊ
 			return;
 		}
 		else
@@ -201,13 +201,13 @@ void Sprite::SetCurrentFrame(UINT cf)
 	this->currentFrame = cf;
 }
 
-// Устанавливает текущий кадр анимации на кадр с номером index
+// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С‚РµРєСѓС‰РёР№ РєР°РґСЂ Р°РЅРёРјР°С†РёРё РЅР° РєР°РґСЂ СЃ РЅРѕРјРµСЂРѕРј index
 bool Sprite::JumpFrame( int index )
 {
 	Animation* a = this->GetAnimation( this->cur_anim_num );
 	if ( !a || index < 0 || index > a->frameCount-1 )
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Невозможный прыжок в анимации.");
+		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "РќРµРІРѕР·РјРѕР¶РЅС‹Р№ РїСЂС‹Р¶РѕРє РІ Р°РЅРёРјР°С†РёРё.");
 		return false;
 	}
 	this->SetCurrentFrame(a->frames[ index ].num);
@@ -215,8 +215,8 @@ bool Sprite::JumpFrame( int index )
 	return true;
 }
 
-// Переключает текущий кадр анимации на следующий.
-// Возвращает true, если анимация завершена или необходимо ждать завершения кадра.
+// РџРµСЂРµРєР»СЋС‡Р°РµС‚ С‚РµРєСѓС‰РёР№ РєР°РґСЂ Р°РЅРёРјР°С†РёРё РЅР° СЃР»РµРґСѓСЋС‰РёР№.
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ true, РµСЃР»Рё Р°РЅРёРјР°С†РёСЏ Р·Р°РІРµСЂС€РµРЅР° РёР»Рё РЅРµРѕР±С…РѕРґРёРјРѕ Р¶РґР°С‚СЊ Р·Р°РІРµСЂС€РµРЅРёСЏ РєР°РґСЂР°.
 bool Sprite::ChangeFrame(Animation* a)
 {
 	if (IsAnimDone())
@@ -244,7 +244,7 @@ bool Sprite::ChangeFrame(Animation* a)
 		a->current++;
 		ASSERT(a->current < a->frameCount);
 
-		// TODO: afcLoop в общем то не очень и нужен
+		// TODO: afcLoop РІ РѕР±С‰РµРј С‚Рѕ РЅРµ РѕС‡РµРЅСЊ Рё РЅСѓР¶РµРЅ
 		if (a->frames[a->current].command == afcLoop)
 		{
 			a->current = 0;
@@ -332,7 +332,7 @@ void Sprite::Draw(const CAABB &aabb)
 	if (this->tex && this->currentFrame >= this->tex->framesCount)
 	{
 		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV,
-			"Нарисовать кадр %d текстуры %s в анимации %s невозможно. Описано только %d кадров.",
+			"РќР°СЂРёСЃРѕРІР°С‚СЊ РєР°РґСЂ %d С‚РµРєСЃС‚СѓСЂС‹ %s РІ Р°РЅРёРјР°С†РёРё %s РЅРµРІРѕР·РјРѕР¶РЅРѕ. РћРїРёСЃР°РЅРѕ С‚РѕР»СЊРєРѕ %d РєР°РґСЂРѕРІ.",
 			this->currentFrame, this->tex->name.c_str(), this->cur_anim.c_str(), this->tex->framesCount);
 		return;
 	}
@@ -385,7 +385,7 @@ void Sprite::Draw(const CAABB &aabb)
 
 	if (render_without_texture)
 	{
-		// Если спрайт находится за пределами обзора камеры, то мы его не рисуем.
+		// Р•СЃР»Рё СЃРїСЂР°Р№С‚ РЅР°С…РѕРґРёС‚СЃСЏ Р·Р° РїСЂРµРґРµР»Р°РјРё РѕР±Р·РѕСЂР° РєР°РјРµСЂС‹, С‚Рѕ РјС‹ РµРіРѕ РЅРµ СЂРёСЃСѓРµРј.
 		if (x + this->frameWidth < CAMERA_LEFT || x > CAMERA_RIGHT)
 			return;
 		if (y + this->frameHeight < CAMERA_TOP || y > CAMERA_BOTTOM )
@@ -400,7 +400,7 @@ void Sprite::Draw(const CAABB &aabb)
 	{
 		if (renderMethod == rsmStandart)
 		{
-			// Если спрайт находится за пределами обзора камеры, то мы его не рисуем.
+			// Р•СЃР»Рё СЃРїСЂР°Р№С‚ РЅР°С…РѕРґРёС‚СЃСЏ Р·Р° РїСЂРµРґРµР»Р°РјРё РѕР±Р·РѕСЂР° РєР°РјРµСЂС‹, С‚Рѕ РјС‹ РµРіРѕ РЅРµ СЂРёСЃСѓРµРј.
 			if (x + this->frameWidth < CAMERA_LEFT || x > CAMERA_RIGHT)
 				return;
 			if (y + this->frameHeight < CAMERA_TOP || y > CAMERA_BOTTOM )
@@ -413,7 +413,7 @@ void Sprite::Draw(const CAABB &aabb)
 				use = this->overlayUse[i];
 				if (use >= tex->overlayCount)
 				{
-					sLog(DEFAULT_LOG_NAME, logLevelError, "В прототипе %s используется оверлей %d, хотя на текстуре описано %d оверлеев",
+					sLog(DEFAULT_LOG_NAME, logLevelError, "Р’ РїСЂРѕС‚РѕС‚РёРїРµ %s РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РѕРІРµСЂР»РµР№ %d, С…РѕС‚СЏ РЅР° С‚РµРєСЃС‚СѓСЂРµ РѕРїРёСЃР°РЅРѕ %d РѕРІРµСЂР»РµРµРІ",
 						this->proto_name, use, tex->overlayCount);
 					continue;
 				}
@@ -445,7 +445,7 @@ void Sprite::Draw(const CAABB &aabb)
 				c.p.y -= CAMERA_OFF_Y;
 			}
 
-			// Если спрайт находится за пределами обзора камеры, то мы его не рисуем.
+			// Р•СЃР»Рё СЃРїСЂР°Р№С‚ РЅР°С…РѕРґРёС‚СЃСЏ Р·Р° РїСЂРµРґРµР»Р°РјРё РѕР±Р·РѕСЂР° РєР°РјРµСЂС‹, С‚Рѕ РјС‹ РµРіРѕ РЅРµ СЂРёСЃСѓРµРј.
 			if (c.Right() < CAMERA_LEFT || c.Left() > CAMERA_RIGHT)
 				return;
 			if (c.Bottom() < CAMERA_TOP || c.Top() > CAMERA_BOTTOM )
@@ -478,9 +478,9 @@ void Sprite::LoadFromProto(const Proto* proto)
 	if (!proto)
 		return;
 	
-	// TODO: в принципе, запоминать можно сразу *proto, все равно он не должен быть удален
-	// раньше спрайта. Но, пока это еще в состоянии отладки, пусть будет. Да и хранить указатели - плохо.
-	// Хотя, все хранится эе указатель на анимации из прототипа.
+	// TODO: РІ РїСЂРёРЅС†РёРїРµ, Р·Р°РїРѕРјРёРЅР°С‚СЊ РјРѕР¶РЅРѕ СЃСЂР°Р·Сѓ *proto, РІСЃРµ СЂР°РІРЅРѕ РѕРЅ РЅРµ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ СѓРґР°Р»РµРЅ
+	// СЂР°РЅСЊС€Рµ СЃРїСЂР°Р№С‚Р°. РќРѕ, РїРѕРєР° СЌС‚Рѕ РµС‰Рµ РІ СЃРѕСЃС‚РѕСЏРЅРёРё РѕС‚Р»Р°РґРєРё, РїСѓСЃС‚СЊ Р±СѓРґРµС‚. Р”Р° Рё С…СЂР°РЅРёС‚СЊ СѓРєР°Р·Р°С‚РµР»Рё - РїР»РѕС…Рѕ.
+	// РҐРѕС‚СЏ, РІСЃРµ С…СЂР°РЅРёС‚СЃСЏ СЌРµ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° Р°РЅРёРјР°С†РёРё РёР· РїСЂРѕС‚РѕС‚РёРїР°.
 	proto_name = StrDupl(proto->name.c_str());
 	proto->ReserveUsage();
 
@@ -494,7 +494,7 @@ void Sprite::LoadFromProto(const Proto* proto)
 		{
 			this->overlayCount = proto->overlayCount;
 			if (proto->overlayCount > tex->overlayCount)
-				sLog(DEFAULT_LOG_NAME, logLevelWarning, "В прототипе %s используется больше оверлеев, чем на текстуре %s", proto_name, proto->texture);
+				sLog(DEFAULT_LOG_NAME, logLevelWarning, "Р’ РїСЂРѕС‚РѕС‚РёРїРµ %s РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ Р±РѕР»СЊС€Рµ РѕРІРµСЂР»РµРµРІ, С‡РµРј РЅР° С‚РµРєСЃС‚СѓСЂРµ %s", proto_name, proto->texture);
 		}
 		this->ocolor = proto->ocolor;
 		this->overlayUse = proto->overlayUsage;
@@ -520,8 +520,8 @@ void Sprite::LoadFromProto(const Proto* proto)
 	{
 		this->animNames = &(proto->animNames);
 		this->animsCount = proto->animationsCount;
-		// Массив копий специально создается с помощью malloc, чтобы не потм при освобождении
-		// не вызывать деструкторы.
+		// РњР°СЃСЃРёРІ РєРѕРїРёР№ СЃРїРµС†РёР°Р»СЊРЅРѕ СЃРѕР·РґР°РµС‚СЃСЏ СЃ РїРѕРјРѕС‰СЊСЋ malloc, С‡С‚РѕР±С‹ РЅРµ РїРѕС‚Рј РїСЂРё РѕСЃРІРѕР±РѕР¶РґРµРЅРёРё
+		// РЅРµ РІС‹Р·С‹РІР°С‚СЊ РґРµСЃС‚СЂСѓРєС‚РѕСЂС‹.
 		this->anims = (Animation*)malloc(sizeof(Animation) * proto->animationsCount);
 		memcpy(this->anims, proto->animations, sizeof(Animation) * proto->animationsCount);
 	}
@@ -531,7 +531,7 @@ void Sprite::LoadFromProto(const Proto* proto)
 
 Sprite::~Sprite()
 {
-	// Массив копий удаляем с помощью free, чтобы не вызывать деструкторы.
+	// РњР°СЃСЃРёРІ РєРѕРїРёР№ СѓРґР°Р»СЏРµРј СЃ РїРѕРјРѕС‰СЊСЋ free, С‡С‚РѕР±С‹ РЅРµ РІС‹Р·С‹РІР°С‚СЊ РґРµСЃС‚СЂСѓРєС‚РѕСЂС‹.
 	free(this->anims);
 
 	DELETESINGLE(this->stack);

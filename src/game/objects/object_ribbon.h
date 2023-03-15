@@ -14,7 +14,7 @@ class ObjRibbon:
 public:
 	float bl, br, bt, bb;
 	bool ubl, ubr, ubt, ubb;		// bounds usage
-	bool repeat_x, repeat_y;		// направления повторения
+	bool repeat_x, repeat_y;		// РЅР°РїСЂР°РІР»РµРЅРёСЏ РїРѕРІС‚РѕСЂРµРЅРёСЏ
 	Vector2 k;
 #ifdef MAP_EDITOR
 	bool from_proto;

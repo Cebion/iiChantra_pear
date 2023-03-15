@@ -278,7 +278,7 @@ void LSQ_RewindOneElement(LSQ_IteratorT iterator)
 		iteratorl->Node = iteratorl->Node->Parent;
 	}
 }
-/* Ôóíêöèÿ, ïåðåìåùàþùàÿ èòåðàòîð íà çàäàííîå ñìåùåíèå ñî çíàêîì */
+/* Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ, Ð¿ÐµÑ€ÐµÐ¼ÐµÑ‰Ð°ÑŽÑ‰Ð°Ñ Ð¸Ñ‚ÐµÑ€Ð°Ñ‚Ð¾Ñ€ Ð½Ð° Ð·Ð°Ð´Ð°Ð½Ð½Ð¾Ðµ ÑÐ¼ÐµÑ‰ÐµÐ½Ð¸Ðµ ÑÐ¾ Ð·Ð½Ð°ÐºÐ¾Ð¼ */
 void LSQ_ShiftPosition(LSQ_IteratorT iterator, LSQ_IntegerIndexT shift)
 {
 	int absshift = (shift > 0) ? shift : -shift;
@@ -290,7 +290,7 @@ void LSQ_ShiftPosition(LSQ_IteratorT iterator, LSQ_IntegerIndexT shift)
 		absshift--;
 	}
 }
-/* Ôóíêöèÿ, óñòàíàâëèâàþùàÿ èòåðàòîð íà ýëåìåíò ñ óêàçàííûì íîìåðîì */
+/* Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ, ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÑŽÑ‰Ð°Ñ Ð¸Ñ‚ÐµÑ€Ð°Ñ‚Ð¾Ñ€ Ð½Ð° ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚ Ñ ÑƒÐºÐ°Ð·Ð°Ð½Ð½Ñ‹Ð¼ Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð¼ */
 void LSQ_SetPosition(LSQ_IteratorT iterator, LSQ_IntegerIndexT pos)
 {
 	IteratorT *iteratorl = (IteratorT*)iterator;
@@ -301,7 +301,7 @@ void LSQ_SetPosition(LSQ_IteratorT iterator, LSQ_IntegerIndexT pos)
 	LSQ_ShiftPosition(iterator, pos+1);
 }
 
-/* Îáíîâëÿåò ïîòîìêà ïðåäêà óçëà, ïðè åãî çàìåíå â ñëó÷àå, åñëè ìû íå çíàåì, ëåâûì áûë ïîòîìîê èëè ïðàâûì*/
+/* ÐžÐ±Ð½Ð¾Ð²Ð»ÑÐµÑ‚ Ð¿Ð¾Ñ‚Ð¾Ð¼ÐºÐ° Ð¿Ñ€ÐµÐ´ÐºÐ° ÑƒÐ·Ð»Ð°, Ð¿Ñ€Ð¸ ÐµÐ³Ð¾ Ð·Ð°Ð¼ÐµÐ½Ðµ Ð² ÑÐ»ÑƒÑ‡Ð°Ðµ, ÐµÑÐ»Ð¸ Ð¼Ñ‹ Ð½Ðµ Ð·Ð½Ð°ÐµÐ¼, Ð»ÐµÐ²Ñ‹Ð¼ Ð±Ñ‹Ð» Ð¿Ð¾Ñ‚Ð¾Ð¼Ð¾Ðº Ð¸Ð»Ð¸ Ð¿Ñ€Ð°Ð²Ñ‹Ð¼*/
 static void UpdateParent(ContainerT *container, ContainerTreeNodeT *descendant,
 						 ContainerTreeNodeT *newDescendant)
 {
@@ -317,8 +317,8 @@ static void UpdateParent(ContainerT *container, ContainerTreeNodeT *descendant,
 		container->Root = newDescendant;
 	}
 	newDescendant->Parent = descendant->Parent;
-	/* Êîä êîòîðûé âûçûâàë ýòó ïðîöåäóðó äîëæåí îáíîâèòü ïðåäêà ñòàðîãî
-		ïîòîìêà ò.ê. â ðàçíûõ ñëó÷àÿõ ïîâîðîòà îí ìîæåò áûòü ðàçíûì, à òóò ìû åãî îáíóëèì*/
+	/* ÐšÐ¾Ð´ ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¹ Ð²Ñ‹Ð·Ñ‹Ð²Ð°Ð» ÑÑ‚Ñƒ Ð¿Ñ€Ð¾Ñ†ÐµÐ´ÑƒÑ€Ñƒ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¾Ð±Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ð¿Ñ€ÐµÐ´ÐºÐ° ÑÑ‚Ð°Ñ€Ð¾Ð³Ð¾
+		Ð¿Ð¾Ñ‚Ð¾Ð¼ÐºÐ° Ñ‚.Ðº. Ð² Ñ€Ð°Ð·Ð½Ñ‹Ñ… ÑÐ»ÑƒÑ‡Ð°ÑÑ… Ð¿Ð¾Ð²Ð¾Ñ€Ð¾Ñ‚Ð° Ð¾Ð½ Ð¼Ð¾Ð¶ÐµÑ‚ Ð±Ñ‹Ñ‚ÑŒ Ñ€Ð°Ð·Ð½Ñ‹Ð¼, Ð° Ñ‚ÑƒÑ‚ Ð¼Ñ‹ ÐµÐ³Ð¾ Ð¾Ð±Ð½ÑƒÐ»Ð¸Ð¼*/
 	descendant->Parent = NULL;
 }
 
@@ -406,13 +406,13 @@ void LSQ_InsertElement(LSQ_HandleT handle, LSQ_IntegerIndexT key, LSQ_BaseTypeT 
 		return;
 	TempNode = container->Root;
 
-	// Ïîèñê, ñóùåñòâóåò ëè ýëåìåíò ñ äàííûì êëþ÷îì.
-	// Îäíîâðåìåííî, èùåì, êóäà ìîæíî âñòàâèòü íîâûé ýëåìåíò.
+	// ÐŸÐ¾Ð¸ÑÐº, ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚ Ð»Ð¸ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚ Ñ Ð´Ð°Ð½Ð½Ñ‹Ð¼ ÐºÐ»ÑŽÑ‡Ð¾Ð¼.
+	// ÐžÐ´Ð½Ð¾Ð²Ñ€ÐµÐ¼ÐµÐ½Ð½Ð¾, Ð¸Ñ‰ÐµÐ¼, ÐºÑƒÐ´Ð° Ð¼Ð¾Ð¶Ð½Ð¾ Ð²ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ Ð½Ð¾Ð²Ñ‹Ð¹ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚.
 	while (TempNode != NULL)
 	{
 		if (TempNode->Key == key)
 		{
-			// Ýëåìåíò íàéäåí, îáíîâëÿåì çíà÷åíèå.
+			// Ð­Ð»ÐµÐ¼ÐµÐ½Ñ‚ Ð½Ð°Ð¹Ð´ÐµÐ½, Ð¾Ð±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ.
 			TempNode->Data = value;
 			return;
 		}
@@ -423,7 +423,7 @@ void LSQ_InsertElement(LSQ_HandleT handle, LSQ_IntegerIndexT key, LSQ_BaseTypeT 
 			TempNode = TempNode->Right;
 	}
 
-	// Ýëåìåíò ñ äàííûì êëþ÷îì íå ñóùåñòâóåò, ñîçäàåì íîâûé.
+	// Ð­Ð»ÐµÐ¼ÐµÐ½Ñ‚ Ñ Ð´Ð°Ð½Ð½Ñ‹Ð¼ ÐºÐ»ÑŽÑ‡Ð¾Ð¼ Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚, ÑÐ¾Ð·Ð´Ð°ÐµÐ¼ Ð½Ð¾Ð²Ñ‹Ð¹.
 	NewNode = (ContainerTreeNodeT*)malloc(sizeof(ContainerTreeNodeT));
 	if (NewNode == NULL)
 		return;
@@ -434,7 +434,7 @@ void LSQ_InsertElement(LSQ_HandleT handle, LSQ_IntegerIndexT key, LSQ_BaseTypeT 
  	NewNode->Right = NULL;
  	NewNode->Parent = ParentNode;
 
-	// Âñòàâêà ýëåìåíòà
+	// Ð’ÑÑ‚Ð°Ð²ÐºÐ° ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°
  	if (container->ElementsCount == 0)
 	{
 		container->First = container->Last = container->Root = NewNode;
@@ -454,7 +454,7 @@ void LSQ_InsertElement(LSQ_HandleT handle, LSQ_IntegerIndexT key, LSQ_BaseTypeT 
 		ParentNode->Right = NewNode;
 	}
 
-	// Áàëàíñèðîâêà äåðåâà
+	// Ð‘Ð°Ð»Ð°Ð½ÑÐ¸Ñ€Ð¾Ð²ÐºÐ° Ð´ÐµÑ€ÐµÐ²Ð°
 	PrevNode = NewNode;
 	TempNode = NewNode->Parent;
 	while (TempNode != NULL)
@@ -504,15 +504,15 @@ void LSQ_InsertNewMaxElement(LSQ_HandleT handle, LSQ_IntegerIndexT key, LSQ_Base
 		return;
 	TempNode = container->Root;
 
-	// Ïîèñê ìåñòà, êóäà ìîæíî âñòàâèòü íîâûé ýëåìåíò. Ýòî âñåãäà ïðàâàÿ âåòâü,
-	// ò.ê. ìû âñòàâëÿåì ýëåìåíò ñ êëþ÷îì, çàâåäîìî áîëüøèì, ÷åì âñå êëþ÷è â äåðåâå.
+	// ÐŸÐ¾Ð¸ÑÐº Ð¼ÐµÑÑ‚Ð°, ÐºÑƒÐ´Ð° Ð¼Ð¾Ð¶Ð½Ð¾ Ð²ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ Ð½Ð¾Ð²Ñ‹Ð¹ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚. Ð­Ñ‚Ð¾ Ð²ÑÐµÐ³Ð´Ð° Ð¿Ñ€Ð°Ð²Ð°Ñ Ð²ÐµÑ‚Ð²ÑŒ,
+	// Ñ‚.Ðº. Ð¼Ñ‹ Ð²ÑÑ‚Ð°Ð²Ð»ÑÐµÐ¼ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚ Ñ ÐºÐ»ÑŽÑ‡Ð¾Ð¼, Ð·Ð°Ð²ÐµÐ´Ð¾Ð¼Ð¾ Ð±Ð¾Ð»ÑŒÑˆÐ¸Ð¼, Ñ‡ÐµÐ¼ Ð²ÑÐµ ÐºÐ»ÑŽÑ‡Ð¸ Ð² Ð´ÐµÑ€ÐµÐ²Ðµ.
 	while (TempNode != NULL)
 	{
 		ParentNode = TempNode;
 		TempNode = TempNode->Right;
 	}
 
-	// Ñîçäàåì íîâûé êëþ÷.
+	// Ð¡Ð¾Ð·Ð´Ð°ÐµÐ¼ Ð½Ð¾Ð²Ñ‹Ð¹ ÐºÐ»ÑŽÑ‡.
 	NewNode = (ContainerTreeNodeT*)malloc(sizeof(ContainerTreeNodeT));
 	if (NewNode == NULL)
 		return;
@@ -523,7 +523,7 @@ void LSQ_InsertNewMaxElement(LSQ_HandleT handle, LSQ_IntegerIndexT key, LSQ_Base
  	NewNode->Right = NULL;
  	NewNode->Parent = ParentNode;
 
-	// Âñòàâêà ýäåìåíòà
+	// Ð’ÑÑ‚Ð°Ð²ÐºÐ° ÑÐ´ÐµÐ¼ÐµÐ½Ñ‚Ð°
  	if (container->ElementsCount == 0)
 	{
 		container->First = container->Last = container->Root = NewNode;
@@ -534,7 +534,7 @@ void LSQ_InsertNewMaxElement(LSQ_HandleT handle, LSQ_IntegerIndexT key, LSQ_Base
 		container->Last = NewNode;
 	ParentNode->Right = NewNode;
 
-	// Áàëàíñèðîâêà äåðåâà
+	// Ð‘Ð°Ð»Ð°Ð½ÑÐ¸Ñ€Ð¾Ð²ÐºÐ° Ð´ÐµÑ€ÐµÐ²Ð°
 	PrevNode = NewNode;
 	TempNode = NewNode->Parent;
 	while (TempNode != NULL)
@@ -725,10 +725,10 @@ void LSQ_DeleteElement(LSQ_HandleT handle, LSQ_IntegerIndexT key)
 }
 
 
-// Îòëàäî÷íûå ôóíêöèè ïðîâåðêè äåðåâà.
+// ÐžÑ‚Ð»Ð°Ð´Ð¾Ñ‡Ð½Ñ‹Ðµ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ¸ Ð´ÐµÑ€ÐµÐ²Ð°.
 #ifdef LSQ_DEBUG
 
-#undef MAX	// MAX áûë óæå îïðåäåëåí â IceTypes.h êàê ìàêðîñ
+#undef MAX	// MAX Ð±Ñ‹Ð» ÑƒÐ¶Ðµ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½ Ð² IceTypes.h ÐºÐ°Ðº Ð¼Ð°ÐºÑ€Ð¾Ñ
 static __inline int MAX(int a, int b)
 {
 	if (a > b)

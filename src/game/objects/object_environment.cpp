@@ -75,7 +75,7 @@ ObjEnvironment* CreateEnvironment(const char* proto_name, Vector2 coord)
 	}
 
 	env->aabb.p = coord;
-	//env->sprite = NULL; <- Ïëîõàÿ ñòðî÷êà, ïëîõàÿ! Âûçûâàåò óòå÷êó! Ïî÷åìó...?
+	//env->sprite = NULL; <- ÐŸÐ»Ð¾Ñ…Ð°Ñ ÑÑ‚Ñ€Ð¾Ñ‡ÐºÐ°, Ð¿Ð»Ð¾Ñ…Ð°Ñ! Ð’Ñ‹Ð·Ñ‹Ð²Ð°ÐµÑ‚ ÑƒÑ‚ÐµÑ‡ÐºÑƒ! ÐŸÐ¾Ñ‡ÐµÐ¼Ñƒ...?
 
 	env->type = objEnvironment;
 	env->SetPhysic();
@@ -126,9 +126,9 @@ void ObjEnvironment::OnEnter( GameObject* obj )
 	if ( !this->script_on_enter ) return;
 	ObjDynamic* eob = (ObjDynamic*)obj;
 
-	//Èùåì òî÷êó äëÿ ïåðåäà÷è ïàðàìåòðîì
+	//Ð˜Ñ‰ÐµÐ¼ Ñ‚Ð¾Ñ‡ÐºÑƒ Ð´Ð»Ñ Ð¿ÐµÑ€ÐµÐ´Ð°Ñ‡Ð¸ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð¼
 	Vector2 pnt = obj->aabb.p;
-	//Ñíà÷àëà èùåì âîçìîæíîå ïåðåñå÷åíèå âíóòðè
+	//Ð¡Ð½Ð°Ñ‡Ð°Ð»Ð° Ð¸Ñ‰ÐµÐ¼ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾Ðµ Ð¿ÐµÑ€ÐµÑÐµÑ‡ÐµÐ½Ð¸Ðµ Ð²Ð½ÑƒÑ‚Ñ€Ð¸
 	float top = this->aabb.Top();
 	float bottom = this->aabb.Bottom();
 	if ( obj->aabb.Bottom() > top && top > obj->aabb.Top() && bottom > obj->aabb.Bottom() )
@@ -141,7 +141,7 @@ void ObjEnvironment::OnEnter( GameObject* obj )
 		pnt.x = right;
 	else if ( obj->aabb.Right() > left && left > obj->aabb.Left() && right > obj->aabb.Right() )
 		pnt.y = left;
-	//Âíóòðåííèõ ïåðåñå÷åíèé íå áûëî, îòñëåæèâàåì ñêîðîñòü íàçàä.
+	//Ð’Ð½ÑƒÑ‚Ñ€ÐµÐ½Ð½Ð¸Ñ… Ð¿ÐµÑ€ÐµÑÐµÑ‡ÐµÐ½Ð¸Ð¹ Ð½Ðµ Ð±Ñ‹Ð»Ð¾, Ð¾Ñ‚ÑÐ»ÐµÐ¶Ð¸Ð²Ð°ÐµÐ¼ ÑÐºÐ¾Ñ€Ð¾ÑÑ‚ÑŒ Ð½Ð°Ð·Ð°Ð´.
 	if ( pnt.x == obj->aabb.p.x && pnt.y == obj->aabb.p.y )
 		pnt = TraceVelBack(eob, this, false);
 
@@ -158,7 +158,7 @@ void ObjEnvironment::OnLeave( GameObject* obj )
 {
 	if ( !this->script_on_leave ) return;
 	ObjDynamic* eob = (ObjDynamic*)obj;
-	//Èùåì òî÷êó äëÿ ïåðåäà÷è ïàðàìåòðîì, ïåðåñå÷åíèÿ âíóòðè òî÷íî íåò.
+	//Ð˜Ñ‰ÐµÐ¼ Ñ‚Ð¾Ñ‡ÐºÑƒ Ð´Ð»Ñ Ð¿ÐµÑ€ÐµÐ´Ð°Ñ‡Ð¸ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð¼, Ð¿ÐµÑ€ÐµÑÐµÑ‡ÐµÐ½Ð¸Ñ Ð²Ð½ÑƒÑ‚Ñ€Ð¸ Ñ‚Ð¾Ñ‡Ð½Ð¾ Ð½ÐµÑ‚.
 	Vector2 pnt = TraceVelBack(eob, this, true);
 
 	lua_getglobal(lua, this->script_on_leave);
@@ -223,7 +223,7 @@ void DefaultEnvSet( ObjEnvironment* env )
 				strcpy(default_environment->sounds[i], env->sounds[i]);
 			}
 		}
-		//memcpy(default_environment, env, sizeof(ObjEnvironment)); <= íå ñðàáîòàåò, ïîòîìó ÷òî ñòðîêè, íà êîòîðûå ññûëàþòñÿ ñïèñêè ìîãóò áûòü óäàëåíû ñî ñòàðûì îêðóæåíèåì.
+		//memcpy(default_environment, env, sizeof(ObjEnvironment)); <= Ð½Ðµ ÑÑ€Ð°Ð±Ð¾Ñ‚Ð°ÐµÑ‚, Ð¿Ð¾Ñ‚Ð¾Ð¼Ñƒ Ñ‡Ñ‚Ð¾ ÑÑ‚Ñ€Ð¾ÐºÐ¸, Ð½Ð° ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ ÑÑÑ‹Ð»Ð°ÑŽÑ‚ÑÑ ÑÐ¿Ð¸ÑÐºÐ¸ Ð¼Ð¾Ð³ÑƒÑ‚ Ð±Ñ‹Ñ‚ÑŒ ÑƒÐ´Ð°Ð»ÐµÐ½Ñ‹ ÑÐ¾ ÑÑ‚Ð°Ñ€Ñ‹Ð¼ Ð¾ÐºÑ€ÑƒÐ¶ÐµÐ½Ð¸ÐµÐ¼.
 	}
 	else 
 	{

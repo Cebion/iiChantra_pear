@@ -12,10 +12,10 @@
 extern GameObject* attached_object;
 
 /*
-Ðåæèìû:
-1 - ñîçäàíèå ïî âñåìó aabb îáúåêòà.
-2 - ïðèìåíÿòü ãðàâèòàöèþ.
-3 - "ñíåã", ñîçäàíèå ïî îòðåçêó øèðèíû ñòàðòîâîé ïîçèöèè îáúåêòà âíèç.
+Ð ÐµÐ¶Ð¸Ð¼Ñ‹:
+1 - ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¿Ð¾ Ð²ÑÐµÐ¼Ñƒ aabb Ð¾Ð±ÑŠÐµÐºÑ‚Ð°.
+2 - Ð¿Ñ€Ð¸Ð¼ÐµÐ½ÑÑ‚ÑŒ Ð³Ñ€Ð°Ð²Ð¸Ñ‚Ð°Ñ†Ð¸ÑŽ.
+3 - "ÑÐ½ÐµÐ³", ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¿Ð¾ Ð¾Ñ‚Ñ€ÐµÐ·ÐºÑƒ ÑˆÐ¸Ñ€Ð¸Ð½Ñ‹ ÑÑ‚Ð°Ñ€Ñ‚Ð¾Ð²Ð¾Ð¹ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ð¸ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° Ð²Ð½Ð¸Ð·.
 */
 
 Vector2 wind;
@@ -284,7 +284,7 @@ bool CParticleSystem::Render()
 			fsize.x = fsize.y = particles[i].size;
 			if (this->texture->framesCount > 1)
 			{
-				// Âûáîð êàäðà àíèìàöèè
+				// Ð’Ñ‹Ð±Ð¾Ñ€ ÐºÐ°Ð´Ñ€Ð° Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸Ð¸
 				frameNum = (size_t)floor((pp.age / pp.life) * this->texture->framesCount);
 				if (frameNum >= this->texture->framesCount) frameNum = this->texture->framesCount-1;
 			}
@@ -316,7 +316,7 @@ bool CParticleSystem::Render()
 			
 			if (this->texture->framesCount > 1)
 			{
-				// Âûáîð êàäðà àíèìàöèè
+				// Ð’Ñ‹Ð±Ð¾Ñ€ ÐºÐ°Ð´Ñ€Ð° Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸Ð¸
 				frameNum = (size_t)floor((pp.age / pp.life) * this->texture->framesCount);
 				if (frameNum >= this->texture->framesCount) frameNum = this->texture->framesCount-1;
 			}

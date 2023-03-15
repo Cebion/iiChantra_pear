@@ -12,35 +12,35 @@ extern config cfg;
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-// Положение камеры
+// РџРѕР»РѕР¶РµРЅРёРµ РєР°РјРµСЂС‹
 float CAMERA_X = 0;
 float CAMERA_Y = 0;
 Vector2 camera_pos = Vector2(0,0);
 
-// Коэффициент, отвечающий за скорость реакции камеры на изменение положения объекта
+// РљРѕСЌС„С„РёС†РёРµРЅС‚, РѕС‚РІРµС‡Р°СЋС‰РёР№ Р·Р° СЃРєРѕСЂРѕСЃС‚СЊ СЂРµР°РєС†РёРё РєР°РјРµСЂС‹ РЅР° РёР·РјРµРЅРµРЅРёРµ РїРѕР»РѕР¶РµРЅРёСЏ РѕР±СЉРµРєС‚Р°
 float CAMERA_LAG = 1.0f;
 
-// Положение границ экрана
+// РџРѕР»РѕР¶РµРЅРёРµ РіСЂР°РЅРёС† СЌРєСЂР°РЅР°
 float CAMERA_LEFT = 0;
 float CAMERA_RIGHT = 0;
 float CAMERA_TOP = 0;
 float CAMERA_BOTTOM = 0;
 
-// Это смещенеие системы кординат
+// Р­С‚Рѕ СЃРјРµС‰РµРЅРµРёРµ СЃРёСЃС‚РµРјС‹ РєРѕСЂРґРёРЅР°С‚
 float CAMERA_OFF_X = 0;
 float CAMERA_OFF_Y = 0;
 
 float CAMERA_OLD_OFF_X = 0;
 float CAMERA_OLD_OFF_Y = 0;
 
-// Смещение камеры относительно объекта
+// РЎРјРµС‰РµРЅРёРµ РєР°РјРµСЂС‹ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РѕР±СЉРµРєС‚Р°
 float CAMERA_OBJ_OFF_X = 0;
 float CAMERA_OBJ_OFF_Y = 0;
 
-// Точка объекта, на которую нацелена камера
+// РўРѕС‡РєР° РѕР±СЉРµРєС‚Р°, РЅР° РєРѕС‚РѕСЂСѓСЋ РЅР°С†РµР»РµРЅР° РєР°РјРµСЂР°
 CameraFocusObjectPoint CAMERA_FOCUS_ON_OBJ_POS = CamFocusCenter;
 
-// Объект, на который нацелена камера
+// РћР±СЉРµРєС‚, РЅР° РєРѕС‚РѕСЂС‹Р№ РЅР°С†РµР»РµРЅР° РєР°РјРµСЂР°
 GameObject* attached_object = NULL;
 
 bool camera_attach_x = true;
@@ -52,7 +52,7 @@ float CAMERA_RIGHT_BOUND = 0;
 float CAMERA_TOP_BOUND = 0;
 float CAMERA_BOTTOM_BOUND = 0;
 //////////////////////////////////////////////////////////////////////////
-// Расчеты
+// Р Р°СЃС‡РµС‚С‹
 
 __INLINE void CalcCamOffX()
 {
@@ -101,8 +101,8 @@ void CameraAttachToAxis(bool x, bool y)
 	camera_attach_y = y;
 }
 
-// Прицепляет камеру к объекту
-// Если передать NULL, то отцеплет ее
+// РџСЂРёС†РµРїР»СЏРµС‚ РєР°РјРµСЂСѓ Рє РѕР±СЉРµРєС‚Сѓ
+// Р•СЃР»Рё РїРµСЂРµРґР°С‚СЊ NULL, С‚Рѕ РѕС‚С†РµРїР»РµС‚ РµРµ
 void CameraAttachToObject(GameObject* obj)
 {
 	attached_object = obj;
@@ -128,14 +128,14 @@ void SetCameraAttachedObjectOffset(float x, float y)
 	}
 }
 
-// Возвращает объект
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РѕР±СЉРµРєС‚
 GameObject* GetCameraAttachedObject()
 {
 	return attached_object;
 }
 
-// Смещает камеру
-// x, y - координаты точки, которая будет в центре экрана
+// РЎРјРµС‰Р°РµС‚ РєР°РјРµСЂСѓ
+// x, y - РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РѕС‡РєРё, РєРѕС‚РѕСЂР°СЏ Р±СѓРґРµС‚ РІ С†РµРЅС‚СЂРµ СЌРєСЂР°РЅР°
 void CameraMoveToPos(float x, float y)
 {
 	attached_object = NULL;
@@ -149,14 +149,14 @@ void CameraMoveToPos(float x, float y)
 	CalcCamOffY();
 }
 
-// Устанавливает, необходимо ли использовать границы для камеры
+// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚, РЅРµРѕР±С…РѕРґРёРјРѕ Р»Рё РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РіСЂР°РЅРёС†С‹ РґР»СЏ РєР°РјРµСЂС‹
 void CameraUseBounds(bool b)
 {
 	camera_use_bounds = b;
 }
 
-// Устанавливает значения границ
-// Если границы таковы, что камера не влезет в экран, то праввая и нижняя будут сдвинуты
+// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ Р·РЅР°С‡РµРЅРёСЏ РіСЂР°РЅРёС†
+// Р•СЃР»Рё РіСЂР°РЅРёС†С‹ С‚Р°РєРѕРІС‹, С‡С‚Рѕ РєР°РјРµСЂР° РЅРµ РІР»РµР·РµС‚ РІ СЌРєСЂР°РЅ, С‚Рѕ РїСЂР°РІРІР°СЏ Рё РЅРёР¶РЅСЏСЏ Р±СѓРґСѓС‚ СЃРґРІРёРЅСѓС‚С‹
 void CameraSetBounds(float left, float right, float top, float bottom)
 {
 	CAMERA_LEFT_BOUND = left;
@@ -167,7 +167,7 @@ void CameraSetBounds(float left, float right, float top, float bottom)
 	if (bottom - top < cfg.scr_height) bottom = top + cfg.scr_height;
 }
 
-// Возвращает в x, y сдвиг относительно объекта, к которому прицпленеа камера
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РІ x, y СЃРґРІРёРі РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РѕР±СЉРµРєС‚Р°, Рє РєРѕС‚РѕСЂРѕРјСѓ РїСЂРёС†РїР»РµРЅРµР° РєР°РјРµСЂР°
 void GetCameraAttachedFocusShift(float& x, float& y)
 {
 	if (attached_object)
@@ -207,11 +207,11 @@ void GetCameraAttachedFocusShift(float& x, float& y)
 	}
 }
 
-// Обновляет положение камеры
+// РћР±РЅРѕРІР»СЏРµС‚ РїРѕР»РѕР¶РµРЅРёРµ РєР°РјРµСЂС‹
 void CameraUpdatePosition()
 {
-	// Мы сдвигаем систему координат OpenGL - в экран попадает то, что
-	// мы должны увидеть.
+	// РњС‹ СЃРґРІРёРіР°РµРј СЃРёСЃС‚РµРјСѓ РєРѕРѕСЂРґРёРЅР°С‚ OpenGL - РІ СЌРєСЂР°РЅ РїРѕРїР°РґР°РµС‚ С‚Рѕ, С‡С‚Рѕ
+	// РјС‹ РґРѕР»Р¶РЅС‹ СѓРІРёРґРµС‚СЊ.
 
 	//glTranslated( floor(CAMERA_OFF_X+0.5f)+0.375, floor(CAMERA_OFF_Y+0.5f)+0.375, 0);
 	glTranslated( CAMERA_OFF_X+0.375, CAMERA_OFF_Y+0.375, 0);

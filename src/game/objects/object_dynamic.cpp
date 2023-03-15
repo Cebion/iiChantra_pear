@@ -109,7 +109,7 @@ void ObjDynamic::PhysProcess()
 	this->ClearOnPlane();
 	if ( CheckSuspectedPlane() )
 	{
-		// Ñäâèãàåì ñ îáúåêòîì íà êîòîðîì ñòîèì. Åñëè ñòîèì íà ñêëîíå, ñþäà íå ïîïàäàåì.
+		// Ð¡Ð´Ð²Ð¸Ð³Ð°ÐµÐ¼ Ñ Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð¼ Ð½Ð° ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¼ ÑÑ‚Ð¾Ð¸Ð¼. Ð•ÑÐ»Ð¸ ÑÑ‚Ð¾Ð¸Ð¼ Ð½Ð° ÑÐºÐ»Ð¾Ð½Ðµ, ÑÑŽÐ´Ð° Ð½Ðµ Ð¿Ð¾Ð¿Ð°Ð´Ð°ÐµÐ¼.
 		if (suspected_plane->IsDynamic()) 
 		{
 			this->aabb.p += ((ObjDynamic*)suspected_plane)->vel + 0.5f * ((ObjDynamic*)suspected_plane)->acc;
@@ -121,17 +121,17 @@ void ObjDynamic::PhysProcess()
 	}
 	else 
 	{
-		//Åñëè ýòî ñêëîí, òî ìû ìîæåì áûòü âíóòðè íåãî, íî íå íà í¸ì, òàê ÷òî íå òðîãàåì
+		//Ð•ÑÐ»Ð¸ ÑÑ‚Ð¾ ÑÐºÐ»Ð¾Ð½, Ñ‚Ð¾ Ð¼Ñ‹ Ð¼Ð¾Ð¶ÐµÐ¼ Ð±Ñ‹Ñ‚ÑŒ Ð²Ð½ÑƒÑ‚Ñ€Ð¸ Ð½ÐµÐ³Ð¾, Ð½Ð¾ Ð½Ðµ Ð½Ð° Ð½Ñ‘Ð¼, Ñ‚Ð°Ðº Ñ‡Ñ‚Ð¾ Ð½Ðµ Ñ‚Ñ€Ð¾Ð³Ð°ÐµÐ¼
 		if (suspected_plane && suspected_plane->slopeType == 0) 
 		{
-			// Íå ñêëîí è íå ñòîèì
+			// ÐÐµ ÑÐºÐ»Ð¾Ð½ Ð¸ Ð½Ðµ ÑÑ‚Ð¾Ð¸Ð¼
 			this->suspected_plane = NULL;
 		}
-		//Ñàìîå âðåìÿ ïðîâåðèòü, íå çàøëè ëè ìû ñðàçó íà äðóãóþ ïîâåðõíîñòü.
+		//Ð¡Ð°Ð¼Ð¾Ðµ Ð²Ñ€ÐµÐ¼Ñ Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ, Ð½Ðµ Ð·Ð°ÑˆÐ»Ð¸ Ð»Ð¸ Ð¼Ñ‹ ÑÑ€Ð°Ð·Ñƒ Ð½Ð° Ð´Ñ€ÑƒÐ³ÑƒÑŽ Ð¿Ð¾Ð²ÐµÑ€Ñ…Ð½Ð¾ÑÑ‚ÑŒ.
 		CheckUnderlyngPlane();
 	}
 
-	// Ãðàâèòèðóåì òîëüêî åñëè îáúåêò íå íà ïëîñêîñòè
+	// Ð“Ñ€Ð°Ð²Ð¸Ñ‚Ð¸Ñ€ÑƒÐµÐ¼ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ ÐµÑÐ»Ð¸ Ð¾Ð±ÑŠÐµÐºÑ‚ Ð½Ðµ Ð½Ð° Ð¿Ð»Ð¾ÑÐºÐ¾ÑÑ‚Ð¸
 	if (!IsOnPlane())
 	{
 		vel += acc + gravity;
@@ -144,12 +144,12 @@ void ObjDynamic::PhysProcess()
 		aabb.p.x += env->gravity_bonus.x;
 	}
 
-	//Åñëè ñòîÿëè íà ñêëîíå, òî ñêîðîñòü íàïðàâëåíà ïî íåìó.
+	//Ð•ÑÐ»Ð¸ ÑÑ‚Ð¾ÑÐ»Ð¸ Ð½Ð° ÑÐºÐ»Ð¾Ð½Ðµ, Ñ‚Ð¾ ÑÐºÐ¾Ñ€Ð¾ÑÑ‚ÑŒ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð° Ð¿Ð¾ Ð½ÐµÐ¼Ñƒ.
 	if ( suspected_plane && SolveVSSlope(this->aabb, suspected_plane, Vector2(0,1)) && (!IsNear(old_v.x, 0, 0.5)) && !(suspected_plane->IsOneSide() && this->IsDropping()) )
 	{
 		//double angle = atan( suspected_plane->slopeType == 1 ? suspected_plane->aabb.H/suspected_plane->aabb.W : suspected_plane->aabb.W/suspected_plane->aabb.H ) + (vel.x < 0 ? 2*PI : 0);
 		//vel = Vector2(vel.x*cos( angle ) + vel.y*sin(angle), -vel.x*sin(angle) + vel.x*cos(angle));
-		//Íî åñëè íå âèäíî ðàçíèöû, òî çà÷åì ñ÷èòàòü áîëüøå?
+		//ÐÐ¾ ÐµÑÐ»Ð¸ Ð½Ðµ Ð²Ð¸Ð´Ð½Ð¾ Ñ€Ð°Ð·Ð½Ð¸Ñ†Ñ‹, Ñ‚Ð¾ Ð·Ð°Ñ‡ÐµÐ¼ ÑÑ‡Ð¸Ñ‚Ð°Ñ‚ÑŒ Ð±Ð¾Ð»ÑŒÑˆÐµ?
 		float next_x = aabb.p.x+old_v.x+acc.x/2;
 		float shift = GetSlopeTop(suspected_plane, next_x) - GetSlopeTop(suspected_plane, aabb.p.x);
 		if (shift > 0) 
@@ -187,7 +187,7 @@ void ObjDynamic::PhysProcess()
 	//old_env = env;
 	//env = default_environment;
 
-	// Ñêàæè íåò èäåàëüíûì ãåîìåòðè÷åñêèì ôèãóðàì
+	// Ð¡ÐºÐ°Ð¶Ð¸ Ð½ÐµÑ‚ Ð¸Ð´ÐµÐ°Ð»ÑŒÐ½Ñ‹Ð¼ Ð³ÐµÐ¾Ð¼ÐµÑ‚Ñ€Ð¸Ñ‡ÐµÑÐºÐ¸Ð¼ Ñ„Ð¸Ð³ÑƒÑ€Ð°Ð¼
 	assert(aabb.H != 0);
 	assert(aabb.W != 0);
 
@@ -199,11 +199,11 @@ void ObjDynamic::PhysProcess()
 		asap->UpdateObject(sap_handle, aabb.GetASAP_AABB());
 	}
 
-	// Ïðîåâðÿåì, åñòü ëè ïëîñêîñòü ïîä îáúåêòîì.
+	// ÐŸÑ€Ð¾ÐµÐ²Ñ€ÑÐµÐ¼, ÐµÑÑ‚ÑŒ Ð»Ð¸ Ð¿Ð»Ð¾ÑÐºÐ¾ÑÑ‚ÑŒ Ð¿Ð¾Ð´ Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð¼.
 	//CheckUnderlyngPlane();
 }
 
-// Ïðîâåðêà íàëè÷èÿ ïëîñêîñòè "ïîä"
+// ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð°Ð»Ð¸Ñ‡Ð¸Ñ Ð¿Ð»Ð¾ÑÐºÐ¾ÑÑ‚Ð¸ "Ð¿Ð¾Ð´"
 using namespace Opcode;
 
 void ObjDynamic::CheckUnderlyngPlane()
@@ -260,23 +260,23 @@ void ObjDynamic::CheckUnderlyngPlane()
 
 void ObjDynamic::DropShadow()
 {
-	//Åñëè òåíè îòêëþ÷åíû - íè÷åãî íå äåëàòü.
+	//Ð•ÑÐ»Ð¸ Ñ‚ÐµÐ½Ð¸ Ð¾Ñ‚ÐºÐ»ÑŽÑ‡ÐµÐ½Ñ‹ - Ð½Ð¸Ñ‡ÐµÐ³Ð¾ Ð½Ðµ Ð´ÐµÐ»Ð°Ñ‚ÑŒ.
 	if ( !cfg.shadows )
 		return;
 
-	//Ñïÿùèå îáúåêòû íå îòáðàñûâàþò òåíè.
+	//Ð¡Ð¿ÑÑ‰Ð¸Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ñ‹ Ð½Ðµ Ð¾Ñ‚Ð±Ñ€Ð°ÑÑ‹Ð²Ð°ÑŽÑ‚ Ñ‚ÐµÐ½Ð¸.
 	if ( this->IsSleep() )
 		return;
 
-	//Îáúåêòû, íå îòáðàñûâàþùèå òåíü íàñ íå èíòåðåñóþò.
+	//ÐžÐ±ÑŠÐµÐºÑ‚Ñ‹, Ð½Ðµ Ð¾Ñ‚Ð±Ñ€Ð°ÑÑ‹Ð²Ð°ÑŽÑ‰Ð¸Ðµ Ñ‚ÐµÐ½ÑŒ Ð½Ð°Ñ Ð½Ðµ Ð¸Ð½Ñ‚ÐµÑ€ÐµÑÑƒÑŽÑ‚.
 	if ( !this->drops_shadow )
 		return;
 
-	//Íàñ íå èíòåðåñóþò òåíè, êîòîðûå ìû íå ìîæåì óâèäåòü.
+	//ÐÐ°Ñ Ð½Ðµ Ð¸Ð½Ñ‚ÐµÑ€ÐµÑÑƒÑŽÑ‚ Ñ‚ÐµÐ½Ð¸, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð¼Ñ‹ Ð½Ðµ Ð¼Ð¾Ð¶ÐµÐ¼ ÑƒÐ²Ð¸Ð´ÐµÑ‚ÑŒ.
 	if ( this->aabb.Left() > CAMERA_RIGHT || this->aabb.Right() < CAMERA_LEFT ) 
 		return;
 
-	//Åñëè ìû ñòîèì íà ïîâåðõíîñòè - òåíü ïðÿìî ïîä íîãàìè.
+	//Ð•ÑÐ»Ð¸ Ð¼Ñ‹ ÑÑ‚Ð¾Ð¸Ð¼ Ð½Ð° Ð¿Ð¾Ð²ÐµÑ€Ñ…Ð½Ð¾ÑÑ‚Ð¸ - Ñ‚ÐµÐ½ÑŒ Ð¿Ñ€ÑÐ¼Ð¾ Ð¿Ð¾Ð´ Ð½Ð¾Ð³Ð°Ð¼Ð¸.
 	if ( this->IsOnPlane() )
 	{
 		float y = this->aabb.Bottom();

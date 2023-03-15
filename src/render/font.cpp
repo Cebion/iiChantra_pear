@@ -14,17 +14,17 @@ extern ResourceMgr<Texture> * textureMgr;
 
 //////////////////////////////////////////////////////////////////////////
 
-map<string, Font*> fonts;	// Загруженные шрифты
+map<string, Font*> fonts;	// Р—Р°РіСЂСѓР¶РµРЅРЅС‹Рµ С€СЂРёС„С‚С‹
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
 #ifdef WIN32
-// Загрузка шрифта Windows
-// in_name - имя шрифта (например 'Courier New')
-// height - высота
-// weight (400 - NORMAL, 700 - BOLD, и т. д...)
-// out_name - шрифт будет использоваться в игре под таким именем
+// Р—Р°РіСЂСѓР·РєР° С€СЂРёС„С‚Р° Windows
+// in_name - РёРјСЏ С€СЂРёС„С‚Р° (РЅР°РїСЂРёРјРµСЂ 'Courier New')
+// height - РІС‹СЃРѕС‚Р°
+// weight (400 - NORMAL, 700 - BOLD, Рё С‚. Рґ...)
+// out_name - С€СЂРёС„С‚ Р±СѓРґРµС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РІ РёРіСЂРµ РїРѕРґ С‚Р°РєРёРј РёРјРµРЅРµРј
 bool LoadWindowsFont(const char* in_name, BYTE height, long weight, const char* out_name)
 {
 	if(!in_name || !out_name)
@@ -35,7 +35,7 @@ bool LoadWindowsFont(const char* in_name, BYTE height, long weight, const char* 
 
 	if (FontByName(out_name))
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Уже есть.");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РЈР¶Рµ РµСЃС‚СЊ.");
 		return false;
 	}
 
@@ -58,9 +58,9 @@ bool LoadWindowsFont(const char* in_name, BYTE height, long weight, const char* 
 }
 #endif // WIN32
 
-// Загрузка шрифта из текстуры
-// in_name - имя файла описания шрифта
-// out_name - шрифт будет использоваться в игре под таким именем
+// Р—Р°РіСЂСѓР·РєР° С€СЂРёС„С‚Р° РёР· С‚РµРєСЃС‚СѓСЂС‹
+// in_name - РёРјСЏ С„Р°Р№Р»Р° РѕРїРёСЃР°РЅРёСЏ С€СЂРёС„С‚Р°
+// out_name - С€СЂРёС„С‚ Р±СѓРґРµС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РІ РёРіСЂРµ РїРѕРґ С‚Р°РєРёРј РёРјРµРЅРµРј
 bool LoadTextureFont(const char* in_name, const char* out_name)
 {
 	if(!in_name || !out_name)
@@ -71,7 +71,7 @@ bool LoadTextureFont(const char* in_name, const char* out_name)
 
 	if (FontByName(out_name))
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Уже есть.");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РЈР¶Рµ РµСЃС‚СЊ.");
 		return false;
 	}
 
@@ -95,7 +95,7 @@ bool LoadTextureFont(const char* in_name, const char* out_name)
 	return true;
 }
 
-// Перезагружает все шрифты.
+// РџРµСЂРµР·Р°РіСЂСѓР¶Р°РµС‚ РІСЃРµ С€СЂРёС„С‚С‹.
 void RecoverFonts()
 {
 	map<string, Font*>::iterator it;
@@ -170,8 +170,8 @@ WinFont::~WinFont()
 	glDeleteLists(this->base, FONT_BASE_COUNT);
 }
 
-// Загрузка шрифта.
-// Предварительно надо задать in_name, height, weight
+// Р—Р°РіСЂСѓР·РєР° С€СЂРёС„С‚Р°.
+// РџСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ РЅР°РґРѕ Р·Р°РґР°С‚СЊ in_name, height, weight
 bool WinFont::Load()
 {
 	this->font = CreateFont(-this->height, 0,	0, 0, this->weight, FALSE, FALSE, FALSE,
@@ -198,7 +198,7 @@ void WinFont::Recover()
 	wglUseFontBitmaps(/*hDC*/0, 0, FONT_BASE_COUNT, this->base);
 }
 
-// Подготовка строки к выводу на экран
+// РџРѕРґРіРѕС‚РѕРІРєР° СЃС‚СЂРѕРєРё Рє РІС‹РІРѕРґСѓ РЅР° СЌРєСЂР°РЅ
 void WinFont::Print(const char *text, ...)
 {
 	if (text == NULL)
@@ -214,7 +214,7 @@ void WinFont::Print(const char *text, ...)
 	delete [] temp;
 }
 
-// Вывод на экран строки
+// Р’С‹РІРѕРґ РЅР° СЌРєСЂР°РЅ СЃС‚СЂРѕРєРё
 void WinFont::_Print(const char *text)
 {
 	glDisable(GL_TEXTURE_2D);
@@ -235,7 +235,7 @@ CFont::CFont()
 	FontImageName = NULL;
 	dist = CFONT_DEFAULT_DISTANCE;
 	tClr = RGBAf(1.0f, 1.0f, 1.0f, 1.0f);
-	// TODO: забить нулями bbox
+	// TODO: Р·Р°Р±РёС‚СЊ РЅСѓР»СЏРјРё bbox
 }
 
 CFont::~CFont()
@@ -244,8 +244,8 @@ CFont::~CFont()
 		delete [] FontImageName;
 }
 
-// Загрузка шрифта из файла
-// Предварительно надо задать filename
+// Р—Р°РіСЂСѓР·РєР° С€СЂРёС„С‚Р° РёР· С„Р°Р№Р»Р°
+// РџСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ РЅР°РґРѕ Р·Р°РґР°С‚СЊ filename
 bool CFont::Load()
 {
 	if (filename == "")
@@ -268,8 +268,8 @@ bool CFont::Load()
 	file.Read(bbox, sizeof(bbox));
 	scalar y;
 
-	// TODO: Этот цикл - костыль. Потому что редактор шрифтов и готовые шрифты
-	// размечены как размечены, легче конвернтуть во время загрузки.
+	// TODO: Р­С‚РѕС‚ С†РёРєР» - РєРѕСЃС‚С‹Р»СЊ. РџРѕС‚РѕРјСѓ С‡С‚Рѕ СЂРµРґР°РєС‚РѕСЂ С€СЂРёС„С‚РѕРІ Рё РіРѕС‚РѕРІС‹Рµ С€СЂРёС„С‚С‹
+	// СЂР°Р·РјРµС‡РµРЅС‹ РєР°Рє СЂР°Р·РјРµС‡РµРЅС‹, Р»РµРіС‡Рµ РєРѕРЅРІРµСЂРЅС‚СѓС‚СЊ РІРѕ РІСЂРµРјСЏ Р·Р°РіСЂСѓР·РєРё.
 	for (size_t i = 0; i < sizeof(bbox) / sizeof(bbox[0]); i++)
 	{
 		y = (scalar)tex->height - bbox[i].Max.y;
@@ -332,7 +332,7 @@ void CFont::_Print(const UCHAR *text, int cursor)
 		c = *t - 32;
 		if ( pos == cursor )
 		{
-			//TODO:надо как-то получше это всё.
+			//TODO:РЅР°РґРѕ РєР°Рє-С‚Рѕ РїРѕР»СѓС‡С€Рµ СЌС‚Рѕ РІСЃС‘.
 			if ( current_time % 1000 > 500 ) RenderSprite(x, y, z, bbox['|'-32].Min.x, bbox['|'-32].Min.y, bbox['|'-32].Max.x, bbox['|'-32].Max.y, tex, false, tClr);
 			x +=width['|'-32] + dist;
 			RenderSprite(x, y, z, bbox[c].Min.x, bbox[c].Min.y, bbox[c].Max.x, bbox[c].Max.y, tex, false, tClr);
@@ -369,16 +369,16 @@ void CFont::PrintMultiline( const char *text, CAABB &area, int cursor )
 	if (text == NULL)
 		return;
 
-	size_t br = 1;				// Номер текущего символа.
+	size_t br = 1;				// РќРѕРјРµСЂ С‚РµРєСѓС‰РµРіРѕ СЃРёРјРІРѕР»Р°.
 	size_t back = 0;			
 	int x_size = 0;
 	int y_size = 0;
-	float current_shift = 0;	// Сдвиг блока текста вправо. Позиция, скотрой начинаем рисовать
+	float current_shift = 0;	// РЎРґРІРёРі Р±Р»РѕРєР° С‚РµРєСЃС‚Р° РІРїСЂР°РІРѕ. РџРѕР·РёС†РёСЏ, СЃРєРѕС‚СЂРѕР№ РЅР°С‡РёРЅР°РµРј СЂРёСЃРѕРІР°С‚СЊ
 	float old_x = this->p.x;
 	float old_y = this->p.y;
 	size_t max_br;
 
-	size_t left_text_len = 0;	// Длина строки для печати
+	size_t left_text_len = 0;	// Р”Р»РёРЅР° СЃС‚СЂРѕРєРё РґР»СЏ РїРµС‡Р°С‚Рё
 
 	ControlSeqParser::CSeqType seq_type =  ControlSeqParser::ENone;
 	size_t seq_shift = 0;
@@ -404,7 +404,7 @@ void CFont::PrintMultiline( const char *text, CAABB &area, int cursor )
 		{
 		case ControlSeqParser::EColor:
 			{
-				// Печатаем левую часть
+				// РџРµС‡Р°С‚Р°РµРј Р»РµРІСѓСЋ С‡Р°СЃС‚СЊ
 				if (br-back-1 > 0)
 				{
 					memcpy(temp, text + back, left_text_len);
@@ -425,9 +425,9 @@ void CFont::PrintMultiline( const char *text, CAABB &area, int cursor )
 		default:
 			{
 				max_br = br;
-				while ( text[br-1] != 32 && br-1 > back && br != text_len+1  )	//Пытаемся перенести по пробелу
+				while ( text[br-1] != 32 && br-1 > back && br != text_len+1  )	//РџС‹С‚Р°РµРјСЃСЏ РїРµСЂРµРЅРµСЃС‚Рё РїРѕ РїСЂРѕР±РµР»Сѓ
 					br--;
-				if ( br-1 == back ) br = max_br; //Пробелов нет.
+				if ( br-1 == back ) br = max_br; //РџСЂРѕР±РµР»РѕРІ РЅРµС‚.
 				
 				left_text_len = br-seq_shift-back-1;
 			}
@@ -448,7 +448,7 @@ void CFont::PrintMultiline( const char *text, CAABB &area, int cursor )
 		current_shift = 0;
 
 		back = br-1;
-		while ( text[back] == 32 && back < text_len )	//Отрезаем пробелы в начале после переноса
+		while ( text[back] == 32 && back < text_len )	//РћС‚СЂРµР·Р°РµРј РїСЂРѕР±РµР»С‹ РІ РЅР°С‡Р°Р»Рµ РїРѕСЃР»Рµ РїРµСЂРµРЅРѕСЃР°
 		{
 			back++;
 			br++;
@@ -518,32 +518,32 @@ int CFont::GetStringHeightEx( UINT t1, UINT t2, const char *text )
 }
 
 
-// В этом неймспасе находится код для выделения управляющих последовательностей для отрисовки строк.
-// Выделение производится с помощью автомата.
+// Р’ СЌС‚РѕРј РЅРµР№РјСЃРїР°СЃРµ РЅР°С…РѕРґРёС‚СЃСЏ РєРѕРґ РґР»СЏ РІС‹РґРµР»РµРЅРёСЏ СѓРїСЂР°РІР»СЏСЋС‰РёС… РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚РµР№ РґР»СЏ РѕС‚СЂРёСЃРѕРІРєРё СЃС‚СЂРѕРє.
+// Р’С‹РґРµР»РµРЅРёРµ РїСЂРѕРёР·РІРѕРґРёС‚СЃСЏ СЃ РїРѕРјРѕС‰СЊСЋ Р°РІС‚РѕРјР°С‚Р°.
 namespace ControlSeqParser
 {
-	// Схема автомата:
+	// РЎС…РµРјР° Р°РІС‚РѕРјР°С‚Р°:
 	//		[0]
 	//	'/'  |
 	//		[1]
 	//	'c'	/ \ 'n'
 	//	  [2] [3]
 	//
-	const int states_count = 5;				// Коилчство состояний. Состояние states_count-1 всегда - ошибка.
-	const size_t classes_count = 4;			// Количество классов символов
-	const CSeqType seqs[states_count] = {ENone, ENone, EColor, ENewLine, ENone};	// Состветсиве номеров состояний типам контрольных последовательностей
-	const bool end_state[states_count] = {false, false, true, true, false};		// Окончательность состяния
-	const char classes[classes_count] = {'/', 'c', 'n', '\0'};					// Классы
-	const int table[states_count][classes_count] = {	// Таблица переходов автомата. Строки - текущие состояния, столбцы - классы, в таблице - номер следующего состояния.
+	const int states_count = 5;				// РљРѕРёР»С‡СЃС‚РІРѕ СЃРѕСЃС‚РѕСЏРЅРёР№. РЎРѕСЃС‚РѕСЏРЅРёРµ states_count-1 РІСЃРµРіРґР° - РѕС€РёР±РєР°.
+	const size_t classes_count = 4;			// РљРѕР»РёС‡РµСЃС‚РІРѕ РєР»Р°СЃСЃРѕРІ СЃРёРјРІРѕР»РѕРІ
+	const CSeqType seqs[states_count] = {ENone, ENone, EColor, ENewLine, ENone};	// РЎРѕСЃС‚РІРµС‚СЃРёРІРµ РЅРѕРјРµСЂРѕРІ СЃРѕСЃС‚РѕСЏРЅРёР№ С‚РёРїР°Рј РєРѕРЅС‚СЂРѕР»СЊРЅС‹С… РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚РµР№
+	const bool end_state[states_count] = {false, false, true, true, false};		// РћРєРѕРЅС‡Р°С‚РµР»СЊРЅРѕСЃС‚СЊ СЃРѕСЃС‚СЏРЅРёСЏ
+	const char classes[classes_count] = {'/', 'c', 'n', '\0'};					// РљР»Р°СЃСЃС‹
+	const int table[states_count][classes_count] = {	// РўР°Р±Р»РёС†Р° РїРµСЂРµС…РѕРґРѕРІ Р°РІС‚РѕРјР°С‚Р°. РЎС‚СЂРѕРєРё - С‚РµРєСѓС‰РёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ, СЃС‚РѕР»Р±С†С‹ - РєР»Р°СЃСЃС‹, РІ С‚Р°Р±Р»РёС†Рµ - РЅРѕРјРµСЂ СЃР»РµРґСѓСЋС‰РµРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ.
 		{1, 4, 4, 4},
 		{4, 2, 3, 4},
 		{4, 4, 4, 4},
 		{4, 4, 4, 4},
 		{4, 4, 4, 4} };
 	
-	const size_t seq_len[] = {0, 8, 2};		// Длины контрольных последовательностей для сдвига в строке. Индексы сосответствуют CSeqType.
+	const size_t seq_len[] = {0, 8, 2};		// Р”Р»РёРЅС‹ РєРѕРЅС‚СЂРѕР»СЊРЅС‹С… РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚РµР№ РґР»СЏ СЃРґРІРёРіР° РІ СЃС‚СЂРѕРєРµ. РРЅРґРµРєСЃС‹ СЃРѕСЃРѕС‚РІРµС‚СЃС‚РІСѓСЋС‚ CSeqType.
 
-	// Возвращает номер класса символа
+	// Р’РѕР·РІСЂР°С‰Р°РµС‚ РЅРѕРјРµСЂ РєР»Р°СЃСЃР° СЃРёРјРІРѕР»Р°
 	size_t GetClass(char c)
 	{
 		for (size_t i = 0; i < classes_count; i++)
@@ -554,8 +554,8 @@ namespace ControlSeqParser
 		return classes_count-1;
 	}
 
-	// Код автомата, выделяет последовательность и проверяет, чтоы она входила по длине до конца строки
-	// В shift возвращает номер следующего после последовательности символа.
+	// РљРѕРґ Р°РІС‚РѕРјР°С‚Р°, РІС‹РґРµР»СЏРµС‚ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ Рё РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚РѕС‹ РѕРЅР° РІС…РѕРґРёР»Р° РїРѕ РґР»РёРЅРµ РґРѕ РєРѕРЅС†Р° СЃС‚СЂРѕРєРё
+	// Р’ shift РІРѕР·РІСЂР°С‰Р°РµС‚ РЅРѕРјРµСЂ СЃР»РµРґСѓСЋС‰РµРіРѕ РїРѕСЃР»Рµ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё СЃРёРјРІРѕР»Р°.
 	CSeqType CheckControlSeq(const char* text, size_t& shift)
 	{
 		shift = 0;
@@ -585,7 +585,7 @@ namespace ControlSeqParser
 		return ENone;
 	}
 
-	// Парсит последовательность задания цвета и заносит в color закодированный цвет
+	// РџР°СЂСЃРёС‚ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ Р·Р°РґР°РЅРёСЏ С†РІРµС‚Р° Рё Р·Р°РЅРѕСЃРёС‚ РІ color Р·Р°РєРѕРґРёСЂРѕРІР°РЅРЅС‹Р№ С†РІРµС‚
 	void GetColor(const char* text, RGBAf& color)
 	{
 		ASSERT(text[0] == '/' && text[1] == 'c');

@@ -47,8 +47,8 @@ void ProcessRayCollision();
 
 //////////////////////////////////////////////////////////////////////////
 
-// Список окружений и объектов, которые, возможно, будут пересекаться в конце хода.
-// Первым идет окружение, вторым - объект.
+// РЎРїРёСЃРѕРє РѕРєСЂСѓР¶РµРЅРёР№ Рё РѕР±СЉРµРєС‚РѕРІ, РєРѕС‚РѕСЂС‹Рµ, РІРѕР·РјРѕР¶РЅРѕ, Р±СѓРґСѓС‚ РїРµСЂРµСЃРµРєР°С‚СЊСЃСЏ РІ РєРѕРЅС†Рµ С…РѕРґР°.
+// РџРµСЂРІС‹Рј РёРґРµС‚ РѕРєСЂСѓР¶РµРЅРёРµ, РІС‚РѕСЂС‹Рј - РѕР±СЉРµРєС‚.
 list<GameObject*> delayed_env_coll;
 
 #ifdef DEBUG_PRINT
@@ -58,7 +58,7 @@ UINT dbgPairsCount = 0;
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-// Тут объявдены callback-и на создание и удаление пар пересечений. Пока что использовались только для отладки.
+// РўСѓС‚ РѕР±СЉСЏРІРґРµРЅС‹ callback-Рё РЅР° СЃРѕР·РґР°РЅРёРµ Рё СѓРґР°Р»РµРЅРёРµ РїР°СЂ РїРµСЂРµСЃРµС‡РµРЅРёР№. РџРѕРєР° С‡С‚Рѕ РёСЃРїРѕР»СЊР·РѕРІР°Р»РёСЃСЊ С‚РѕР»СЊРєРѕ РґР»СЏ РѕС‚Р»Р°РґРєРё.
 //#if defined(DEBUG_SAP_PAIRS_COORDS)
 	#define USE_PAIR_CALLBACK
 //#endif // defined(DEBUG_SAP_PAIRS_COORDS)
@@ -97,13 +97,13 @@ void  OnPairRemove(const void* object0, const void* object1, void* user_data, vo
 ////////////////////////////////////////////////////////////////////////// 
 
 
-// Этот блок код отвечает за то, чтобы никто ничего не делал с SAP в то время, когда 
-// работает функция ProcessCollisions. Если кто-то вызовет asap->DumpPairs или asap->UpdateObject,
-// то почти наверняка изменится содержимаое массива asap->mPairs.mActivePairs или даже его адрес,
-// что привелет к тому, что в ProcessCollisions окажется указатель на устаревший массив.
-// Чтобы этого не произошло, мы "лочим" состояние SAP и запоминаем, что нас просили вызвать 
-// DumpPairs или UpdateObject. Затем, в конце ProcessCollisions мы "разлочим" SAP и 
-// выполним все запросы.
+// Р­С‚РѕС‚ Р±Р»РѕРє РєРѕРґ РѕС‚РІРµС‡Р°РµС‚ Р·Р° С‚Рѕ, С‡С‚РѕР±С‹ РЅРёРєС‚Рѕ РЅРёС‡РµРіРѕ РЅРµ РґРµР»Р°Р» СЃ SAP РІ С‚Рѕ РІСЂРµРјСЏ, РєРѕРіРґР° 
+// СЂР°Р±РѕС‚Р°РµС‚ С„СѓРЅРєС†РёСЏ ProcessCollisions. Р•СЃР»Рё РєС‚Рѕ-С‚Рѕ РІС‹Р·РѕРІРµС‚ asap->DumpPairs РёР»Рё asap->UpdateObject,
+// С‚Рѕ РїРѕС‡С‚Рё РЅР°РІРµСЂРЅСЏРєР° РёР·РјРµРЅРёС‚СЃСЏ СЃРѕРґРµСЂР¶РёРјР°РѕРµ РјР°СЃСЃРёРІР° asap->mPairs.mActivePairs РёР»Рё РґР°Р¶Рµ РµРіРѕ Р°РґСЂРµСЃ,
+// С‡С‚Рѕ РїСЂРёРІРµР»РµС‚ Рє С‚РѕРјСѓ, С‡С‚Рѕ РІ ProcessCollisions РѕРєР°Р¶РµС‚СЃСЏ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СѓСЃС‚Р°СЂРµРІС€РёР№ РјР°СЃСЃРёРІ.
+// Р§С‚РѕР±С‹ СЌС‚РѕРіРѕ РЅРµ РїСЂРѕРёР·РѕС€Р»Рѕ, РјС‹ "Р»РѕС‡РёРј" СЃРѕСЃС‚РѕСЏРЅРёРµ SAP Рё Р·Р°РїРѕРјРёРЅР°РµРј, С‡С‚Рѕ РЅР°СЃ РїСЂРѕСЃРёР»Рё РІС‹Р·РІР°С‚СЊ 
+// DumpPairs РёР»Рё UpdateObject. Р—Р°С‚РµРј, РІ РєРѕРЅС†Рµ ProcessCollisions РјС‹ "СЂР°Р·Р»РѕС‡РёРј" SAP Рё 
+// РІС‹РїРѕР»РЅРёРј РІСЃРµ Р·Р°РїСЂРѕСЃС‹.
 
 bool sapStateLocked = false;
 bool sapStateUpdatePending = false;
@@ -123,7 +123,7 @@ public:
 
 list<UpdateObjInfo> updateObjList;
 
-// Вызывать эту функцию вместо DumpPairs(NULL, NULL, NULL, NULL)
+// Р’С‹Р·С‹РІР°С‚СЊ СЌС‚Сѓ С„СѓРЅРєС†РёСЋ РІРјРµСЃС‚Рѕ DumpPairs(NULL, NULL, NULL, NULL)
 void UpdateSAPState()
 {
 	if (sapStateLocked)
@@ -141,7 +141,7 @@ void UpdateSAPState()
 	sapStateUpdatePending = false;
 }
 
-// Вызывать эту функцию вместо UpdateObject
+// Р’С‹Р·С‹РІР°С‚СЊ СЌС‚Сѓ С„СѓРЅРєС†РёСЋ РІРјРµСЃС‚Рѕ UpdateObject
 void UpdateSAPObject(UINT sap_handle, const ASAP_AABB& aabb)
 {
 	if (sapStateLocked)
@@ -176,7 +176,7 @@ void BatchSAPObjUpdate()
 
 //////////////////////////////////////////////////////////////////////////
 
-// Обработка столкновений
+// РћР±СЂР°Р±РѕС‚РєР° СЃС‚РѕР»РєРЅРѕРІРµРЅРёР№
 void ProcessCollisions()
 {
 	Opcode::ASAP_Pair* pairs;
@@ -197,7 +197,7 @@ void ProcessCollisions()
 	if (!editorAreaSelectNeeded) return;
 #endif // MAP_EDITOR
 
-	ASSERT(!sapStateLocked);	// Если упало тут, то значит как-то получился вложенный вызов ProcessCollisions
+	ASSERT(!sapStateLocked);	// Р•СЃР»Рё СѓРїР°Р»Рѕ С‚СѓС‚, С‚Рѕ Р·РЅР°С‡РёС‚ РєР°Рє-С‚Рѕ РїРѕР»СѓС‡РёР»СЃСЏ РІР»РѕР¶РµРЅРЅС‹Р№ РІС‹Р·РѕРІ ProcessCollisions
 	sapStateLocked = true;
 
 #ifdef USE_PAIR_CALLBACK
@@ -220,7 +220,7 @@ void ProcessCollisions()
 		{
 			odArr[i*2 + 0] = (ObjPhysic*)pairs[i].object0;
 			odArr[i*2 + 1] = (ObjPhysic*)pairs[i].object1;
-			// Решение конкретной пары столкновений
+			// Р РµС€РµРЅРёРµ РєРѕРЅРєСЂРµС‚РЅРѕР№ РїР°СЂС‹ СЃС‚РѕР»РєРЅРѕРІРµРЅРёР№
 			SolveCollision(odArr[i*2 + 0], odArr[i*2 + 1]);
 			if (isNewGameCreated)
 			{
@@ -235,7 +235,7 @@ void ProcessCollisions()
 		for(UINT i = 0, j = 0; i < pairsCount * 2; i+=2)
 		{
 			j = i+1;
-			// Обновление положения объектов после того, как их столкновение было решено
+			// РћР±РЅРѕРІР»РµРЅРёРµ РїРѕР»РѕР¶РµРЅРёСЏ РѕР±СЉРµРєС‚РѕРІ РїРѕСЃР»Рµ С‚РѕРіРѕ, РєР°Рє РёС… СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ Р±С‹Р»Рѕ СЂРµС€РµРЅРѕ
 			asap->UpdateObject(odArr[i]->sap_handle, odArr[i]->aabb.GetASAP_AABB() );
 			asap->UpdateObject(odArr[j]->sap_handle, odArr[j]->aabb.GetASAP_AABB() );
 		}
@@ -262,13 +262,13 @@ void ProcessCollisions()
 
 //////////////////////////////////////////////////////////////////////////
 
-// Массив для указателй объектов, с котрыми луч пересекся
+// РњР°СЃСЃРёРІ РґР»СЏ СѓРєР°Р·Р°С‚РµР»Р№ РѕР±СЉРµРєС‚РѕРІ, СЃ РєРѕС‚СЂС‹РјРё Р»СѓС‡ РїРµСЂРµСЃРµРєСЃСЏ
 ObjPhysic* arRayObjIntersections[maxRayIntersectionsCount];
-// Массив расстояний от начала луча до точек пересечения луча с обхъектами
+// РњР°СЃСЃРёРІ СЂР°СЃСЃС‚РѕСЏРЅРёР№ РѕС‚ РЅР°С‡Р°Р»Р° Р»СѓС‡Р° РґРѕ С‚РѕС‡РµРє РїРµСЂРµСЃРµС‡РµРЅРёСЏ Р»СѓС‡Р° СЃ РѕР±С…СЉРµРєС‚Р°РјРё
 float arRayObjIntersectionsDistances[maxRayIntersectionsCount];
 
-// В это функции идет заполнение массивов объектов, с которыми луч пересекатеся, 
-// и расстояний до них.
+// Р’ СЌС‚Рѕ С„СѓРЅРєС†РёРё РёРґРµС‚ Р·Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІРѕРІ РѕР±СЉРµРєС‚РѕРІ, СЃ РєРѕС‚РѕСЂС‹РјРё Р»СѓС‡ РїРµСЂРµСЃРµРєР°С‚РµСЃСЏ, 
+// Рё СЂР°СЃСЃС‚РѕСЏРЅРёР№ РґРѕ РЅРёС….
 UINT GetRayIntersections(bool dir, scalar posFirstCoord, scalar limit, 
 			  AxisIndex fa, AxisIndex sa, ObjRay* ray) 
 {
@@ -282,29 +282,29 @@ UINT GetRayIntersections(bool dir, scalar posFirstCoord, scalar limit,
 	assert(current->mValue == (dir ? MIN_FLOAT : MAX_FLOAT));
 
 	const Opcode::ASAP_Box* object = NULL;
-	const Opcode::ASAP_EndPoint* anotherEP;				// Это будет точка, противоположная найденной на firstAxis
-	const Opcode::ASAP_EndPoint *minEP_SA, *maxEP_SA;	// Это точки на secondAxis
+	const Opcode::ASAP_EndPoint* anotherEP;				// Р­С‚Рѕ Р±СѓРґРµС‚ С‚РѕС‡РєР°, РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅР°СЏ РЅР°Р№РґРµРЅРЅРѕР№ РЅР° firstAxis
+	const Opcode::ASAP_EndPoint *minEP_SA, *maxEP_SA;	// Р­С‚Рѕ С‚РѕС‡РєРё РЅР° secondAxis
 	scalar leftVal, rightVal, topVal, bottomVal;
 
-	// В принципе, постоянный мемсет, кажется, не нужен. Все равно мы перебиваем создержимое с самого начала
-	// и потом читаем ровно столько, сколько забили.
+	// Р’ РїСЂРёРЅС†РёРїРµ, РїРѕСЃС‚РѕСЏРЅРЅС‹Р№ РјРµРјСЃРµС‚, РєР°Р¶РµС‚СЃСЏ, РЅРµ РЅСѓР¶РµРЅ. Р’СЃРµ СЂР°РІРЅРѕ РјС‹ РїРµСЂРµР±РёРІР°РµРј СЃРѕР·РґРµСЂР¶РёРјРѕРµ СЃ СЃР°РјРѕРіРѕ РЅР°С‡Р°Р»Р°
+	// Рё РїРѕС‚РѕРј С‡РёС‚Р°РµРј СЂРѕРІРЅРѕ СЃС‚РѕР»СЊРєРѕ, СЃРєРѕР»СЊРєРѕ Р·Р°Р±РёР»Рё.
 	//memset(arRayObjIntersections, 0, sizeof(arRayObjIntersections));
 	//memset(arRayObjIntersectionsDistances, 0, sizeof(arRayObjIntersectionsDistances));
 	UINT intersCount = 0;
 	Vector2 intersPoint;
 
-	// Далее идет перебор точек на оси firstAxis, берутся объекты и проверяется их пересечение с лучом
+	// Р”Р°Р»РµРµ РёРґРµС‚ РїРµСЂРµР±РѕСЂ С‚РѕС‡РµРє РЅР° РѕСЃРё firstAxis, Р±РµСЂСѓС‚СЃСЏ РѕР±СЉРµРєС‚С‹ Рё РїСЂРѕРІРµСЂСЏРµС‚СЃСЏ РёС… РїРµСЂРµСЃРµС‡РµРЅРёРµ СЃ Р»СѓС‡РѕРј
 	if (dir)
 	{
-		// Движемся вправо/вниз
+		// Р”РІРёР¶РµРјСЃСЏ РІРїСЂР°РІРѕ/РІРЅРёР·
 
-		// Отбрасываем те, что слева
-		// TODO: тут бы бинарный поиск, а не линейный
+		// РћС‚Р±СЂР°СЃС‹РІР°РµРј С‚Рµ, С‡С‚Рѕ СЃР»РµРІР°
+		// TODO: С‚СѓС‚ Р±С‹ Р±РёРЅР°СЂРЅС‹Р№ РїРѕРёСЃРє, Р° РЅРµ Р»РёРЅРµР№РЅС‹Р№
 		while((++current)->mValue < posFirstCoord);
 
 		--current;
 
-		// Ищем пересечения
+		// РС‰РµРј РїРµСЂРµСЃРµС‡РµРЅРёСЏ
 		while( (++current)->mValue < limit && intersCount < maxRayIntersectionsCount )
 		{
 			object = boxes + current->GetOwner();
@@ -314,7 +314,7 @@ UINT GetRayIntersections(bool dir, scalar posFirstCoord, scalar limit,
 				anotherEP = firstAxis + object->mMin[fa];
 				if (anotherEP->mValue <= posFirstCoord)
 				{
-					// Случай когда возможно внутри, все равно проверяем
+					// РЎР»СѓС‡Р°Р№ РєРѕРіРґР° РІРѕР·РјРѕР¶РЅРѕ РІРЅСѓС‚СЂРё, РІСЃРµ СЂР°РІРЅРѕ РїСЂРѕРІРµСЂСЏРµРј
 					minEP_SA = secondAxis + object->mMin[sa]; 
 					maxEP_SA = secondAxis + object->mMax[sa];
 
@@ -345,7 +345,7 @@ UINT GetRayIntersections(bool dir, scalar posFirstCoord, scalar limit,
 			}
 			else
 			{
-				// Нашли левую/верхнюю границу, проверяем
+				// РќР°С€Р»Рё Р»РµРІСѓСЋ/РІРµСЂС…РЅСЋСЋ РіСЂР°РЅРёС†Сѓ, РїСЂРѕРІРµСЂСЏРµРј
 				anotherEP	= firstAxis + object->mMax[fa];
 				minEP_SA	= secondAxis + object->mMin[sa]; 
 				maxEP_SA	= secondAxis + object->mMax[sa];
@@ -378,22 +378,22 @@ UINT GetRayIntersections(bool dir, scalar posFirstCoord, scalar limit,
 	}
 	else
 	{
-		// Движемся влево/верх
+		// Р”РІРёР¶РµРјСЃСЏ РІР»РµРІРѕ/РІРµСЂС…
 
-		// Отбрасываем те, что справа
-		// TODO: тут бы бинарный поиск, а не линейный
+		// РћС‚Р±СЂР°СЃС‹РІР°РµРј С‚Рµ, С‡С‚Рѕ СЃРїСЂР°РІР°
+		// TODO: С‚СѓС‚ Р±С‹ Р±РёРЅР°СЂРЅС‹Р№ РїРѕРёСЃРє, Р° РЅРµ Р»РёРЅРµР№РЅС‹Р№
 		while((--current)->mValue > posFirstCoord);
 
 		++current;
 
-		// Ищем пересечения
+		// РС‰РµРј РїРµСЂРµСЃРµС‡РµРЅРёСЏ
 		while( (--current)->mValue > limit && intersCount < maxRayIntersectionsCount)
 		{
 			object = boxes + current->GetOwner();
 
 			if (current->IsMax())
 			{
-				// Нашли правую границу, проверяем
+				// РќР°С€Р»Рё РїСЂР°РІСѓСЋ РіСЂР°РЅРёС†Сѓ, РїСЂРѕРІРµСЂСЏРµРј
 				anotherEP	= firstAxis + object->mMin[fa];
 				minEP_SA	= secondAxis + object->mMin[sa]; 
 				maxEP_SA	= secondAxis + object->mMax[sa];
@@ -427,7 +427,7 @@ UINT GetRayIntersections(bool dir, scalar posFirstCoord, scalar limit,
 				anotherEP = firstAxis + object->mMax[fa];
 				if (anotherEP->mValue >= posFirstCoord)
 				{
-					// Случай когда возможно внутри, все равно проверяем
+					// РЎР»СѓС‡Р°Р№ РєРѕРіРґР° РІРѕР·РјРѕР¶РЅРѕ РІРЅСѓС‚СЂРё, РІСЃРµ СЂР°РІРЅРѕ РїСЂРѕРІРµСЂСЏРµРј
 					minEP_SA = secondAxis + object->mMin[sa]; 
 					maxEP_SA = secondAxis + object->mMax[sa];
 
@@ -462,13 +462,13 @@ UINT GetRayIntersections(bool dir, scalar posFirstCoord, scalar limit,
 	return intersCount;
 }
 
-// В этой функции идет поиск пересечения данного луча со всеми боксами в SAP
+// Р’ СЌС‚РѕР№ С„СѓРЅРєС†РёРё РёРґРµС‚ РїРѕРёСЃРє РїРµСЂРµСЃРµС‡РµРЅРёСЏ РґР°РЅРЅРѕРіРѕ Р»СѓС‡Р° СЃРѕ РІСЃРµРјРё Р±РѕРєСЃР°РјРё РІ SAP
 void FindRayAABBintersection(ObjRay* ray)
 {
-	// TODO: используется для отладки пересечений лучей, убрать
+	// TODO: РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РѕС‚Р»Р°РґРєРё РїРµСЂРµСЃРµС‡РµРЅРёР№ Р»СѓС‡РµР№, СѓР±СЂР°С‚СЊ
 	ray->debug_color = RGBAf(1.0f, 1.0f, 1.0f, 1.0f);
 
-	// Возможно, не стоит здесь так сразу перерывать.
+	// Р’РѕР·РјРѕР¶РЅРѕ, РЅРµ СЃС‚РѕРёС‚ Р·РґРµСЃСЊ С‚Р°Рє СЃСЂР°Р·Сѓ РїРµСЂРµСЂС‹РІР°С‚СЊ.
 	if (ray->activity == oatDying)
 		return;
 
@@ -482,26 +482,26 @@ void FindRayAABBintersection(ObjRay* ray)
 
 	assert(asap);	
 
-	// Определяем первую ось (ту, по которой будем двигаться) и вторую
-	// Для вертикального луча будем двигаться по оси Y
+	// РћРїСЂРµРґРµР»СЏРµРј РїРµСЂРІСѓСЋ РѕСЃСЊ (С‚Сѓ, РїРѕ РєРѕС‚РѕСЂРѕР№ Р±СѓРґРµРј РґРІРёРіР°С‚СЊСЃСЏ) Рё РІС‚РѕСЂСѓСЋ
+	// Р”Р»СЏ РІРµСЂС‚РёРєР°Р»СЊРЅРѕРіРѕ Р»СѓС‡Р° Р±СѓРґРµРј РґРІРёРіР°С‚СЊСЃСЏ РїРѕ РѕСЃРё Y
 	AxisIndex fa = isVert ? Y_ : X_;
 	AxisIndex sa = isVert ? X_ : Y_;
 
-	scalar posFirstCoord = isVert ? r.p.y : r.p.x;		// Начало луча на первой оси
+	scalar posFirstCoord = isVert ? r.p.y : r.p.x;		// РќР°С‡Р°Р»Рѕ Р»СѓС‡Р° РЅР° РїРµСЂРІРѕР№ РѕСЃРё
 
-	scalar limit;		// Граничное точка на оси firstAxis, на которой будет вестись поиск
+	scalar limit;		// Р“СЂР°РЅРёС‡РЅРѕРµ С‚РѕС‡РєР° РЅР° РѕСЃРё firstAxis, РЅР° РєРѕС‚РѕСЂРѕР№ Р±СѓРґРµС‚ РІРµСЃС‚РёСЃСЊ РїРѕРёСЃРє
 
 	if (ray->searchDistance == 0)
 	{
-		// Без ограничений на дальность - почти до краев SAP
+		// Р‘РµР· РѕРіСЂР°РЅРёС‡РµРЅРёР№ РЅР° РґР°Р»СЊРЅРѕСЃС‚СЊ - РїРѕС‡С‚Рё РґРѕ РєСЂР°РµРІ SAP
 		limit = dir ? (MAX_FLOAT - 100) : (MIN_FLOAT + 100);
 	}
 	else
 	{
-		// Есть ограничение на дальность
+		// Р•СЃС‚СЊ РѕРіСЂР°РЅРёС‡РµРЅРёРµ РЅР° РґР°Р»СЊРЅРѕСЃС‚СЊ
 		if (isVert)
 		{
-			// Луч строго вертикален, считать легко
+			// Р›СѓС‡ СЃС‚СЂРѕРіРѕ РІРµСЂС‚РёРєР°Р»РµРЅ, СЃС‡РёС‚Р°С‚СЊ Р»РµРіРєРѕ
 			if (dir)
 				limit = posFirstCoord + ray->searchDistance;
 			else
@@ -509,8 +509,8 @@ void FindRayAABBintersection(ObjRay* ray)
 		}
 		else
 		{
-			// TODO: вычислять ray->searchDistance / sqrt(r.k*r.k + 1) - проекцию на ось
-			// имеет смысл только при изменении k - угла наклона или расстояния поиска
+			// TODO: РІС‹С‡РёСЃР»СЏС‚СЊ ray->searchDistance / sqrt(r.k*r.k + 1) - РїСЂРѕРµРєС†РёСЋ РЅР° РѕСЃСЊ
+			// РёРјРµРµС‚ СЃРјС‹СЃР» С‚РѕР»СЊРєРѕ РїСЂРё РёР·РјРµРЅРµРЅРёРё k - СѓРіР»Р° РЅР°РєР»РѕРЅР° РёР»Рё СЂР°СЃСЃС‚РѕСЏРЅРёСЏ РїРѕРёСЃРєР°
 			if (dir)
 				limit = posFirstCoord + ray->searchDistance / sqrt(r.k*r.k + 1);
 			else
@@ -518,22 +518,22 @@ void FindRayAABBintersection(ObjRay* ray)
 		}
 	}
 	
-	// TODO: Возможно стоит для горизонтальных и вертикальный лучей использовать 
-	// упрощенный поиск без сортировки (котрый был в rev. 1198). 
+	// TODO: Р’РѕР·РјРѕР¶РЅРѕ СЃС‚РѕРёС‚ РґР»СЏ РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅС‹С… Рё РІРµСЂС‚РёРєР°Р»СЊРЅС‹Р№ Р»СѓС‡РµР№ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ 
+	// СѓРїСЂРѕС‰РµРЅРЅС‹Р№ РїРѕРёСЃРє Р±РµР· СЃРѕСЂС‚РёСЂРѕРІРєРё (РєРѕС‚СЂС‹Р№ Р±С‹Р» РІ rev. 1198). 
 
 	UINT intersCount = GetRayIntersections(dir, posFirstCoord, limit, fa, sa, ray);
 
 	if (intersCount > 0)
 	{
-		// Массивы заполнены, теперь мы сортируем массив длин, получаем отсортированные индексы и 
-		// используем их, чтобы в правильном порядке обойти объеты в массиве
+		// РњР°СЃСЃРёРІС‹ Р·Р°РїРѕР»РЅРµРЅС‹, С‚РµРїРµСЂСЊ РјС‹ СЃРѕСЂС‚РёСЂСѓРµРј РјР°СЃСЃРёРІ РґР»РёРЅ, РїРѕР»СѓС‡Р°РµРј РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Рµ РёРЅРґРµРєСЃС‹ Рё 
+		// РёСЃРїРѕР»СЊР·СѓРµРј РёС…, С‡С‚РѕР±С‹ РІ РїСЂР°РІРёР»СЊРЅРѕРј РїРѕСЂСЏРґРєРµ РѕР±РѕР№С‚Рё РѕР±СЉРµС‚С‹ РІ РјР°СЃСЃРёРІРµ
 		IceCore::RadixSort r;
 		IceCore::RadixSort* RS = &r;
 		const UINT* sorted = RS->Sort(arRayObjIntersectionsDistances, intersCount).GetRanks();
 
 		const UINT* const lastSorted = &sorted[intersCount];
 		UINT index;
-		// Обходим объекты
+		// РћР±С…РѕРґРёРј РѕР±СЉРµРєС‚С‹
 		while(sorted < lastSorted)
 		{
 			index =  *sorted++;
@@ -545,7 +545,7 @@ void FindRayAABBintersection(ObjRay* ray)
 }
 
 
-// Тут перебираются все лучи для поиска их пересечений
+// РўСѓС‚ РїРµСЂРµР±РёСЂР°СЋС‚СЃСЏ РІСЃРµ Р»СѓС‡Рё РґР»СЏ РїРѕРёСЃРєР° РёС… РїРµСЂРµСЃРµС‡РµРЅРёР№
 void ProcessRayCollision()
 {
 	extern LSQ_HandleT RayTree;
@@ -563,10 +563,10 @@ void ProcessRayCollision()
 	}
 }
 
-// Возвращает true, если больше луч ни с кем не пересекается.
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ true, РµСЃР»Рё Р±РѕР»СЊС€Рµ Р»СѓС‡ РЅРё СЃ РєРµРј РЅРµ РїРµСЂРµСЃРµРєР°РµС‚СЃСЏ.
 bool SolveRay(ObjRay* ray, ObjPhysic* obj)
 {
-	// TODO: временное средство для отладки пересечения лучей
+	// TODO: РІСЂРµРјРµРЅРЅРѕРµ СЃСЂРµРґСЃС‚РІРѕ РґР»СЏ РѕС‚Р»Р°РґРєРё РїРµСЂРµСЃРµС‡РµРЅРёСЏ Р»СѓС‡РµР№
 	ray->debug_color = RGBAf(1.0f, 0.2f, 0.2f, 1.0f);
 
 	if (ray->Hit(obj))
@@ -580,7 +580,7 @@ bool SolveRay(ObjRay* ray, ObjPhysic* obj)
 //////////////////////////////////////////////////////////////////////////
 
 
-//Проверяем, стоит ли объект на склоне.
+//РџСЂРѕРІРµСЂСЏРµРј, СЃС‚РѕРёС‚ Р»Рё РѕР±СЉРµРєС‚ РЅР° СЃРєР»РѕРЅРµ.
 bool SolveVSSlope(const CAABB& aabb, ObjPhysic* slope, Vector2 shift )
 {
 	if (!slope || !slope->slopeType) return false;
@@ -744,12 +744,12 @@ void SolveCollision(ObjPhysic* obj1, ObjPhysic* obj2)
 			return;
 		}
 
-		if ( !obj1->IsSolid() && obj2->IsSolid() ) //С пулей плохая проверка, но иначе они выталкиываются
+		if ( !obj1->IsSolid() && obj2->IsSolid() ) //РЎ РїСѓР»РµР№ РїР»РѕС…Р°СЏ РїСЂРѕРІРµСЂРєР°, РЅРѕ РёРЅР°С‡Рµ РѕРЅРё РІС‹С‚Р°Р»РєРёС‹РІР°СЋС‚СЃСЏ
 			SolveDynamicVSStatic( (ObjDynamic*)obj1, obj2 );
 		else if ( obj1->IsSolid() && !obj2->IsSolid() )
 			SolveDynamicVSStatic( (ObjDynamic*)obj2, obj1 );
 
-		if ( obj1->type == objPlayer && obj2->IsTouchable() && TouchCondition((ObjDynamic*)obj1, obj2) ) //Без этого не работают предметы. Бида.
+		if ( obj1->type == objPlayer && obj2->IsTouchable() && TouchCondition((ObjDynamic*)obj1, obj2) ) //Р‘РµР· СЌС‚РѕРіРѕ РЅРµ СЂР°Р±РѕС‚Р°СЋС‚ РїСЂРµРґРјРµС‚С‹. Р‘РёРґР°.
 		{
 			switch ( obj2->type )
 			{
@@ -764,7 +764,7 @@ void SolveCollision(ObjPhysic* obj1, ObjPhysic* obj2)
 					return;
 			}
 		}
-		if ( obj2->type == objPlayer && obj1->IsTouchable() && TouchCondition((ObjDynamic*)obj2, obj1) ) //Без этого не работают предметы. Бида.
+		if ( obj2->type == objPlayer && obj1->IsTouchable() && TouchCondition((ObjDynamic*)obj2, obj1) ) //Р‘РµР· СЌС‚РѕРіРѕ РЅРµ СЂР°Р±РѕС‚Р°СЋС‚ РїСЂРµРґРјРµС‚С‹. Р‘РёРґР°.
 		{
 			switch ( obj1->type )
 			{
@@ -812,38 +812,38 @@ void SolveCollision(ObjPhysic* obj1, ObjPhysic* obj2)
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-//Разрешает столкновение строго к центру динамического объекта.
+//Р Р°Р·СЂРµС€Р°РµС‚ СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃС‚СЂРѕРіРѕ Рє С†РµРЅС‚СЂСѓ РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ РѕР±СЉРµРєС‚Р°.
 void SolveDynamicVSStatic(ObjDynamic* objD, ObjPhysic* objS)
 {
-	//Летающие объекты не пересекаются с односторонними платформами и спокойно летают через них.
+	//Р›РµС‚Р°СЋС‰РёРµ РѕР±СЉРµРєС‚С‹ РЅРµ РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ СЃ РѕРґРЅРѕСЃС‚РѕСЂРѕРЅРЅРёРјРё РїР»Р°С‚С„РѕСЂРјР°РјРё Рё СЃРїРѕРєРѕР№РЅРѕ Р»РµС‚Р°СЋС‚ С‡РµСЂРµР· РЅРёС….
 	if ( objS->IsOneSide() && objD->gravity == Vector2::Blank() )
 		return;
 
-	//Если вдруг это окружение
+	//Р•СЃР»Рё РІРґСЂСѓРі СЌС‚Рѕ РѕРєСЂСѓР¶РµРЅРёРµ
 	if ( objS->type == objEnvironment )
 	{
 		SolveEnvironment((ObjEnvironment*)objS, objD);
 		return;
 	}
 
-	//Если вдруг это склон
+	//Р•СЃР»Рё РІРґСЂСѓРі СЌС‚Рѕ СЃРєР»РѕРЅ
 	if ( objS->slopeType > 0)
 	{
-		if ( objD->type == objBullet ) return; //Выстрелы не ходят по склонам
+		if ( objD->type == objBullet ) return; //Р’С‹СЃС‚СЂРµР»С‹ РЅРµ С…РѕРґСЏС‚ РїРѕ СЃРєР»РѕРЅР°Рј
 
 
 		if (SolveVSSlope( objD->aabb, objS, Vector2(0,0)))
 		{
 			if (objS->IsOneSide() && (objD->IsDropping() || objD->drop_from == objS) )
 			{
-				// Спрыниваем с контра-лайка
+				// РЎРїСЂС‹РЅРёРІР°РµРј СЃ РєРѕРЅС‚СЂР°-Р»Р°Р№РєР°
 				objD->ClearOnPlane();
 			}
 			else
 			{
 				float slopeY = GetSlopeTop(objS, objD->aabb.p.x) - objD->aabb.H;
-				// Выталкиваем вверх к склону. Если контралайк, то выталкиваем вверх, если движемся вних и не удалились ниже, чем на 10 точек.
-				// TODO: 10 работает неплохо, но это магическое число. Магия отказывает в самый неподходящий момент.
+				// Р’С‹С‚Р°Р»РєРёРІР°РµРј РІРІРµСЂС… Рє СЃРєР»РѕРЅСѓ. Р•СЃР»Рё РєРѕРЅС‚СЂР°Р»Р°Р№Рє, С‚Рѕ РІС‹С‚Р°Р»РєРёРІР°РµРј РІРІРµСЂС…, РµСЃР»Рё РґРІРёР¶РµРјСЃСЏ РІРЅРёС… Рё РЅРµ СѓРґР°Р»РёР»РёСЃСЊ РЅРёР¶Рµ, С‡РµРј РЅР° 10 С‚РѕС‡РµРє.
+				// TODO: 10 СЂР°Р±РѕС‚Р°РµС‚ РЅРµРїР»РѕС…Рѕ, РЅРѕ СЌС‚Рѕ РјР°РіРёС‡РµСЃРєРѕРµ С‡РёСЃР»Рѕ. РњР°РіРёСЏ РѕС‚РєР°Р·С‹РІР°РµС‚ РІ СЃР°РјС‹Р№ РЅРµРїРѕРґС…РѕРґСЏС‰РёР№ РјРѕРјРµРЅС‚.
 				if (objD->aabb.p.y > slopeY && (!objS->IsOneSide() || (objD->vel.y > 0 && abs(slopeY - objD->aabb.p.y) < 10) ) ) 
 				{
 					objD->aabb.p.y = slopeY;
@@ -858,7 +858,7 @@ void SolveDynamicVSStatic(ObjDynamic* objD, ObjPhysic* objS)
 		}
 		return;
 	}
-	//Конец склонов
+	//РљРѕРЅРµС† СЃРєР»РѕРЅРѕРІ
 
 	if (!objS->IsSolid())
 		return;
@@ -882,11 +882,11 @@ void SolveDynamicVSStatic(ObjDynamic* objD, ObjPhysic* objS)
 	int oSy = SegProjIntersect(Vector2(objD->old_aabb.p.y - objD->old_aabb.H, objD->old_aabb.p.y + objD->old_aabb.H),
 		Vector2(objS->aabb.p.y - objS->aabb.H, objS->aabb.p.y + objS->aabb.H));
 
-	// Если мы пересекаемся ещё до применения скорости, то....
+	// Р•СЃР»Рё РјС‹ РїРµСЂРµСЃРµРєР°РµРјСЃСЏ РµС‰С‘ РґРѕ РїСЂРёРјРµРЅРµРЅРёСЏ СЃРєРѕСЂРѕСЃС‚Рё, С‚Рѕ....
 	if (SegStateX == SEG_PROJ_STATE_INTERSECT && SegStateY == SEG_PROJ_STATE_INTERSECT && !(objS->IsOneSide()))
 	{
-		// ...используем данные с прошлого шага
-		// А вдруг в угол нах на прошлом шаге?!+
+		// ...РёСЃРїРѕР»СЊР·СѓРµРј РґР°РЅРЅС‹Рµ СЃ РїСЂРѕС€Р»РѕРіРѕ С€Р°РіР°
+		// Рђ РІРґСЂСѓРі РІ СѓРіРѕР» РЅР°С… РЅР° РїСЂРѕС€Р»РѕРј С€Р°РіРµ?!+
 		if ((oSx != SEG_PROJ_STATE_INTERSECT) && (oSy != SEG_PROJ_STATE_INTERSECT))
 			CornerProblemSolve(oSx, oSx, tmp, objS->aabb, objD->vel);
 
@@ -895,9 +895,9 @@ void SolveDynamicVSStatic(ObjDynamic* objD, ObjPhysic* objS)
 			if (ResolveCollision(oSx, oSy, objD, objS->aabb)) objD->suspected_plane = objS;
 		}
 		else
-			// Но если и там бида, то резолвим по мин дистанции
+			// РќРѕ РµСЃР»Рё Рё С‚Р°Рј Р±РёРґР°, С‚Рѕ СЂРµР·РѕР»РІРёРј РїРѕ РјРёРЅ РґРёСЃС‚Р°РЅС†РёРё
 			ResolveCollisionMTD(objD, objS->aabb);
-		// хз зачем мы это опять присваиваем...
+		// С…Р· Р·Р°С‡РµРј РјС‹ СЌС‚Рѕ РѕРїСЏС‚СЊ РїСЂРёСЃРІР°РёРІР°РµРј...
 		tmp = CAABB(objD->aabb);
 		//oSx = SegStateX;
 		//oSy = SegStateY;
@@ -908,14 +908,14 @@ void SolveDynamicVSStatic(ObjDynamic* objD, ObjPhysic* objS)
 	{
 		collided = true;
 
-		//Собственно если угол, то мы его решаем, и потом вызывем резолв колллижен.
+		//РЎРѕР±СЃС‚РІРµРЅРЅРѕ РµСЃР»Рё СѓРіРѕР», С‚Рѕ РјС‹ РµРіРѕ СЂРµС€Р°РµРј, Рё РїРѕС‚РѕРј РІС‹Р·С‹РІРµРј СЂРµР·РѕР»РІ РєРѕР»Р»Р»РёР¶РµРЅ.
 		if ((SegStateX != SEG_PROJ_STATE_INTERSECT) && (SegStateY != SEG_PROJ_STATE_INTERSECT) && !(objS->IsOneSide()))
 			CornerProblemSolve(SegStateX, SegStateY, tmp, objS->aabb, objD->vel);
 
 		if ( (objS->IsOneSide() && objD->IsDropping() && objS->IsForced() && objD->type == objPlayer)
 			|| (!objS->IsOneSide() && objD->IsDropping()))
 			{
-				//Вот такой хак, чтобы не показывать приземление снова.
+				//Р’РѕС‚ С‚Р°РєРѕР№ С…Р°Рє, С‡С‚РѕР±С‹ РЅРµ РїРѕРєР°Р·С‹РІР°С‚СЊ РїСЂРёР·РµРјР»РµРЅРёРµ СЃРЅРѕРІР°.
 				((ObjCharacter*)objD)->movement = omtDropSitting;
 			}
 		if ( objS->IsOneSide() && !(objD->IsDropping() && objS->IsForced()) )
@@ -931,7 +931,7 @@ void SolveDynamicVSStatic(ObjDynamic* objD, ObjPhysic* objS)
 			}
 		}
 		else if (ResolveCollision(SegStateX, SegStateY, objD, objS->aabb)) objD->suspected_plane = objS;
-		// хз зачем мы это опять присваиваем...
+		// С…Р· Р·Р°С‡РµРј РјС‹ СЌС‚Рѕ РѕРїСЏС‚СЊ РїСЂРёСЃРІР°РёРІР°РµРј...
 		//tmp = AABB(dyn->aabb);
 	}
 }
@@ -946,7 +946,7 @@ void SolveBullet(ObjBullet* bul, ObjPhysic* obj)
 		}
 	}
 	else bul->Hit(obj);
-	//Если пуля уничтожается при попадании, то она уже начала этот процесс. Но на случай, если нет - нужно решить столкновение.
+	//Р•СЃР»Рё РїСѓР»СЏ СѓРЅРёС‡С‚РѕР¶Р°РµС‚СЃСЏ РїСЂРё РїРѕРїР°РґР°РЅРёРё, С‚Рѕ РѕРЅР° СѓР¶Рµ РЅР°С‡Р°Р»Р° СЌС‚РѕС‚ РїСЂРѕС†РµСЃСЃ. РќРѕ РЅР° СЃР»СѓС‡Р°Р№, РµСЃР»Рё РЅРµС‚ - РЅСѓР¶РЅРѕ СЂРµС€РёС‚СЊ СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ.
 	if ( bul->activity != oatDying && SolidTo( obj, objBullet ) ) SolveDynamicVSStatic( bul, obj );
 }
 
@@ -960,7 +960,7 @@ void SolveEnvironment(ObjEnvironment* env, ObjDynamic* obj)
 	}
 	else
 	{
-		// Откладываем обработку пересечения с новым окружением
+		// РћС‚РєР»Р°РґС‹РІР°РµРј РѕР±СЂР°Р±РѕС‚РєСѓ РїРµСЂРµСЃРµС‡РµРЅРёСЏ СЃ РЅРѕРІС‹Рј РѕРєСЂСѓР¶РµРЅРёРµРј
 		delayed_env_coll.push_back(env);
 		delayed_env_coll.push_back(obj);
 	}
@@ -968,8 +968,8 @@ void SolveEnvironment(ObjEnvironment* env, ObjDynamic* obj)
 
 }
 
-// Отлоденная обработка пересечений с окружениями. Отрабатывает после того, как 
-// к объекту применяться все изменения полоедния, вызванные дургими пересечениями.
+// РћС‚Р»РѕРґРµРЅРЅР°СЏ РѕР±СЂР°Р±РѕС‚РєР° РїРµСЂРµСЃРµС‡РµРЅРёР№ СЃ РѕРєСЂСѓР¶РµРЅРёСЏРјРё. РћС‚СЂР°Р±Р°С‚С‹РІР°РµС‚ РїРѕСЃР»Рµ С‚РѕРіРѕ, РєР°Рє 
+// Рє РѕР±СЉРµРєС‚Сѓ РїСЂРёРјРµРЅСЏС‚СЊСЃСЏ РІСЃРµ РёР·РјРµРЅРµРЅРёСЏ РїРѕР»РѕРµРґРЅРёСЏ, РІС‹Р·РІР°РЅРЅС‹Рµ РґСѓСЂРіРёРјРё РїРµСЂРµСЃРµС‡РµРЅРёСЏРјРё.
 void SolveDelayedEnvCollision()
 {
 	if (delayed_env_coll.empty())
@@ -988,7 +988,7 @@ void SolveDelayedEnvCollision()
 
 		if (Collide(env->aabb, obj->aabb))
 		{
-			// Объект действительно попал в новое окружение.
+			// РћР±СЉРµРєС‚ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ РїРѕРїР°Р» РІ РЅРѕРІРѕРµ РѕРєСЂСѓР¶РµРЅРёРµ.
 			if ( obj->env->id < env->id )
 			{
 				obj->SetEnv(env);
@@ -1000,7 +1000,7 @@ void SolveDelayedEnvCollision()
 }
 
 
-// Вызовется раньше, чем SolveEnvironment и SolveDelayedEnvCollision
+// Р’С‹Р·РѕРІРµС‚СЃСЏ СЂР°РЅСЊС€Рµ, С‡РµРј SolveEnvironment Рё SolveDelayedEnvCollision
 void SolveEnvLeave(ObjEnvironment* env, ObjDynamic* obj)
 {
 	if (env == obj->env)
@@ -1009,8 +1009,8 @@ void SolveEnvLeave(ObjEnvironment* env, ObjDynamic* obj)
 
 //////////////////////////////////////////////////////////////////////////
 
-// Резолв коллиежена по MTD MTD = Minimal Translation Distance
-// Код из функции void PhysDynamicBody::SatanaResolveCollisionMTD(const ASAP_AABB &bb)
+// Р РµР·РѕР»РІ РєРѕР»Р»РёРµР¶РµРЅР° РїРѕ MTD MTD = Minimal Translation Distance
+// РљРѕРґ РёР· С„СѓРЅРєС†РёРё void PhysDynamicBody::SatanaResolveCollisionMTD(const ASAP_AABB &bb)
 void ResolveCollisionMTD(ObjDynamic* dyn, const CAABB &bb)
 {
 	scalar deltaX, deltaY;
@@ -1030,7 +1030,7 @@ void ResolveCollisionMTD(ObjDynamic* dyn, const CAABB &bb)
 	}
 }
 
-// Там внизу всё очевидно
+// РўР°Рј РІРЅРёР·Сѓ РІСЃС‘ РѕС‡РµРІРёРґРЅРѕ
 bool ResolveCollision( int sX, int sY, ObjDynamic* dyn, const CAABB &bb )
 {
 	bool mark_as_suspected = false;

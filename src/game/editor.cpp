@@ -39,7 +39,7 @@ void ObjPhysic::PhysProcess()
 		movement_occured = true;
 	}
 
-	// Скажи нет идеальным геометрическим фигурам
+	// РЎРєР°Р¶Рё РЅРµС‚ РёРґРµР°Р»СЊРЅС‹Рј РіРµРѕРјРµС‚СЂРёС‡РµСЃРєРёРј С„РёРіСѓСЂР°Рј
 	assert(aabb.H != 0);
 	assert(aabb.W != 0);
 
@@ -82,7 +82,7 @@ void ProcessEditor()
 	if (editorAreaSelectNeeded && editorPhysicProcessed)
 	{
 
-		lua_createtable(lua, 0, 2);	// Стек: t
+		lua_createtable(lua, 0, 2);	// РЎС‚РµРє: t
 		int i = 1;
 		for (set<UINT>::iterator it = editorObjectsInArea.begin(); it != editorObjectsInArea.end(); it++, i++)
 		{
@@ -127,9 +127,9 @@ void EditorRegAreaSelectProc(lua_State* L)
 int EditorCopyObject(lua_State* L)
 {
 #ifdef MAP_EDITOR
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id объекта.");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата x копии объекта.");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата y копии объекта.");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РѕР±СЉРµРєС‚Р°.");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° x РєРѕРїРёРё РѕР±СЉРµРєС‚Р°.");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° y РєРѕРїРёРё РѕР±СЉРµРєС‚Р°.");
 	GameObject* obj = GetGameObject( lua_tointeger(L, 1) );
 	float x = lua_tonumber(L, 2);
 	float y = lua_tonumber(L, 3);
@@ -261,7 +261,7 @@ int EditorResize(lua_State* L)
 	int axis = lua_tointeger(L, 2);
 	int align = lua_tointeger(L, 3);
 	int ammount = lua_tointeger(L, 4);
-	if ( axis == 0 )	//Потом, когда просплюсь, я об этом пожалею. Но это будет потом.
+	if ( axis == 0 )	//РџРѕС‚РѕРј, РєРѕРіРґР° РїСЂРѕСЃРїР»СЋСЃСЊ, СЏ РѕР± СЌС‚РѕРј РїРѕР¶Р°Р»РµСЋ. РќРѕ СЌС‚Рѕ Р±СѓРґРµС‚ РїРѕС‚РѕРј.
 	{
 		if ( obj->aabb.W + ammount/2.0 < 0.5f ) return 0;
 		if ( align == -1 )

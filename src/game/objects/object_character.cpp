@@ -19,7 +19,7 @@ void ObjCharacter::ProcessShooting()
 
 	if ( this->sprite->mpCount < 1 && this->activity == oatShooting )
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Попытка выстрела объекта без точек крепления");
+		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "РџРѕРїС‹С‚РєР° РІС‹СЃС‚СЂРµР»Р° РѕР±СЉРµРєС‚Р° Р±РµР· С‚РѕС‡РµРє РєСЂРµРїР»РµРЅРёСЏ");
 		return;
 	}
 
@@ -101,8 +101,8 @@ GameObject* ObjCharacter::GetNearestCharacter( vector<int> factions_list )
 bool ObjCharacter::IsEnemy( GameObject* obj )
 {
 	if ( obj->type != objEnemy && obj->type != objPlayer )
-		return true; //Окружение есть враг всему живому.
-	if ( this->type == objPlayer ) //Игроку враги все, с номером стороны больше 0 и не той же стороны.
+		return true; //РћРєСЂСѓР¶РµРЅРёРµ РµСЃС‚СЊ РІСЂР°Рі РІСЃРµРјСѓ Р¶РёРІРѕРјСѓ.
+	if ( this->type == objPlayer ) //РРіСЂРѕРєСѓ РІСЂР°РіРё РІСЃРµ, СЃ РЅРѕРјРµСЂРѕРј СЃС‚РѕСЂРѕРЅС‹ Р±РѕР»СЊС€Рµ 0 Рё РЅРµ С‚РѕР№ Р¶Рµ СЃС‚РѕСЂРѕРЅС‹.
 	{
 		ObjCharacter* oen = (ObjCharacter*)obj;
 		return ( oen->faction_id != faction_id && oen->faction_id > 0 );

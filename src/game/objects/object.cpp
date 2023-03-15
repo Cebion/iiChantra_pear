@@ -67,10 +67,10 @@ extern bool isNewGameCreated;
 extern game::GameStates game_state;
 
 //////////////////////////////////////////////////////////////////////////
-LSQ_HandleT ObjTree = NULL;		//Указатель на дерево объектов
-LSQ_HandleT AddTree = NULL;		//Указатель на дерево только что добавленных объектов
+LSQ_HandleT ObjTree = NULL;		//РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РґРµСЂРµРІРѕ РѕР±СЉРµРєС‚РѕРІ
+LSQ_HandleT AddTree = NULL;		//РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РґРµСЂРµРІРѕ С‚РѕР»СЊРєРѕ С‡С‚Рѕ РґРѕР±Р°РІР»РµРЅРЅС‹С… РѕР±СЉРµРєС‚РѕРІ
 
-LSQ_HandleT RayTree = NULL;		// Временное дерево-хранилище лучей
+LSQ_HandleT RayTree = NULL;		// Р’СЂРµРјРµРЅРЅРѕРµ РґРµСЂРµРІРѕ-С…СЂР°РЅРёР»РёС‰Рµ Р»СѓС‡РµР№
 
 LSQ_HandleT ActiveObjTree = NULL;
 LSQ_HandleT PassiveObjTree = NULL;
@@ -89,7 +89,7 @@ bool DRAW_DEBUG_RECTS = false;
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-// Регистрация нового объекта. Добавляет физические объекты в SAP.
+// Р РµРіРёСЃС‚СЂР°С†РёСЏ РЅРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р°. Р”РѕР±Р°РІР»СЏРµС‚ С„РёР·РёС‡РµСЃРєРёРµ РѕР±СЉРµРєС‚С‹ РІ SAP.
 void AddObject(GameObject* obj)
 {
 	if (!ObjTree) ObjTree = LSQ_CreateSequence();
@@ -117,22 +117,22 @@ void AddObject(GameObject* obj)
 
 void RemoveObject(GameObject* obj)
 {
-	// Добавляем объект в список к удалению
+	// Р”РѕР±Р°РІР»СЏРµРј РѕР±СЉРµРєС‚ РІ СЃРїРёСЃРѕРє Рє СѓРґР°Р»РµРЅРёСЋ
 	removedObjects.push_back(obj);
 	if (obj->IsPhysic())
 	{
 #ifdef DEBUG_SAP
 		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Removing from sap %s 0x%p id: %d, sap: %d", tNames[obj->type], obj, obj->id, ((ObjPhysic*)obj)->sap_handle);
 #endif // DEBUG_SAP
-		// Удаляем объект из ASAP
+		// РЈРґР°Р»СЏРµРј РѕР±СЉРµРєС‚ РёР· ASAP
 		asap->RemoveObject( ((ObjPhysic*)obj)->sap_handle );
 	}
 
-	// Убираем из списка лучей так же, как физические объекты удаляются из SAP
+	// РЈР±РёСЂР°РµРј РёР· СЃРїРёСЃРєР° Р»СѓС‡РµР№ С‚Р°Рє Р¶Рµ, РєР°Рє С„РёР·РёС‡РµСЃРєРёРµ РѕР±СЉРµРєС‚С‹ СѓРґР°Р»СЏСЋС‚СЃСЏ РёР· SAP
 	if (obj->type == objRay) LSQ_DeleteElement(RayTree, obj->id);
 }
 
-// Внесение всех новых объектов в основной контейнер объектов.
+// Р’РЅРµСЃРµРЅРёРµ РІСЃРµС… РЅРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ РІ РѕСЃРЅРѕРІРЅРѕР№ РєРѕРЅС‚РµР№РЅРµСЂ РѕР±СЉРµРєС‚РѕРІ.
 void BatchAdd()
 {
 	if ( LSQ_GetSize(AddTree) == 0 )
@@ -146,7 +146,7 @@ void BatchAdd()
 		if ( obj->IsPhysic() ) update_sap = true;
 		LSQ_InsertElement(ObjTree, obj->id, obj);
 		if (obj->type == objRay) LSQ_InsertNewMaxElement(RayTree, obj->id, obj);
-		// Тут задается критерий отбора пассивных объектов
+		// РўСѓС‚ Р·Р°РґР°РµС‚СЃСЏ РєСЂРёС‚РµСЂРёР№ РѕС‚Р±РѕСЂР° РїР°СЃСЃРёРІРЅС‹С… РѕР±СЉРµРєС‚РѕРІ
 		if (!obj->IsPhysic() && 
 			(!obj->sprite || (obj->sprite && obj->sprite->animsCount == 0)) &&
 			!obj->ParticleSystem && obj->type != objSpawner)
@@ -170,14 +170,14 @@ void BatchAdd()
 		UpdateSAPState();
 }
 
-// Уничтожение объекта
+// РЈРЅРёС‡С‚РѕР¶РµРЅРёРµ РѕР±СЉРµРєС‚Р°
 void RemObj(GameObject* obj)
 {
 	if (obj)
 	{
 		if (GetCameraAttachedObject() == obj)
 		{
-			// На этом объекте сфокусирована камера. Убираем это.
+			// РќР° СЌС‚РѕРј РѕР±СЉРµРєС‚Рµ СЃС„РѕРєСѓСЃРёСЂРѕРІР°РЅР° РєР°РјРµСЂР°. РЈР±РёСЂР°РµРј СЌС‚Рѕ.
 			CameraAttachToObject(NULL);
 		}
 		if (Waypoints == obj)
@@ -198,7 +198,7 @@ void RemObj(GameObject* obj)
 	}
 }
 
-// Убирает все удаленые объекты из основного контейнера объектов и вызывает их уничтожение.
+// РЈР±РёСЂР°РµС‚ РІСЃРµ СѓРґР°Р»РµРЅС‹Рµ РѕР±СЉРµРєС‚С‹ РёР· РѕСЃРЅРѕРІРЅРѕРіРѕ РєРѕРЅС‚РµР№РЅРµСЂР° РѕР±СЉРµРєС‚РѕРІ Рё РІС‹Р·С‹РІР°РµС‚ РёС… СѓРЅРёС‡С‚РѕР¶РµРЅРёРµ.
 void BatchRemove()
 {
 	if (!removedObjects.size())
@@ -239,7 +239,7 @@ void PrepareRemoveAllObjects()
 	DefaultEnvDelete();
 	EmptyWPStack();
 
-	// Удаляем объекты, которые были созданы, но еще не были добавлены в основной контейнер.
+	// РЈРґР°Р»СЏРµРј РѕР±СЉРµРєС‚С‹, РєРѕС‚РѕСЂС‹Рµ Р±С‹Р»Рё СЃРѕР·РґР°РЅС‹, РЅРѕ РµС‰Рµ РЅРµ Р±С‹Р»Рё РґРѕР±Р°РІР»РµРЅС‹ РІ РѕСЃРЅРѕРІРЅРѕР№ РєРѕРЅС‚РµР№РЅРµСЂ.
 	if ( LSQ_GetSize(AddTree) > 0 )
 	{
 		LSQ_IteratorT AddIter = NULL;
@@ -256,7 +256,7 @@ void PrepareRemoveAllObjects()
 	LSQ_DestroySequence(AddTree);
 	AddTree = NULL;
 
-	// Само удаление будет в RemoveAllObjects
+	// РЎР°РјРѕ СѓРґР°Р»РµРЅРёРµ Р±СѓРґРµС‚ РІ RemoveAllObjects
 	if (removedObjects.size() > 0)
 		removedObjects.clear();
 
@@ -265,7 +265,7 @@ void PrepareRemoveAllObjects()
 }
 
 
-// Уничтожает все объекты.
+// РЈРЅРёС‡С‚РѕР¶Р°РµС‚ РІСЃРµ РѕР±СЉРµРєС‚С‹.
 void RemoveAllObjects()
 {
 	game::GameStates temp_game_state = game_state;
@@ -428,11 +428,11 @@ void ProcessAllActiveObjects()
 {
 #ifdef DEBUG_SAP
 	static UINT turn_number = 0;
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "=================== Начало хода #%d ====================", turn_number);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "=================== РќР°С‡Р°Р»Рѕ С…РѕРґР° #%d ====================", turn_number);
 	turn_number++;
 #endif // DEBUG_SAP
 	
-	BatchAdd();		// Будут доступны на следующем ходу
+	BatchAdd();		// Р‘СѓРґСѓС‚ РґРѕСЃС‚СѓРїРЅС‹ РЅР° СЃР»РµРґСѓСЋС‰РµРј С…РѕРґСѓ
 
 	//sLog(DEFAULT_LOG_NAME, logLevelInfo, "objTree = %d, activeTree = %d", LSQ_GetSize(ObjTree), LSQ_GetSize(ActiveObjTree));
 	//LSQ_IteratorT ObjIter = LSQ_GetFrontElement(ObjTree);
@@ -448,7 +448,7 @@ void ProcessAllActiveObjects()
 				lua_pushinteger(lua, obj->id);
 				if (SCRIPT::ExecChunkFromReg(obj->scriptProcess, 1))
 				{
-					// В скрипте произошла какая-то ошибка. Будем испльзовать стандартный в следующий раз.
+					// Р’ СЃРєСЂРёРїС‚Рµ РїСЂРѕРёР·РѕС€Р»Р° РєР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР°. Р‘СѓРґРµРј РёСЃРїР»СЊР·РѕРІР°С‚СЊ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РІ СЃР»РµРґСѓСЋС‰РёР№ СЂР°Р·.
 					SCRIPT::RemoveFromRegistry(obj->scriptProcess);
 				}
 			}
@@ -496,7 +496,7 @@ void ProcessAllActiveObjects()
 		}
 		LSQ_DestroyIterator(ObjIter);
 
-		// Обработка пар столкновений
+		// РћР±СЂР°Р±РѕС‚РєР° РїР°СЂ СЃС‚РѕР»РєРЅРѕРІРµРЅРёР№
 #ifdef DEBUG_SAP
 		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "ProcessCollisions");
 #endif // DEBUG_SAP
@@ -504,8 +504,8 @@ void ProcessAllActiveObjects()
 	}
 
 	BatchRemove();
-	inpmgr.ProlongedArrayFlush(); // <- временное (надеюсь) решение, нужно посовещаться.
-	//BatchAdd();		// Будут доступны на следующем ходу
+	inpmgr.ProlongedArrayFlush(); // <- РІСЂРµРјРµРЅРЅРѕРµ (РЅР°РґРµСЋСЃСЊ) СЂРµС€РµРЅРёРµ, РЅСѓР¶РЅРѕ РїРѕСЃРѕРІРµС‰Р°С‚СЊСЃСЏ.
+	//BatchAdd();		// Р‘СѓРґСѓС‚ РґРѕСЃС‚СѓРїРЅС‹ РЅР° СЃР»РµРґСѓСЋС‰РµРј С…РѕРґСѓ
 }
 
 void ProcessAllPassiveObjects()
@@ -698,7 +698,7 @@ void GameObject::ProcessSprite()
 	//if ( this->IsSleep() ) return;
 	Sprite* s= this->sprite;
 
-	// Если наследуетесь от класса ObjCharacter, то здесь надо добавить соответсвующую проверку.
+	// Р•СЃР»Рё РЅР°СЃР»РµРґСѓРµС‚РµСЃСЊ РѕС‚ РєР»Р°СЃСЃР° ObjCharacter, С‚Рѕ Р·РґРµСЃСЊ РЅР°РґРѕ РґРѕР±Р°РІРёС‚СЊ СЃРѕРѕС‚РІРµС‚СЃРІСѓСЋС‰СѓСЋ РїСЂРѕРІРµСЂРєСѓ.
 	ObjCharacter* ch = (this->type == objPlayer || this->type == objEnemy) ? static_cast<ObjCharacter*>(this) : NULL;
 	ParametersStack* ps = this->sprite->stack;
 	int param;
@@ -720,13 +720,13 @@ void GameObject::ProcessSprite()
 					{
 						if (!this->sprite->ocolor)
 						{
-							sLog(DEFAULT_LOG_NAME, logLevelWarning, "ProcessSprite(), afcRandomOverlayColor ocolor==NULL, прототип %s, анимация %s, кадр %d",
+							sLog(DEFAULT_LOG_NAME, logLevelWarning, "ProcessSprite(), afcRandomOverlayColor ocolor==NULL, РїСЂРѕС‚РѕС‚РёРї %s, Р°РЅРёРјР°С†РёСЏ %s, РєР°РґСЂ %d",
 								this->sprite->proto_name, a->name, a->current);
 							break;
 						}
 						if (this->sprite->overlayCount <= (UINT)param || param < 0)
 						{
-							sLog(DEFAULT_LOG_NAME, logLevelWarning, "ProcessSprite(), afcControlledOverlayColor неправильный param, прототип %s, анимация %s, кадр %d",
+							sLog(DEFAULT_LOG_NAME, logLevelWarning, "ProcessSprite(), afcControlledOverlayColor РЅРµРїСЂР°РІРёР»СЊРЅС‹Р№ param, РїСЂРѕС‚РѕС‚РёРї %s, Р°РЅРёРјР°С†РёСЏ %s, РєР°РґСЂ %d",
 								this->sprite->proto_name, a->name, a->current);
 							break;
 						}
@@ -752,7 +752,7 @@ void GameObject::ProcessSprite()
 							((ObjEnemy*)this)->current_waypoint = wp->id;
 					}
 					break;
-				case afcMenuLoop:	//TODO: Убрать
+				case afcMenuLoop:	//TODO: РЈР±СЂР°С‚СЊ
 					{
 						StackElement* sd1 = this->sprite->stack->Pop();
 						this->sprite->stack->Push(sd1->data.intData);
@@ -797,13 +797,13 @@ void GameObject::ProcessSprite()
 					{
 						if (!this->sprite->ocolor)
 						{
-							sLog(DEFAULT_LOG_NAME, logLevelWarning, "ProcessSprite(), afcControlledOverlayColor ocolor==NULL, прототип %s, анимация %s, кадр %d",
+							sLog(DEFAULT_LOG_NAME, logLevelWarning, "ProcessSprite(), afcControlledOverlayColor ocolor==NULL, РїСЂРѕС‚РѕС‚РёРї %s, Р°РЅРёРјР°С†РёСЏ %s, РєР°РґСЂ %d",
 								this->sprite->proto_name, a->name, a->current);
 							break;
 						}
 						if (this->sprite->overlayCount <= (UINT)param || param < 0)
 						{
-							sLog(DEFAULT_LOG_NAME, logLevelWarning, "ProcessSprite(), afcControlledOverlayColor неправильный param, прототип %s, анимация %s, кадр %d",
+							sLog(DEFAULT_LOG_NAME, logLevelWarning, "ProcessSprite(), afcControlledOverlayColor РЅРµРїСЂР°РІРёР»СЊРЅС‹Р№ param, РїСЂРѕС‚РѕС‚РёРї %s, Р°РЅРёРјР°С†РёСЏ %s, РєР°РґСЂ %d",
 								this->sprite->proto_name, a->name, a->current);
 							break;
 						}
@@ -965,7 +965,7 @@ void GameObject::ProcessSprite()
 						ASSERT(this->mem_anim);
 						if (!this->mem_anim)
 						{
-							sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Недопустимый вызов afcRecover, mem_anim=NULL. Прототип %s, анимация %s, кадр %d",
+							sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "РќРµРґРѕРїСѓСЃС‚РёРјС‹Р№ РІС‹Р·РѕРІ afcRecover, mem_anim=NULL. РџСЂРѕС‚РѕС‚РёРї %s, Р°РЅРёРјР°С†РёСЏ %s, РєР°РґСЂ %d",
 								this->sprite->proto_name, a->name, a->current);
 						}
 						this->sprite->SetAnimation( string(this->mem_anim) );
@@ -1061,7 +1061,7 @@ void GameObject::ProcessSprite()
 
 					}
 					break;
-				case afcJumpCheckFOV:	//TODO: учитывать направление взгляда.
+				case afcJumpCheckFOV:	//TODO: СѓС‡РёС‚С‹РІР°С‚СЊ РЅР°РїСЂР°РІР»РµРЅРёРµ РІР·РіР»СЏРґР°.
 					if ( this->type == objEnemy )
 					{
 						if ( !ps->CheckParamTypes(1, stInt) )
@@ -1134,7 +1134,7 @@ void GameObject::ProcessSprite()
 							this->sprite->JumpFrame( param );
 					}
 					break;
-				case afcJumpIfSquashCondition: //TODO: Заменить на JumpIfYLess + JumpIfObjectYSpeedGreater?
+				case afcJumpIfSquashCondition: //TODO: Р—Р°РјРµРЅРёС‚СЊ РЅР° JumpIfYLess + JumpIfObjectYSpeedGreater?
 					if ( this->type == objEnemy )
 					{
 						ObjDynamic* dno = (ObjDynamic*)this;
@@ -1204,7 +1204,7 @@ void GameObject::ProcessSprite()
 					if ( this->type == objEnemy )
 					{
 						((ObjEnemy*)this)->health = param;
-						((ObjEnemy*)this)->health_max = param * 2; //TODO: читать из прототипа?
+						((ObjEnemy*)this)->health_max = param * 2; //TODO: С‡РёС‚Р°С‚СЊ РёР· РїСЂРѕС‚РѕС‚РёРїР°?
 					}
 					if ( this->type == objEffect )
 					{
@@ -1229,10 +1229,10 @@ void GameObject::ProcessSprite()
 						ObjCharacter* oc = (ObjCharacter*)GetGameObject( oid );
 						if (oc)
 							oc->ReduceHealth(param);
-						//Вынести бездну в отдельный параметр.
+						//Р’С‹РЅРµСЃС‚Рё Р±РµР·РґРЅСѓ РІ РѕС‚РґРµР»СЊРЅС‹Р№ РїР°СЂР°РјРµС‚СЂ.
 						if (GetCameraAttachedObject() == oc )
 						{
-							// На этом объекте сфокусирована камера. Убираем это.
+							// РќР° СЌС‚РѕРј РѕР±СЉРµРєС‚Рµ СЃС„РѕРєСѓСЃРёСЂРѕРІР°РЅР° РєР°РјРµСЂР°. РЈР±РёСЂР°РµРј СЌС‚Рѕ.
 							CameraAttachToObject(NULL);
 						}
 					}
@@ -1376,7 +1376,7 @@ void GameObject::ProcessSprite()
 				case afcSetAccY:
 					{
 						/*if ( !(this->IsPhysic() || this->type == objBullet ) || !((ObjPhysic*)this)->IsDynamic() )
-							break;*/ //Почему-то не работает для бочек. Проверить.
+							break;*/ //РџРѕС‡РµРјСѓ-С‚Рѕ РЅРµ СЂР°Р±РѕС‚Р°РµС‚ РґР»СЏ Р±РѕС‡РµРє. РџСЂРѕРІРµСЂРёС‚СЊ.
 						((ObjDynamic*)this)->acc.y = param/1000.0f;
 					}
 					break;
@@ -1787,7 +1787,7 @@ void GameObject::ProcessSprite()
 							oe->waypoint_global = ps->PopInt(); 
 						}
 			
-						if ( oe->waypoint_mode & 2 ) //Ограничиваем скорость сверху
+						if ( oe->waypoint_mode & 2 ) //РћРіСЂР°РЅРёС‡РёРІР°РµРј СЃРєРѕСЂРѕСЃС‚СЊ СЃРІРµСЂС…Сѓ
 						{
 							ps->CheckParamTypes(1, stInt);
 							oe->waypoint_speed_limit = ps->PopInt() / 1000.0f;
@@ -1889,7 +1889,7 @@ void GameObject::ProcessSprite()
 						{
 							if ( param >= this->sprite->mpCount )
 							{
-								sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Попытка установить несуществующую точку крепления номер %i в анимации %s.", this->sprite->mpCount, this->sprite->cur_anim.c_str());
+								sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "РџРѕРїС‹С‚РєР° СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РЅРµСЃСѓС‰РµСЃС‚РІСѓСЋС‰СѓСЋ С‚РѕС‡РєСѓ РєСЂРµРїР»РµРЅРёСЏ РЅРѕРјРµСЂ %i РІ Р°РЅРёРјР°С†РёРё %s.", this->sprite->mpCount, this->sprite->cur_anim.c_str());
 								break;
 							}
 							if ( this->childrenConnection ) this->childrenConnection->Event( ObjectEventInfo( eventMPChanged, Vector2((scalar)x,(scalar)y)-this->sprite->mp[ param ], param ) );
@@ -2016,7 +2016,7 @@ void GameObject::ProcessSprite()
 						ObjCharacter* target = oen->GetTarget();
 						switch ( param )
 						{
-							case 1:		//Берём центр цели со смещением.
+							case 1:		//Р‘РµСЂС‘Рј С†РµРЅС‚СЂ С†РµР»Рё СЃРѕ СЃРјРµС‰РµРЅРёРµРј.
 								{
 									if ( !ps->CheckParamTypes(2, stInt, stInt) )
 										break;
@@ -2028,7 +2028,7 @@ void GameObject::ProcessSprite()
 										oen->aim = Vector2((scalar)x, (scalar)y);
 								}
 								break;
-							case 2:		//Смещение относительно собственного центра.
+							case 2:		//РЎРјРµС‰РµРЅРёРµ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ СЃРѕР±СЃС‚РІРµРЅРЅРѕРіРѕ С†РµРЅС‚СЂР°.
 								{
 									if ( !ps->CheckParamTypes(2, stInt, stInt) )
 										break;
@@ -2037,7 +2037,7 @@ void GameObject::ProcessSprite()
 									oen->aim = oen->aabb.p + Vector2((scalar)x, (scalar)y);
 								}
 								break;
-							case 3:		//Абсолютные координаты
+							case 3:		//РђР±СЃРѕР»СЋС‚РЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹
 								{
 									if ( !ps->CheckParamTypes(2, stInt, stInt) )
 										break;
@@ -2046,12 +2046,12 @@ void GameObject::ProcessSprite()
 									oen->aim = Vector2((scalar)x, (scalar)y);
 								}
 								break;
-							case 4:		//Точно по игроку
+							case 4:		//РўРѕС‡РЅРѕ РїРѕ РёРіСЂРѕРєСѓ
 								{
 									if (playerControl->current) oen->aim = playerControl->current->aabb.p;
 								}
 								break;
-							default:	//В простейшем случае просто берём координаты текущей цели
+							default:	//Р’ РїСЂРѕСЃС‚РµР№С€РµРј СЃР»СѓС‡Р°Рµ РїСЂРѕСЃС‚Рѕ Р±РµСЂС‘Рј РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РµРєСѓС‰РµР№ С†РµР»Рё
 								{
 									if ( target )
 										oen->aim = target->aabb.p;
@@ -2062,7 +2062,7 @@ void GameObject::ProcessSprite()
 					}
 					break;
 				case afcAimedShot:
-					//TODO: Если дойдёт до мультиплеера, то это плохо.
+					//TODO: Р•СЃР»Рё РґРѕР№РґС‘С‚ РґРѕ РјСѓР»СЊС‚РёРїР»РµРµСЂР°, С‚Рѕ СЌС‚Рѕ РїР»РѕС…Рѕ.
 					if ( (this->type == objEnemy || this->type == objEffect ) )
 					{
 						ObjBullet* bullet = NULL;
@@ -2165,7 +2165,7 @@ void GameObject::ProcessSprite()
 							break;
 						int y = ps->PopInt();
 						int x = ps->PopInt();
-						//В третьем режиме смещение по x считается в направлении взгляда создателя.
+						//Р’ С‚СЂРµС‚СЊРµРј СЂРµР¶РёРјРµ СЃРјРµС‰РµРЅРёРµ РїРѕ x СЃС‡РёС‚Р°РµС‚СЃСЏ РІ РЅР°РїСЂР°РІР»РµРЅРёРё РІР·РіР»СЏРґР° СЃРѕР·РґР°С‚РµР»СЏ.
 						if ( (param & 4 ) && this->GetFacing() )
 							x *= -1;
 						
@@ -2184,15 +2184,15 @@ void GameObject::ProcessSprite()
 												  false, (ObjDynamic*)this, (USHORT)mpoint, Vector2( (scalar)x, (scalar)y ) );
 						if (of)
 						{
-							//Если первый режим включен, то передаём IsMirrored
+							//Р•СЃР»Рё РїРµСЂРІС‹Р№ СЂРµР¶РёРј РІРєР»СЋС‡РµРЅ, С‚Рѕ РїРµСЂРµРґР°С‘Рј IsMirrored
 							if ( (param & 1 ) && this->GetFacing() )
 								of->SetFacing( true );
-							//Если второй режим включен, но пытаемся компенсировать разницу между центром и углом.
+							//Р•СЃР»Рё РІС‚РѕСЂРѕР№ СЂРµР¶РёРј РІРєР»СЋС‡РµРЅ, РЅРѕ РїС‹С‚Р°РµРјСЃСЏ РєРѕРјРїРµРЅСЃРёСЂРѕРІР°С‚СЊ СЂР°Р·РЅРёС†Сѓ РјРµР¶РґСѓ С†РµРЅС‚СЂРѕРј Рё СѓРіР»РѕРј.
 							if ( param & 2 )
 							{
 								of->aabb.p -= Vector2( ((scalar)(of->sprite->frameWidth))/2, ((scalar)(of->sprite->frameHeight))/2 );
-								//Больше не передаём скорость, есть точки привязки
-								//if ( this->type == objBullet && ( ((ObjPhysic*)obj)->IsDynamic() ) ) //А если это ещё и пуля и создаваемый объект подвижен - передаём скорость.
+								//Р‘РѕР»СЊС€Рµ РЅРµ РїРµСЂРµРґР°С‘Рј СЃРєРѕСЂРѕСЃС‚СЊ, РµСЃС‚СЊ С‚РѕС‡РєРё РїСЂРёРІСЏР·РєРё
+								//if ( this->type == objBullet && ( ((ObjPhysic*)obj)->IsDynamic() ) ) //Рђ РµСЃР»Рё СЌС‚Рѕ РµС‰С‘ Рё РїСѓР»СЏ Рё СЃРѕР·РґР°РІР°РµРјС‹Р№ РѕР±СЉРµРєС‚ РїРѕРґРІРёР¶РµРЅ - РїРµСЂРµРґР°С‘Рј СЃРєРѕСЂРѕСЃС‚СЊ.
 								//	((ObjDynamic*)obj)->vel = ((ObjBullet*)this)->shooter->vel;
 
 							}
@@ -2200,7 +2200,7 @@ void GameObject::ProcessSprite()
 						else
 						{
 							sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV,
-								"Ошибка создания объекта %s в анимации %s:%d",
+								"РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° %s РІ Р°РЅРёРјР°С†РёРё %s:%d",
 								txt_param, this->sprite->cur_anim.c_str(), a->current);
 						}
 
@@ -2213,22 +2213,22 @@ void GameObject::ProcessSprite()
 							break;
 						int y = ps->PopInt();
 						int x = ps->PopInt();
-						//В третьем режиме смещение по x считается в направлении взгляда создателя.
+						//Р’ С‚СЂРµС‚СЊРµРј СЂРµР¶РёРјРµ СЃРјРµС‰РµРЅРёРµ РїРѕ x СЃС‡РёС‚Р°РµС‚СЃСЏ РІ РЅР°РїСЂР°РІР»РµРЅРёРё РІР·РіР»СЏРґР° СЃРѕР·РґР°С‚РµР»СЏ.
 						if ( (param & 4 ) && this->GetFacing() )
 							x *= -1;
 						obj = ::CreateSprite( txt_param, Vector2(  this->aabb.p.x+x, this->aabb.p.y+y ), false, NULL);
 
 						if (obj)
 						{
-							//Если первый режим включен, то передаём IsMirrored
+							//Р•СЃР»Рё РїРµСЂРІС‹Р№ СЂРµР¶РёРј РІРєР»СЋС‡РµРЅ, С‚Рѕ РїРµСЂРµРґР°С‘Рј IsMirrored
 							if ( (param & 1 ) && this->GetFacing() )
 								obj->SetFacing( true );
-							//Если второй режим включен, но пытаемся компенсировать разницу между центром и углом.
+							//Р•СЃР»Рё РІС‚РѕСЂРѕР№ СЂРµР¶РёРј РІРєР»СЋС‡РµРЅ, РЅРѕ РїС‹С‚Р°РµРјСЃСЏ РєРѕРјРїРµРЅСЃРёСЂРѕРІР°С‚СЊ СЂР°Р·РЅРёС†Сѓ РјРµР¶РґСѓ С†РµРЅС‚СЂРѕРј Рё СѓРіР»РѕРј.
 							if ( param & 2 )
 							{
 								obj->aabb.p -= Vector2( ((scalar)(obj->sprite->frameWidth)/2), ((scalar)(obj->sprite->frameHeight))/2 );
-								//Больше не передаём скорость, есть точки привязки
-								//if ( this->type == objBullet && ( ((ObjPhysic*)obj)->IsDynamic() ) ) //А если это ещё и пуля и создаваемый объект подвижен - передаём скорость.
+								//Р‘РѕР»СЊС€Рµ РЅРµ РїРµСЂРµРґР°С‘Рј СЃРєРѕСЂРѕСЃС‚СЊ, РµСЃС‚СЊ С‚РѕС‡РєРё РїСЂРёРІСЏР·РєРё
+								//if ( this->type == objBullet && ( ((ObjPhysic*)obj)->IsDynamic() ) ) //Рђ РµСЃР»Рё СЌС‚Рѕ РµС‰С‘ Рё РїСѓР»СЏ Рё СЃРѕР·РґР°РІР°РµРјС‹Р№ РѕР±СЉРµРєС‚ РїРѕРґРІРёР¶РµРЅ - РїРµСЂРµРґР°С‘Рј СЃРєРѕСЂРѕСЃС‚СЊ.
 								//	((ObjDynamic*)obj)->vel = ((ObjBullet*)this)->shooter->vel;
 
 							}
@@ -2236,7 +2236,7 @@ void GameObject::ProcessSprite()
 						else
 						{
 							sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV,
-								"Ошибка создания объекта %s в анимации %s:%d",
+								"РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° %s РІ Р°РЅРёРјР°С†РёРё %s:%d",
 								txt_param, this->sprite->cur_anim.c_str(), a->current);
 						}
 
@@ -2311,25 +2311,25 @@ void GameObject::ProcessSprite()
 						this->SetFacing( !this->GetFacing() );
 					}
 					break;
-				case afcCreateItem: //Копипаста такая копипаста
+				case afcCreateItem: //РљРѕРїРёРїР°СЃС‚Р° С‚Р°РєР°СЏ РєРѕРїРёРїР°СЃС‚Р°
 					{
 						ObjItem* obj = NULL;
 						if ( !ps->CheckParamTypes(2, stIntOrNone, stIntOrNone) )
 							break;
 						int y = ps->PopInt();
 						int x = ps->PopInt();
-						//В третьем режиме смещение по x считается в направлении взгляда создателя.
+						//Р’ С‚СЂРµС‚СЊРµРј СЂРµР¶РёРјРµ СЃРјРµС‰РµРЅРёРµ РїРѕ x СЃС‡РёС‚Р°РµС‚СЃСЏ РІ РЅР°РїСЂР°РІР»РµРЅРёРё РІР·РіР»СЏРґР° СЃРѕР·РґР°С‚РµР»СЏ.
 						if ( (param & 4 ) && this->GetFacing() )
 							x *= -1;
-						//Иначе просто создаём объект.
+						//РРЅР°С‡Рµ РїСЂРѕСЃС‚Рѕ СЃРѕР·РґР°С‘Рј РѕР±СЉРµРєС‚.
 						obj = ::CreateItem( txt_param, Vector2(  this->aabb.p.x+x, this->aabb.p.y+y ), NULL);
 
 						if (obj)
 						{
-							//Если первый режим включен, то передаём IsMirrored
+							//Р•СЃР»Рё РїРµСЂРІС‹Р№ СЂРµР¶РёРј РІРєР»СЋС‡РµРЅ, С‚Рѕ РїРµСЂРµРґР°С‘Рј IsMirrored
 							if ( (param & 1 ) && this->GetFacing() )
 								obj->SetFacing( true );
-							//Если второй режим включен, но пытаемся компенсировать разницу между центром и углом.
+							//Р•СЃР»Рё РІС‚РѕСЂРѕР№ СЂРµР¶РёРј РІРєР»СЋС‡РµРЅ, РЅРѕ РїС‹С‚Р°РµРјСЃСЏ РєРѕРјРїРµРЅСЃРёСЂРѕРІР°С‚СЊ СЂР°Р·РЅРёС†Сѓ РјРµР¶РґСѓ С†РµРЅС‚СЂРѕРј Рё СѓРіР»РѕРј.
 							if ( param & 2 )
 							{
 								obj->aabb.p -= Vector2( ((scalar)(obj->sprite->frameWidth))/2, ((scalar)(obj->sprite->frameHeight))/2 );
@@ -2338,7 +2338,7 @@ void GameObject::ProcessSprite()
 						else
 						{
 							sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV,
-								"Ошибка создания предмета %s в анимации %s:%d",
+								"РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ РїСЂРµРґРјРµС‚Р° %s РІ Р°РЅРёРјР°С†РёРё %s:%d",
 								txt_param, this->sprite->cur_anim.c_str(), a->current);
 						}
 						break;
@@ -2358,7 +2358,7 @@ void GameObject::ProcessSprite()
 						break;
 					}
 				case afcJumpIfWeaponReady:
-					if ( this->type == objPlayer ) //Только у игрока есть изменяемое оружие
+					if ( this->type == objPlayer ) //РўРѕР»СЊРєРѕ Сѓ РёРіСЂРѕРєР° РµСЃС‚СЊ РёР·РјРµРЅСЏРµРјРѕРµ РѕСЂСѓР¶РёРµ
 					{
 						ObjPlayer* op = (ObjPlayer*)this;
 						if (op->cur_weapon && op->cur_weapon->IsReady() && op->ammo > 0 )
@@ -2395,22 +2395,22 @@ void GameObject::ProcessSprite()
 						int sparam = ps->PopInt();
 						int y = ps->PopInt();
 						int x = ps->PopInt();
-						//В третьем режиме смещение по x считается в направлении взгляда создателя.
+						//Р’ С‚СЂРµС‚СЊРµРј СЂРµР¶РёРјРµ СЃРјРµС‰РµРЅРёРµ РїРѕ x СЃС‡РёС‚Р°РµС‚СЃСЏ РІ РЅР°РїСЂР°РІР»РµРЅРёРё РІР·РіР»СЏРґР° СЃРѕР·РґР°С‚РµР»СЏ.
 						if ( (sparam & 4 ) && this->GetFacing() )
 							x *= -1;
 						obj = ::CreateSprite( sprite_proto, Vector2(  this->aabb.p.x+x, this->aabb.p.y+y ), false, NULL);
 
 						if (obj)
 						{
-							//Если первый режим включен, то передаём IsMirrored
+							//Р•СЃР»Рё РїРµСЂРІС‹Р№ СЂРµР¶РёРј РІРєР»СЋС‡РµРЅ, С‚Рѕ РїРµСЂРµРґР°С‘Рј IsMirrored
 							if ( (sparam & 1 ) && this->GetFacing() )
 								obj->SetFacing( true );
-							//Если второй режим включен, но пытаемся компенсировать разницу между центром и углом.
+							//Р•СЃР»Рё РІС‚РѕСЂРѕР№ СЂРµР¶РёРј РІРєР»СЋС‡РµРЅ, РЅРѕ РїС‹С‚Р°РµРјСЃСЏ РєРѕРјРїРµРЅСЃРёСЂРѕРІР°С‚СЊ СЂР°Р·РЅРёС†Сѓ РјРµР¶РґСѓ С†РµРЅС‚СЂРѕРј Рё СѓРіР»РѕРј.
 							if ( sparam & 2 )
 							{
 								obj->aabb.p -= Vector2( ((scalar)(obj->sprite->frameWidth))/2, ((scalar)(obj->sprite->frameHeight))/2 );
-								//Больше не передаём скорость, есть точки привязки
-								//if ( this->type == objBullet && ( ((ObjPhysic*)obj)->IsDynamic() ) ) //А если это ещё и пуля и создаваемый объект подвижен - передаём скорость.
+								//Р‘РѕР»СЊС€Рµ РЅРµ РїРµСЂРµРґР°С‘Рј СЃРєРѕСЂРѕСЃС‚СЊ, РµСЃС‚СЊ С‚РѕС‡РєРё РїСЂРёРІСЏР·РєРё
+								//if ( this->type == objBullet && ( ((ObjPhysic*)obj)->IsDynamic() ) ) //Рђ РµСЃР»Рё СЌС‚Рѕ РµС‰С‘ Рё РїСѓР»СЏ Рё СЃРѕР·РґР°РІР°РµРјС‹Р№ РѕР±СЉРµРєС‚ РїРѕРґРІРёР¶РµРЅ - РїРµСЂРµРґР°С‘Рј СЃРєРѕСЂРѕСЃС‚СЊ.
 								//	((ObjDynamic*)obj)->vel = ((ObjBullet*)this)->shooter->vel;
 
 							}
@@ -2418,7 +2418,7 @@ void GameObject::ProcessSprite()
 						else
 						{
 							sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV,
-								"Ошибка создания объекта %s в анимации %s:%d",
+								"РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ РѕР±СЉРµРєС‚Р° %s РІ Р°РЅРёРјР°С†РёРё %s:%d",
 								sprite_proto, this->sprite->cur_anim.c_str(), a->current);
 						}
 
@@ -2429,7 +2429,7 @@ void GameObject::ProcessSprite()
 						if (!txt_param)
 						{
 							sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_ERROR_EV, 
-								"Не указано имя функции. proto_name %s, анимация %s, кадр %d", 
+								"РќРµ СѓРєР°Р·Р°РЅРѕ РёРјСЏ С„СѓРЅРєС†РёРё. proto_name %s, Р°РЅРёРјР°С†РёСЏ %s, РєР°РґСЂ %d", 
 								this->sprite->proto_name, this->sprite->cur_anim.c_str(), a->current);
 							break;
 						}
@@ -2437,7 +2437,7 @@ void GameObject::ProcessSprite()
 						if (!lua_isfunction(lua, -1))
 						{
 							sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_ERROR_EV, 
-								"Тип %s - %s. proto_name %s, анимация %s, кадр %d", 
+								"РўРёРї %s - %s. proto_name %s, Р°РЅРёРјР°С†РёСЏ %s, РєР°РґСЂ %d", 
 								txt_param, lua_typename(lua, lua_type(lua, -1)), this->sprite->proto_name, this->sprite->cur_anim.c_str(), a->current);
 							lua_pop(lua, 1);
 							break;
@@ -2448,7 +2448,7 @@ void GameObject::ProcessSprite()
 						if (lua_pcall(lua, 2, 0, 0) != 0 )
 						{
 							sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_ERROR_EV,
-								"Ошибка выполнения функции %s(%d,%d), proto_name %s, анимация %s, кадр %d: %s",
+								"РћС€РёР±РєР° РІС‹РїРѕР»РЅРµРЅРёСЏ С„СѓРЅРєС†РёРё %s(%d,%d), proto_name %s, Р°РЅРёРјР°С†РёСЏ %s, РєР°РґСЂ %d: %s",
 								txt_param, this->id, param, this->sprite->proto_name, this->sprite->cur_anim.c_str(), a->current, lua_tostring(lua, -1) );
 							lua_pop(lua, 1);
 							break;
@@ -2463,7 +2463,7 @@ void GameObject::ProcessSprite()
 						if (!txt_param)
 						{
 							sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_ERROR_EV, 
-								"Не указано имя функции. proto_name %s, анимация %s, кадр %d", 
+								"РќРµ СѓРєР°Р·Р°РЅРѕ РёРјСЏ С„СѓРЅРєС†РёРё. proto_name %s, Р°РЅРёРјР°С†РёСЏ %s, РєР°РґСЂ %d", 
 								this->sprite->proto_name, this->sprite->cur_anim.c_str(), a->current);
 							break;
 						}
@@ -2471,7 +2471,7 @@ void GameObject::ProcessSprite()
 						if (!lua_isfunction(lua, -1))
 						{
 							sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_ERROR_EV, 
-								"Тип %s - %s. proto_name %s, анимация %s, кадр %d", 
+								"РўРёРї %s - %s. proto_name %s, Р°РЅРёРјР°С†РёСЏ %s, РєР°РґСЂ %d", 
 								txt_param, lua_typename(lua, lua_type(lua, -1)), this->sprite->proto_name, this->sprite->cur_anim.c_str(), a->current);
 							lua_pop(lua, 1);
 							break;
@@ -2482,7 +2482,7 @@ void GameObject::ProcessSprite()
 						if (lua_pcall(lua, 2, 0, 0) != 0 )
 						{
 							sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_ERROR_EV,
-								"Ошибка выполнения функции %s(%d,%d), proto_name %s, анимация %s, кадр %d: %s",
+								"РћС€РёР±РєР° РІС‹РїРѕР»РЅРµРЅРёСЏ С„СѓРЅРєС†РёРё %s(%d,%d), proto_name %s, Р°РЅРёРјР°С†РёСЏ %s, РєР°РґСЂ %d: %s",
 								txt_param, this->id, param, this->sprite->proto_name, this->sprite->cur_anim.c_str(), a->current, lua_tostring(lua, -1) );
 							lua_pop(lua, 1);
 							break;

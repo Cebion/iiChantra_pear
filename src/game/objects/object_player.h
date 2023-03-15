@@ -9,12 +9,12 @@ class ObjPlayer : public ObjCharacter
 {
 public:
 	//USHORT health;
-	bool controlEnabled;			// Может ли игрок управлять	
-	Weapon* alt_weapon;				// Альтернативное оружие
+	bool controlEnabled;			// РњРѕР¶РµС‚ Р»Рё РёРіСЂРѕРє СѓРїСЂР°РІР»СЏС‚СЊ	
+	Weapon* alt_weapon;				// РђР»СЊС‚РµСЂРЅР°С‚РёРІРЅРѕРµ РѕСЂСѓР¶РёРµ
 	UINT ammo;
-	int camera_offset;			//Позволяет смотреть вверх-вниз
+	int camera_offset;			//РџРѕР·РІРѕР»СЏРµС‚ СЃРјРѕС‚СЂРµС‚СЊ РІРІРµСЂС…-РІРЅРёР·
 	//USHORT jump_reserve;
-	bool jump_complete;				//Самый тупой способ
+	bool jump_complete;				//РЎР°РјС‹Р№ С‚СѓРїРѕР№ СЃРїРѕСЃРѕР±
 	float recovery_time;
 	
 	ObjPlayer()
@@ -34,7 +34,7 @@ public:
 		this->health = 50;
 		this->ammo = 100;
 		jump_complete = true;
-		//jump_reserve = 10; //Хранить не "куски", а сразу значения ускорения?
+		//jump_reserve = 10; //РҐСЂР°РЅРёС‚СЊ РЅРµ "РєСѓСЃРєРё", Р° СЃСЂР°Р·Сѓ Р·РЅР°С‡РµРЅРёСЏ СѓСЃРєРѕСЂРµРЅРёСЏ?
 	}
 
 	~ObjPlayer();

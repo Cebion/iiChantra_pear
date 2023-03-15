@@ -9,10 +9,10 @@ class ObjBullet : public ObjDynamic
 {
 public:
 	UINT damage;
-	//ObjCharacter* shooter; <- òàê íåëüçÿ, ïîòîìó ÷òî îí ìîæåò áûòü óäàë¸í è èíôîðìàöèè íå ïîëó÷èì.
+	//ObjCharacter* shooter; <- Ñ‚Ð°Ðº Ð½ÐµÐ»ÑŒÐ·Ñ, Ð¿Ð¾Ñ‚Ð¾Ð¼Ñƒ Ñ‡Ñ‚Ð¾ Ð¾Ð½ Ð¼Ð¾Ð¶ÐµÑ‚ Ð±Ñ‹Ñ‚ÑŒ ÑƒÐ´Ð°Ð»Ñ‘Ð½ Ð¸ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ð¸ Ð½Ðµ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ð¼.
 	ObjectType shooter_type;
 
-	//Shielding bit - ïîãëîùàåò äðóãèå âûñòðåëû ïðè âñòðå÷å. Äðóãèå shielding âûñòðåëû èãíîðèðóþòñÿ.
+	//Shielding bit - Ð¿Ð¾Ð³Ð»Ð¾Ñ‰Ð°ÐµÑ‚ Ð´Ñ€ÑƒÐ³Ð¸Ðµ Ð²Ñ‹ÑÑ‚Ñ€ÐµÐ»Ñ‹ Ð¿Ñ€Ð¸ Ð²ÑÑ‚Ñ€ÐµÑ‡Ðµ. Ð”Ñ€ÑƒÐ³Ð¸Ðµ shielding Ð²Ñ‹ÑÑ‚Ñ€ÐµÐ»Ñ‹ Ð¸Ð³Ð½Ð¾Ñ€Ð¸Ñ€ÑƒÑŽÑ‚ÑÑ.
 	__INLINE void SetShielding()		{ physFlags |= 128; }
 	__INLINE void ClearShielding()		{ physFlags &= ~128; }
 	__INLINE bool IsShielding()			{ return (physFlags & 128) != 0; }

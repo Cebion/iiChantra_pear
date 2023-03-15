@@ -24,7 +24,7 @@
 
 #include "ASAP_Types.h"
 
-// Исправления ошибки в хранении боксов.
+// РСЃРїСЂР°РІР»РµРЅРёСЏ РѕС€РёР±РєРё РІ С…СЂР°РЅРµРЅРёРё Р±РѕРєСЃРѕРІ.
 #define KERNEL_BUG_ASAP_FIX
 
 
@@ -80,10 +80,10 @@ namespace Opcode
 		inline_					ASAP_Box()	{}
 		inline_					~ASAP_Box()	{}
 
-		IndexType		mMin[3];		// Номера конечных точек на осях
-		IndexType		mMax[3];		// Номера конечных точек на осях
-		void*			mObject;		// Указатель на игровой объект
-		udword			mGUID;			// Номер игрового объекта (по счетчику самой игры, не SAP'a)
+		IndexType		mMin[3];		// РќРѕРјРµСЂР° РєРѕРЅРµС‡РЅС‹С… С‚РѕС‡РµРє РЅР° РѕСЃСЏС…
+		IndexType		mMax[3];		// РќРѕРјРµСЂР° РєРѕРЅРµС‡РЅС‹С… С‚РѕС‡РµРє РЅР° РѕСЃСЏС…
+		void*			mObject;		// РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚
+		udword			mGUID;			// РќРѕРјРµСЂ РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р° (РїРѕ СЃС‡РµС‚С‡РёРєСѓ СЃР°РјРѕР№ РёРіСЂС‹, РЅРµ SAP'a)
 
 		inline_	ValType			GetMaxValue(udword i, const ASAP_EndPoint* base)	const
 		{
@@ -119,7 +119,7 @@ namespace Opcode
 	struct IAABB;
 	struct CreateData;
 
-	// Главный класс, хранит боксы, двигает их и определяет пересечения
+	// Р“Р»Р°РІРЅС‹Р№ РєР»Р°СЃСЃ, С…СЂР°РЅРёС‚ Р±РѕРєСЃС‹, РґРІРёРіР°РµС‚ РёС… Рё РѕРїСЂРµРґРµР»СЏРµС‚ РїРµСЂРµСЃРµС‡РµРЅРёСЏ
 	class OPCODE_API ArraySAP : public IceCore::Allocateable
 	{
 		public:
@@ -139,22 +139,22 @@ namespace Opcode
 		/*inline_*/	void			RemovePair(const void* object0, const void* object1, uword id0, uword id1);
 
 		private:
-				IceCore::Container	mData;	// Тут хранятся индексы пар пересечений, которые удалялись или добавлялись
-				ASAP_PairManager	mPairs;	// Менеджер пар пересечений
+				IceCore::Container	mData;	// РўСѓС‚ С…СЂР°РЅСЏС‚СЃСЏ РёРЅРґРµРєСЃС‹ РїР°СЂ РїРµСЂРµСЃРµС‡РµРЅРёР№, РєРѕС‚РѕСЂС‹Рµ СѓРґР°Р»СЏР»РёСЃСЊ РёР»Рё РґРѕР±Р°РІР»СЏР»РёСЃСЊ
+				ASAP_PairManager	mPairs;	// РњРµРЅРµРґР¶РµСЂ РїР°СЂ РїРµСЂРµСЃРµС‡РµРЅРёР№
 
-				// Код перенесен в OPC_ArraySAP.cpp
+				// РљРѕРґ РїРµСЂРµРЅРµСЃРµРЅ РІ OPC_ArraySAP.cpp
 		inline_	void				AddPair(const void* object0, const void* object1, uword id0, uword id1);
 		//inline_	void				RemovePair(const void* object0, const void* object1, uword id0, uword id1);
 
 	#ifdef KERNEL_BUG_ASAP_FIX
-				udword				mNbAddedBoxes;	// Количество боксов в массиве, которые ждут обработки в BatchAdd
-				udword				mNbUsedBoxes;	// Количество настоящих боксов, котрые храняться в массиве и используются в данный момент
+				udword				mNbAddedBoxes;	// РљРѕР»РёС‡РµСЃС‚РІРѕ Р±РѕРєСЃРѕРІ РІ РјР°СЃСЃРёРІРµ, РєРѕС‚РѕСЂС‹Рµ Р¶РґСѓС‚ РѕР±СЂР°Р±РѕС‚РєРё РІ BatchAdd
+				udword				mNbUsedBoxes;	// РљРѕР»РёС‡РµСЃС‚РІРѕ РЅР°СЃС‚РѕСЏС‰РёС… Р±РѕРєСЃРѕРІ, РєРѕС‚СЂС‹Рµ С…СЂР°РЅСЏС‚СЊСЃСЏ РІ РјР°СЃСЃРёРІРµ Рё РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РІ РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚
 	#endif // KERNEL_BUG_ASAP_FIX
-				udword				mNbBoxes;		// Количество боксов, котрые храняться в массиве
-				udword				mMaxNbBoxes;	// Количесвто боксов, под которое выделена память
-				ASAP_Box*			mBoxes;			// Массив боксов
-				ASAP_EndPoint*		mEndPoints[3];	// Массив конечных точек боксов по трем осям
-				udword				mFirstFree;		// Следующий свободный номер бокса - следующий свободный индекс в массиве
+				udword				mNbBoxes;		// РљРѕР»РёС‡РµСЃС‚РІРѕ Р±РѕРєСЃРѕРІ, РєРѕС‚СЂС‹Рµ С…СЂР°РЅСЏС‚СЊСЃСЏ РІ РјР°СЃСЃРёРІРµ
+				udword				mMaxNbBoxes;	// РљРѕР»РёС‡РµСЃРІС‚Рѕ Р±РѕРєСЃРѕРІ, РїРѕРґ РєРѕС‚РѕСЂРѕРµ РІС‹РґРµР»РµРЅР° РїР°РјСЏС‚СЊ
+				ASAP_Box*			mBoxes;			// РњР°СЃСЃРёРІ Р±РѕРєСЃРѕРІ
+				ASAP_EndPoint*		mEndPoints[3];	// РњР°СЃСЃРёРІ РєРѕРЅРµС‡РЅС‹С… С‚РѕС‡РµРє Р±РѕРєСЃРѕРІ РїРѕ С‚СЂРµРј РѕСЃСЏРј
+				udword				mFirstFree;		// РЎР»РµРґСѓСЋС‰РёР№ СЃРІРѕР±РѕРґРЅС‹Р№ РЅРѕРјРµСЂ Р±РѕРєСЃР° - СЃР»РµРґСѓСЋС‰РёР№ СЃРІРѕР±РѕРґРЅС‹Р№ РёРЅРґРµРєСЃ РІ РјР°СЃСЃРёРІРµ
 
 				void				ResizeBoxArray();
 			// For batch creation

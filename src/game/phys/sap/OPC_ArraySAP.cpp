@@ -117,9 +117,9 @@ void ArraySAP::ResizeBoxArray()
 
 	if(mNbBoxes)
 	{
-		// Копируем весь массив боксов (в том числе и уже удаленые, если они есть)
+		// РљРѕРїРёСЂСѓРµРј РІРµСЃСЊ РјР°СЃСЃРёРІ Р±РѕРєСЃРѕРІ (РІ С‚РѕРј С‡РёСЃР»Рµ Рё СѓР¶Рµ СѓРґР°Р»РµРЅС‹Рµ, РµСЃР»Рё РѕРЅРё РµСЃС‚СЊ)
 		CopyMemory(NewBoxes, mBoxes, sizeof(ASAP_Box)*mNbBoxes);
-		// Копируем массивы КТ по осям. Их в 2 р. больше, чем реального количества боксов + 2 сентинела.
+		// РљРѕРїРёСЂСѓРµРј РјР°СЃСЃРёРІС‹ РљРў РїРѕ РѕСЃСЏРј. РС… РІ 2 СЂ. Р±РѕР»СЊС€Рµ, С‡РµРј СЂРµР°Р»СЊРЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° Р±РѕРєСЃРѕРІ + 2 СЃРµРЅС‚РёРЅРµР»Р°.
 #ifdef KERNEL_BUG_ASAP_FIX
 		CopyMemory(NewEndPointsX, mEndPoints[0], sizeof(ASAP_EndPoint)*(mNbAddedBoxes*2+NbSentinels));
 		CopyMemory(NewEndPointsY, mEndPoints[1], sizeof(ASAP_EndPoint)*(mNbAddedBoxes*2+NbSentinels));
@@ -168,10 +168,10 @@ inline_ BOOL Intersect(const IAABB& a, const IAABB& b, udword axis)
 // ### TODO: the sorts here might be useless, as the values have been sorted already
 bool ArraySAP::CompleteBoxPruning2(udword nb, const IAABB* array, const Axes& axes, const CreateData* batched)
 {
-	// nb - количество боксов, которые сталкиваем
-	// array - массив индексов КТ сталкиваемых боксов
-	// axes - оси
-	// batched - массив данных  о новых боксах
+	// nb - РєРѕР»РёС‡РµСЃС‚РІРѕ Р±РѕРєСЃРѕРІ, РєРѕС‚РѕСЂС‹Рµ СЃС‚Р°Р»РєРёРІР°РµРј
+	// array - РјР°СЃСЃРёРІ РёРЅРґРµРєСЃРѕРІ РљРў СЃС‚Р°Р»РєРёРІР°РµРјС‹С… Р±РѕРєСЃРѕРІ
+	// axes - РѕСЃРё
+	// batched - РјР°СЃСЃРёРІ РґР°РЅРЅС‹С…  Рѕ РЅРѕРІС‹С… Р±РѕРєСЃР°С…
 	// Checkings
 	if(!nb || !array)	return false;
 
@@ -181,7 +181,7 @@ bool ArraySAP::CompleteBoxPruning2(udword nb, const IAABB* array, const Axes& ax
 	const udword Axis2 = axes.mAxis2;
 
 	// Allocate some temporary data
-	// Массив минимальных КТ по главной оси
+	// РњР°СЃСЃРёРІ РјРёРЅРёРјР°Р»СЊРЅС‹С… РљРў РїРѕ РіР»Р°РІРЅРѕР№ РѕСЃРё
 	udword* PosList = (udword*)ICE_ALLOC_TMP(sizeof(udword)*(nb+1));
 
 	// 1) Build main list using the primary axis
@@ -194,19 +194,19 @@ bool ArraySAP::CompleteBoxPruning2(udword nb, const IAABB* array, const Axes& ax
 	RadixSort* RS = &r;
 
 //	const udword* Sorted = RS->Sort(PosList, nb, RADIX_SIGNED).GetRanks();
-	// Массив индексов отсотритрованных минКТ по глав оси
-	// НАдо сортировать, потму что они илут в том порядке, в котором создавались боксы
+	// РњР°СЃСЃРёРІ РёРЅРґРµРєСЃРѕРІ РѕС‚СЃРѕС‚СЂРёС‚СЂРѕРІР°РЅРЅС‹С… РјРёРЅРљРў РїРѕ РіР»Р°РІ РѕСЃРё
+	// РќРђРґРѕ СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ, РїРѕС‚РјСѓ С‡С‚Рѕ РѕРЅРё РёР»СѓС‚ РІ С‚РѕРј РїРѕСЂСЏРґРєРµ, РІ РєРѕС‚РѕСЂРѕРј СЃРѕР·РґР°РІР°Р»РёСЃСЊ Р±РѕРєСЃС‹
 	const udword* Sorted = RS->Sort(PosList, nb, RADIX_UNSIGNED).GetRanks();
 
 	// 3) Prune the list
-	const udword* const LastSorted = &Sorted[nb];	// Адресс конца массива (вернее массив закончился на прошлом элементе)
+	const udword* const LastSorted = &Sorted[nb];	// РђРґСЂРµСЃСЃ РєРѕРЅС†Р° РјР°СЃСЃРёРІР° (РІРµСЂРЅРµРµ РјР°СЃСЃРёРІ Р·Р°РєРѕРЅС‡РёР»СЃСЏ РЅР° РїСЂРѕС€Р»РѕРј СЌР»РµРјРµРЅС‚Рµ)
 	const udword* RunningAddress = Sorted;
 	udword Index0, Index1;
-	while(RunningAddress<LastSorted && Sorted<LastSorted)		// Пока не вышли за границы массива
+	while(RunningAddress<LastSorted && Sorted<LastSorted)		// РџРѕРєР° РЅРµ РІС‹С€Р»Рё Р·Р° РіСЂР°РЅРёС†С‹ РјР°СЃСЃРёРІР°
 	{
 		Index0 = *Sorted++;
 
-		// Ищем следующую большую КТ или конец массива добавленных КТ
+		// РС‰РµРј СЃР»РµРґСѓСЋС‰СѓСЋ Р±РѕР»СЊС€СѓСЋ РљРў РёР»Рё РєРѕРЅРµС† РјР°СЃСЃРёРІР° РґРѕР±Р°РІР»РµРЅРЅС‹С… РљРў
 		while(RunningAddress<LastSorted && PosList[*RunningAddress++]<PosList[Index0]);
 //		while(PosList[*RunningAddress++]<PosList[Index0]);
 
@@ -214,8 +214,8 @@ bool ArraySAP::CompleteBoxPruning2(udword nb, const IAABB* array, const Axes& ax
 		{
 			const udword* RunningAddress2 = RunningAddress;
 
-			// Ищем, находится ли между мин. и макс. точками бокса Index0 мин. точка других боксов Index1
-			// Если такие находятся, значит на этой оси боксы Index0 и Index1 пересекаются
+			// РС‰РµРј, РЅР°С…РѕРґРёС‚СЃСЏ Р»Рё РјРµР¶РґСѓ РјРёРЅ. Рё РјР°РєСЃ. С‚РѕС‡РєР°РјРё Р±РѕРєСЃР° Index0 РјРёРЅ. С‚РѕС‡РєР° РґСЂСѓРіРёС… Р±РѕРєСЃРѕРІ Index1
+			// Р•СЃР»Рё С‚Р°РєРёРµ РЅР°С…РѕРґСЏС‚СЃСЏ, Р·РЅР°С‡РёС‚ РЅР° СЌС‚РѕР№ РѕСЃРё Р±РѕРєСЃС‹ Index0 Рё Index1 РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ
 			while(RunningAddress2<LastSorted && PosList[Index1 = *RunningAddress2++]<=array[Index0].GetMax(Axis0))
 //			while(PosList[Index1 = *RunningAddress2++]<=(udword)ConvertToSortable(array[Index0].GetMax(Axis0)))
 			{
@@ -223,7 +223,7 @@ bool ArraySAP::CompleteBoxPruning2(udword nb, const IAABB* array, const Axes& ax
 				{
 					if(Intersect(array[Index0], array[Index1], Axis2))
 					{
-						// ПРойдена проверка по остальным двум осям, объекты пересекаются
+						// РџР РѕР№РґРµРЅР° РїСЂРѕРІРµСЂРєР° РїРѕ РѕСЃС‚Р°Р»СЊРЅС‹Рј РґРІСѓРј РѕСЃСЏРј, РѕР±СЉРµРєС‚С‹ РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ
 						const ASAP_Box* Box0 = mBoxes + batched[Index0].mHandle;
 						const ASAP_Box* Box1 = mBoxes + batched[Index1].mHandle;
 						assert(Box0->mGUID != 65535);
@@ -241,13 +241,13 @@ bool ArraySAP::CompleteBoxPruning2(udword nb, const IAABB* array, const Axes& ax
 
 bool ArraySAP::BipartiteBoxPruning2(udword nb0, const IAABB* array0, udword nb1, const IAABB* array1, const Axes& axes, const CreateData* batched, const udword* box_indices)
 {
-	// nb0 - количество новых боксов
-	// Массив индексов КТ новых боксов
-	// nb1 - Кол-во старых боксов
-	// array1 - Массив КТ старых боксов
-	// axes - оси
-	// batched - массив данных о новых боксах
-	// box_indices - масив индексов старых боксов
+	// nb0 - РєРѕР»РёС‡РµСЃС‚РІРѕ РЅРѕРІС‹С… Р±РѕРєСЃРѕРІ
+	// РњР°СЃСЃРёРІ РёРЅРґРµРєСЃРѕРІ РљРў РЅРѕРІС‹С… Р±РѕРєСЃРѕРІ
+	// nb1 - РљРѕР»-РІРѕ СЃС‚Р°СЂС‹С… Р±РѕРєСЃРѕРІ
+	// array1 - РњР°СЃСЃРёРІ РљРў СЃС‚Р°СЂС‹С… Р±РѕРєСЃРѕРІ
+	// axes - РѕСЃРё
+	// batched - РјР°СЃСЃРёРІ РґР°РЅРЅС‹С… Рѕ РЅРѕРІС‹С… Р±РѕРєСЃР°С…
+	// box_indices - РјР°СЃРёРІ РёРЅРґРµРєСЃРѕРІ СЃС‚Р°СЂС‹С… Р±РѕРєСЃРѕРІ
 	// Checkings
 	if(!nb0 || !array0 || !nb1 || !array1)	return false;
 
@@ -303,7 +303,7 @@ bool ArraySAP::BipartiteBoxPruning2(udword nb0, const IAABB* array0, udword nb1,
 					const ASAP_Box* Box1 = mBoxes + box_indices[Index1];
 					assert(Box0->mGUID != 65535);
 					assert(Box1->mGUID != 65535);
-					// Вот здесь и обнаруживаются удаленые боксы, если они попали в список старых боксов
+					// Р’РѕС‚ Р·РґРµСЃСЊ Рё РѕР±РЅР°СЂСѓР¶РёРІР°СЋС‚СЃСЏ СѓРґР°Р»РµРЅС‹Рµ Р±РѕРєСЃС‹, РµСЃР»Рё РѕРЅРё РїРѕРїР°Р»Рё РІ СЃРїРёСЃРѕРє СЃС‚Р°СЂС‹С… Р±РѕРєСЃРѕРІ
 					assert(Box1->mGUID != INVALID_ID);
 					AddPair(Box0->mObject, Box1->mObject, Box0->mGUID, Box1->mGUID);
 				}
@@ -331,7 +331,7 @@ bool ArraySAP::BipartiteBoxPruning2(udword nb0, const IAABB* array0, udword nb1,
 					const ASAP_Box* Box1 = mBoxes + box_indices[Index0];
 					assert(Box0->mGUID != 65535);
 					assert(Box1->mGUID != 65535);
-					// Вот здесь и обнаруживаются удаленые боксы, если они попали в список старых боксов
+					// Р’РѕС‚ Р·РґРµСЃСЊ Рё РѕР±РЅР°СЂСѓР¶РёРІР°СЋС‚СЃСЏ СѓРґР°Р»РµРЅС‹Рµ Р±РѕРєСЃС‹, РµСЃР»Рё РѕРЅРё РїРѕРїР°Р»Рё РІ СЃРїРёСЃРѕРє СЃС‚Р°СЂС‹С… Р±РѕРєСЃРѕРІ
 					assert(Box1->mGUID != INVALID_ID);
 					AddPair(Box0->mObject, Box1->mObject, Box0->mGUID, Box1->mGUID);
 				}
@@ -345,9 +345,9 @@ bool ArraySAP::BipartiteBoxPruning2(udword nb0, const IAABB* array0, udword nb1,
 	return true;
 }
 
-// В этой функции создается запрос добавления нового объекта в SAP. Реальное добавление
-// произойдет в BatchCreate. Здесь же только определеяется id в массиве и вызывается 
-// увеличение выделенной под массив памяти при необходимости.
+// Р’ СЌС‚РѕР№ С„СѓРЅРєС†РёРё СЃРѕР·РґР°РµС‚СЃСЏ Р·Р°РїСЂРѕСЃ РґРѕР±Р°РІР»РµРЅРёСЏ РЅРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р° РІ SAP. Р РµР°Р»СЊРЅРѕРµ РґРѕР±Р°РІР»РµРЅРёРµ
+// РїСЂРѕРёР·РѕР№РґРµС‚ РІ BatchCreate. Р—РґРµСЃСЊ Р¶Рµ С‚РѕР»СЊРєРѕ РѕРїСЂРµРґРµР»РµСЏРµС‚СЃСЏ id РІ РјР°СЃСЃРёРІРµ Рё РІС‹Р·С‹РІР°РµС‚СЃСЏ 
+// СѓРІРµР»РёС‡РµРЅРёРµ РІС‹РґРµР»РµРЅРЅРѕР№ РїРѕРґ РјР°СЃСЃРёРІ РїР°РјСЏС‚Рё РїСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё.
 udword ArraySAP::AddObject(void* object, uword guid, const ASAP_AABB& box)
 {
 	assert(!(size_t(object)&3));	// We will use the 2 LSBs
@@ -360,11 +360,11 @@ udword ArraySAP::AddObject(void* object, uword guid, const ASAP_AABB& box)
 
 	TRACEMSG(">>>>>>>>>> nb = %d, bnu = %d", mNbBoxes, mNbUsedBoxes);
 
-	// Определение свободной позиции в массиве и вызов перераспределения памяти (при необходимости)
+	// РћРїСЂРµРґРµР»РµРЅРёРµ СЃРІРѕР±РѕРґРЅРѕР№ РїРѕР·РёС†РёРё РІ РјР°СЃСЃРёРІРµ Рё РІС‹Р·РѕРІ РїРµСЂРµСЂР°СЃРїСЂРµРґРµР»РµРЅРёСЏ РїР°РјСЏС‚Рё (РїСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё)
 	udword BoxIndex;
 	if(mFirstFree!=INVALID_ID)
 	{
-		// Добавление внутрь массива на место удаленного бокса
+		// Р”РѕР±Р°РІР»РµРЅРёРµ РІРЅСѓС‚СЂСЊ РјР°СЃСЃРёРІР° РЅР° РјРµСЃС‚Рѕ СѓРґР°Р»РµРЅРЅРѕРіРѕ Р±РѕРєСЃР°
 		BoxIndex = mFirstFree;
 		mFirstFree = mBoxes[BoxIndex].mGUID;
 #ifdef KERNEL_BUG_ASAP_FIX
@@ -375,7 +375,7 @@ udword ArraySAP::AddObject(void* object, uword guid, const ASAP_AABB& box)
 	}
 	else
 	{
-		// Добавление в конец масива
+		// Р”РѕР±Р°РІР»РµРЅРёРµ РІ РєРѕРЅРµС† РјР°СЃРёРІР°
 		if(mNbBoxes==mMaxNbBoxes)
 			ResizeBoxArray();
 		BoxIndex = mNbBoxes;
@@ -454,8 +454,8 @@ void ArraySAP::InsertEndPoints(udword axis, const ASAP_EndPoint* end_points, udw
 	//assert(BaseEP[NewSize + 1].mValue == MAX_FLOAT);
 }
 
-// В этой функции происходит реальное добавление новых объектов в массив и их правильное
-// размещение на осях.
+// Р’ СЌС‚РѕР№ С„СѓРЅРєС†РёРё РїСЂРѕРёСЃС…РѕРґРёС‚ СЂРµР°Р»СЊРЅРѕРµ РґРѕР±Р°РІР»РµРЅРёРµ РЅРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ РІ РјР°СЃСЃРёРІ Рё РёС… РїСЂР°РІРёР»СЊРЅРѕРµ
+// СЂР°Р·РјРµС‰РµРЅРёРµ РЅР° РѕСЃСЏС….
 void ArraySAP::BatchCreate()
 {
 	udword NbBatched = mCreated.GetNbEntries();
@@ -469,35 +469,35 @@ void ArraySAP::BatchCreate()
 	mNbUsedBoxes = mNbAddedBoxes;
 #endif // KERNEL_BUG_ASAP_FIX
 
-	const udword NbEndPoints = NbBatched*2;			// Количесво добавляемых конечных точек
-	ASAP_EndPoint* NewEPSorted = ICE_NEW_TMP(ASAP_EndPoint)[NbEndPoints];	// Массив новых конечных точек
-	ASAP_EndPoint* Buffer = (ASAP_EndPoint*)ICE_ALLOC_TMP(sizeof(ASAP_EndPoint)*NbEndPoints);	// Массив отсортированых новых КТ
+	const udword NbEndPoints = NbBatched*2;			// РљРѕР»РёС‡РµСЃРІРѕ РґРѕР±Р°РІР»СЏРµРјС‹С… РєРѕРЅРµС‡РЅС‹С… С‚РѕС‡РµРє
+	ASAP_EndPoint* NewEPSorted = ICE_NEW_TMP(ASAP_EndPoint)[NbEndPoints];	// РњР°СЃСЃРёРІ РЅРѕРІС‹С… РєРѕРЅРµС‡РЅС‹С… С‚РѕС‡РµРє
+	ASAP_EndPoint* Buffer = (ASAP_EndPoint*)ICE_ALLOC_TMP(sizeof(ASAP_EndPoint)*NbEndPoints);	// РњР°СЃСЃРёРІ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅС‹С… РЅРѕРІС‹С… РљРў
 	RadixSort RS;
 
-	// Проверка, что сентинелы проставлены правильно
+	// РџСЂРѕРІРµСЂРєР°, С‡С‚Рѕ СЃРµРЅС‚РёРЅРµР»С‹ РїСЂРѕСЃС‚Р°РІР»РµРЅС‹ РїСЂР°РІРёР»СЊРЅРѕ
 	//for(udword Axis=0;Axis<3;Axis++){
 	//assert(mEndPoints[Axis][0].mValue == MIN_FLOAT);
 	//assert(mEndPoints[Axis][mNbUsedBoxes*2 + 1 - NbEndPoints].mValue == MAX_FLOAT);
 	//}
 
-	// Заполнение массива новых КТ значениями, сортировка и внесение в массив существующих КТ по каждой оси
+	// Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° РЅРѕРІС‹С… РљРў Р·РЅР°С‡РµРЅРёСЏРјРё, СЃРѕСЂС‚РёСЂРѕРІРєР° Рё РІРЅРµСЃРµРЅРёРµ РІ РјР°СЃСЃРёРІ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёС… РљРў РїРѕ РєР°Р¶РґРѕР№ РѕСЃРё
 	for(udword Axis=0;Axis<3;Axis++)
 	{
-		// Заполнеие массива новых КТ
+		// Р—Р°РїРѕР»РЅРµРёРµ РјР°СЃСЃРёРІР° РЅРѕРІС‹С… РљРў
 		for(udword i=0;i<NbBatched;i++)
 		{
 			const udword BoxIndex = (udword)Batched[i].mHandle;
 			assert(mBoxes[BoxIndex].mMin[Axis]==INVALID_INDEX);
 			assert(mBoxes[BoxIndex].mMax[Axis]==INVALID_INDEX);
 
-			// Берем границы ASAP_AABB для бокса
+			// Р‘РµСЂРµРј РіСЂР°РЅРёС†С‹ ASAP_AABB РґР»СЏ Р±РѕРєСЃР°
 			const float MinValue = Batched[i].mBox.GetMin(Axis);
 			const float MaxValue = Batched[i].mBox.GetMax(Axis);
 
 			//NewEPSorted[i*2+0].SetData(EncodeFloat(MinValue), BoxIndex, FALSE);
 			//NewEPSorted[i*2+1].SetData(EncodeFloat(MaxValue), BoxIndex, TRUE);
 
-			// Кладем границы в виде КТ в массив
+			// РљР»Р°РґРµРј РіСЂР°РЅРёС†С‹ РІ РІРёРґРµ РљРў РІ РјР°СЃСЃРёРІ
 			NewEPSorted[i*2+0].SetData(MinValue, BoxIndex, FALSE);
 			NewEPSorted[i*2+1].SetData(MaxValue, BoxIndex, TRUE);
 		}
@@ -512,12 +512,12 @@ void ArraySAP::BatchCreate()
 			//const udword* Sorted = RS.Sort(Keys, NbEndPoints, RADIX_UNSIGNED).GetRanks();
 			const udword* Sorted = RS.Sort(Keys, NbEndPoints).GetRanks();
 
-			// Переписываем в буфер отсортированые КТ в обратном порядке
+			// РџРµСЂРµРїРёСЃС‹РІР°РµРј РІ Р±СѓС„РµСЂ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅС‹Рµ РљРў РІ РѕР±СЂР°С‚РЅРѕРј РїРѕСЂСЏРґРєРµ
 			for(udword i=0;i<NbEndPoints;i++)
 				Buffer[i] = NewEPSorted[Sorted[NbEndPoints-1-i]];
 		}
 
-		// Добавляем КТ к уже существующим
+		// Р”РѕР±Р°РІР»СЏРµРј РљРў Рє СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРј
 		InsertEndPoints(Axis, Buffer, NbEndPoints);
 	}
 
@@ -526,14 +526,14 @@ void ArraySAP::BatchCreate()
 	}
 
 #ifdef _DEBUG
-	// Проверка, что для каждого добавленого бокса обработаны КТ
+	// РџСЂРѕРІРµСЂРєР°, С‡С‚Рѕ РґР»СЏ РєР°Р¶РґРѕРіРѕ РґРѕР±Р°РІР»РµРЅРѕРіРѕ Р±РѕРєСЃР° РѕР±СЂР°Р±РѕС‚Р°РЅС‹ РљРў
 	for(udword i=0;i<NbBatched;i++)
 	{
 		udword BoxIndex = (udword)Batched[i].mHandle;
 		ASAP_Box* Box = mBoxes + BoxIndex;
 		assert(Box->HasBeenInserted());
 	}
-	// Проверка, что все КТ отсортированы правильно
+	// РџСЂРѕРІРµСЂРєР°, С‡С‚Рѕ РІСЃРµ РљРў РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅС‹ РїСЂР°РІРёР»СЊРЅРѕ
 #ifdef KERNEL_BUG_ASAP_FIX
 	for(udword i=0;i<mNbUsedBoxes*2+1;i++)
 #else
@@ -548,18 +548,18 @@ void ArraySAP::BatchCreate()
 
 	if(1)
 	{
-		// Битовый массив, в котором отмечены только новые боксы
+		// Р‘РёС‚РѕРІС‹Р№ РјР°СЃСЃРёРІ, РІ РєРѕС‚РѕСЂРѕРј РѕС‚РјРµС‡РµРЅС‹ С‚РѕР»СЊРєРѕ РЅРѕРІС‹Рµ Р±РѕРєСЃС‹
 		BitArray BA(mMaxNbBoxes);
 
 		// Using box-pruning on array indices....
-		// Массив индексов конечных точек новых боксов
+		// РњР°СЃСЃРёРІ РёРЅРґРµРєСЃРѕРІ РєРѕРЅРµС‡РЅС‹С… С‚РѕС‡РµРє РЅРѕРІС‹С… Р±РѕРєСЃРѕРІ
 		IAABB* NewBoxes = ICE_NEW_TMP(IAABB)[NbBatched];
 		for(udword i=0;i<NbBatched;i++)
 		{
-			const ASAP_Box* Box = mBoxes + (udword)Batched[i].mHandle;		// Новый бокс
-			assert((udword)Batched[i].mHandle<mMaxNbBoxes);					// Хендл не вышел за границы
-			BA.SetBit((udword)Batched[i].mHandle);					// Омечаем в битовом массиве
-			// Переписываем индексы его КТ
+			const ASAP_Box* Box = mBoxes + (udword)Batched[i].mHandle;		// РќРѕРІС‹Р№ Р±РѕРєСЃ
+			assert((udword)Batched[i].mHandle<mMaxNbBoxes);					// РҐРµРЅРґР» РЅРµ РІС‹С€РµР» Р·Р° РіСЂР°РЅРёС†С‹
+			BA.SetBit((udword)Batched[i].mHandle);					// РћРјРµС‡Р°РµРј РІ Р±РёС‚РѕРІРѕРј РјР°СЃСЃРёРІРµ
+			// РџРµСЂРµРїРёСЃС‹РІР°РµРј РёРЅРґРµРєСЃС‹ РµРіРѕ РљРў
 			NewBoxes[i].mMinX = Box->mMin[0];
 			NewBoxes[i].mMaxX = Box->mMax[0];
 			NewBoxes[i].mMinY = Box->mMin[1];
@@ -568,45 +568,45 @@ void ArraySAP::BatchCreate()
 			NewBoxes[i].mMaxZ = Box->mMax[2];
 		}
 
-		// Ведем сталкивание новых боксов и проверяем, не пересекаются ли они
+		// Р’РµРґРµРј СЃС‚Р°Р»РєРёРІР°РЅРёРµ РЅРѕРІС‹С… Р±РѕРєСЃРѕРІ Рё РїСЂРѕРІРµСЂСЏРµРј, РЅРµ РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ Р»Рё РѕРЅРё
 		CompleteBoxPruning2(NbBatched, NewBoxes, Axes(AXES_XZY), Batched);
 
 		// the old boxes are not the first ones in the array
 
 #ifdef KERNEL_BUG_ASAP_FIX
-		const udword NbOldBoxes = mNbUsedBoxes - NbBatched;// Количство боксов, котрые уже были
+		const udword NbOldBoxes = mNbUsedBoxes - NbBatched;// РљРѕР»РёС‡СЃС‚РІРѕ Р±РѕРєСЃРѕРІ, РєРѕС‚СЂС‹Рµ СѓР¶Рµ Р±С‹Р»Рё
 #else
-		const udword NbOldBoxes = mNbBoxes - NbBatched;// Количство боксов, котрые уже были
+		const udword NbOldBoxes = mNbBoxes - NbBatched;// РљРѕР»РёС‡СЃС‚РІРѕ Р±РѕРєСЃРѕРІ, РєРѕС‚СЂС‹Рµ СѓР¶Рµ Р±С‹Р»Рё
 #endif // KERNEL_BUG_ASAP_FIX
 		if(NbOldBoxes)
 		{
-			// Боксы блыи, надо проверить, не пересекаются ли новые со старыми
-			IAABB* OldBoxes = ICE_NEW_TMP(IAABB)[NbOldBoxes];		// Массив индексов конечных точек старых боксов
-			udword* OldBoxesIndices = (udword*)ICE_ALLOC_TMP(sizeof(udword)*NbOldBoxes);	// Массив индексов старых боксов
-			udword Offset=0;		// Счетчик-итератор по массиву всех боксов. Перескакивает через новые
-			udword i=0;				// Счетчик цикла, чтобы обработали только старые боксы
+			// Р‘РѕРєСЃС‹ Р±Р»С‹Рё, РЅР°РґРѕ РїСЂРѕРІРµСЂРёС‚СЊ, РЅРµ РїРµСЂРµСЃРµРєР°СЋС‚СЃСЏ Р»Рё РЅРѕРІС‹Рµ СЃРѕ СЃС‚Р°СЂС‹РјРё
+			IAABB* OldBoxes = ICE_NEW_TMP(IAABB)[NbOldBoxes];		// РњР°СЃСЃРёРІ РёРЅРґРµРєСЃРѕРІ РєРѕРЅРµС‡РЅС‹С… С‚РѕС‡РµРє СЃС‚Р°СЂС‹С… Р±РѕРєСЃРѕРІ
+			udword* OldBoxesIndices = (udword*)ICE_ALLOC_TMP(sizeof(udword)*NbOldBoxes);	// РњР°СЃСЃРёРІ РёРЅРґРµРєСЃРѕРІ СЃС‚Р°СЂС‹С… Р±РѕРєСЃРѕРІ
+			udword Offset=0;		// РЎС‡РµС‚С‡РёРє-РёС‚РµСЂР°С‚РѕСЂ РїРѕ РјР°СЃСЃРёРІСѓ РІСЃРµС… Р±РѕРєСЃРѕРІ. РџРµСЂРµСЃРєР°РєРёРІР°РµС‚ С‡РµСЂРµР· РЅРѕРІС‹Рµ
+			udword i=0;				// РЎС‡РµС‚С‡РёРє С†РёРєР»Р°, С‡С‚РѕР±С‹ РѕР±СЂР°Р±РѕС‚Р°Р»Рё С‚РѕР»СЊРєРѕ СЃС‚Р°СЂС‹Рµ Р±РѕРєСЃС‹
 			while(i<NbOldBoxes)
 			{
 #ifdef KERNEL_BUG_ASAP_FIX
-				// Проверка на то, что мы не пытаемся использовать удаленный бокс.
-				// Удаленным боксам при удалении присваивается mMin[0] = INVALID_INDEX
+				// РџСЂРѕРІРµСЂРєР° РЅР° С‚Рѕ, С‡С‚Рѕ РјС‹ РЅРµ РїС‹С‚Р°РµРјСЃСЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ СѓРґР°Р»РµРЅРЅС‹Р№ Р±РѕРєСЃ.
+				// РЈРґР°Р»РµРЅРЅС‹Рј Р±РѕРєСЃР°Рј РїСЂРё СѓРґР°Р»РµРЅРёРё РїСЂРёСЃРІР°РёРІР°РµС‚СЃСЏ mMin[0] = INVALID_INDEX
 				while (BA.IsSet(Offset) || (mBoxes + Offset)->mMin[0] == INVALID_INDEX)
 				{
-					// Этим циклом мы переескакиваем через новые и удаленные боксы
+					// Р­С‚РёРј С†РёРєР»РѕРј РјС‹ РїРµСЂРµРµСЃРєР°РєРёРІР°РµРј С‡РµСЂРµР· РЅРѕРІС‹Рµ Рё СѓРґР°Р»РµРЅРЅС‹Рµ Р±РѕРєСЃС‹
 					Offset++;
 					assert(Offset<mNbBoxes);
 				}
 #else
 				while(BA.IsSet(Offset))
 				{
-					// Этим циклом мы переескакиваем через новые боксы
+					// Р­С‚РёРј С†РёРєР»РѕРј РјС‹ РїРµСЂРµРµСЃРєР°РєРёРІР°РµРј С‡РµСЂРµР· РЅРѕРІС‹Рµ Р±РѕРєСЃС‹
 					Offset++;
 					assert(Offset<mNbBoxes);
 				}
 #endif // KERNEL_BUG_ASAP_FIX
-				const ASAP_Box* Box = mBoxes + Offset;		// Старый бокс
-				OldBoxesIndices[i] = Offset;		// Индекс старого бокса пишем в массив
-				// Переписываем индексы его КТ
+				const ASAP_Box* Box = mBoxes + Offset;		// РЎС‚Р°СЂС‹Р№ Р±РѕРєСЃ
+				OldBoxesIndices[i] = Offset;		// РРЅРґРµРєСЃ СЃС‚Р°СЂРѕРіРѕ Р±РѕРєСЃР° РїРёС€РµРј РІ РјР°СЃСЃРёРІ
+				// РџРµСЂРµРїРёСЃС‹РІР°РµРј РёРЅРґРµРєСЃС‹ РµРіРѕ РљРў
 				OldBoxes[i].mMinX = Box->mMin[0];
 				OldBoxes[i].mMaxX = Box->mMax[0];
 				OldBoxes[i].mMinY = Box->mMin[1];
@@ -651,7 +651,7 @@ void ArraySAP::BatchRemove()
 			assert(MaxIndex<mMaxNbBoxes*2+2);
 			assert(BaseEP[MinIndex].GetOwner()==Removed[i]);
 			assert(BaseEP[MaxIndex].GetOwner()==Removed[i]);
-			assert(MinIndex < MaxIndex);	// Где-то конечные точки сдвигались не правильно
+			assert(MinIndex < MaxIndex);	// Р“РґРµ-С‚Рѕ РєРѕРЅРµС‡РЅС‹Рµ С‚РѕС‡РєРё СЃРґРІРёРіР°Р»РёСЃСЊ РЅРµ РїСЂР°РІРёР»СЊРЅРѕ
 			BaseEP[MinIndex].mData = 0xfffffffe;
 			BaseEP[MaxIndex].mData = 0xfffffffe;
 			if(MinIndex<MinMinIndex)	MinMinIndex = MinIndex;
@@ -705,9 +705,9 @@ void ArraySAP::BatchRemove()
 		BA.SetBit(Object->mGUID);
 
 #ifdef KERNEL_BUG_ASAP_FIX
-		// Задаем mMin[0] = INVALID_INDEX, чтобы потом через этот бокс перепрыгивать
+		// Р—Р°РґР°РµРј mMin[0] = INVALID_INDEX, С‡С‚РѕР±С‹ РїРѕС‚РѕРј С‡РµСЂРµР· СЌС‚РѕС‚ Р±РѕРєСЃ РїРµСЂРµРїСЂС‹РіРёРІР°С‚СЊ
 		Object->mMin[0] = INVALID_INDEX;
-		//if (Index + 1 == mNbBoxes) mNbBoxes--;	// Приводит к глюкам все равно, так что закоментил :(
+		//if (Index + 1 == mNbBoxes) mNbBoxes--;	// РџСЂРёРІРѕРґРёС‚ Рє РіР»СЋРєР°Рј РІСЃРµ СЂР°РІРЅРѕ, С‚Р°Рє С‡С‚Рѕ Р·Р°РєРѕРјРµРЅС‚РёР» :(
 #endif // KERNEL_BUG_ASAP_FIX
 
 		Object->mGUID = mFirstFree;
@@ -934,12 +934,12 @@ bool ArraySAP::UpdateObject(udword handle, const ASAP_AABB& box)
 			}
 		}
 
-		// Проверка положения сентинелов
+		// РџСЂРѕРІРµСЂРєР° РїРѕР»РѕР¶РµРЅРёСЏ СЃРµРЅС‚РёРЅРµР»РѕРІ
 		assert(BaseEP[0].mValue == MIN_FLOAT);
 #ifdef KERNEL_BUG_ASAP_FIX
 		assert(BaseEP[mNbUsedBoxes*2 + 1].mValue == MAX_FLOAT);
 #endif // KERNEL_BUG_ASAP_FIX
-		assert(Object->mMin[Axis] < Object->mMax[Axis]);	// Неправильный сдвиг конечных точек
+		assert(Object->mMin[Axis] < Object->mMax[Axis]);	// РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ СЃРґРІРёРі РєРѕРЅРµС‡РЅС‹С… С‚РѕС‡РµРє
 	}
 	return true;
 }
@@ -957,8 +957,8 @@ udword ArraySAP::DumpPairs(SAP_CreatePair create_cb, SAP_DeletePair delete_cb, v
 	const udword* Last = Entries + mData.GetNbEntries();
 
 
-	udword* ToRemove = (udword*)Entries;	// Сейчас оба указывают на начло массива
-	// Проходим по массиву новых/удаляемых пар, ищем удаляемые
+	udword* ToRemove = (udword*)Entries;	// РЎРµР№С‡Р°СЃ РѕР±Р° СѓРєР°Р·С‹РІР°СЋС‚ РЅР° РЅР°С‡Р»Рѕ РјР°СЃСЃРёРІР°
+	// РџСЂРѕС…РѕРґРёРј РїРѕ РјР°СЃСЃРёРІСѓ РЅРѕРІС‹С…/СѓРґР°Р»СЏРµРјС‹С… РїР°СЂ, РёС‰РµРј СѓРґР°Р»СЏРµРјС‹Рµ
 	while(Entries!=Last)
 	{
 		const udword ID = *Entries++;
@@ -980,7 +980,7 @@ udword ArraySAP::DumpPairs(SAP_CreatePair create_cb, SAP_DeletePair delete_cb, v
 #endif
 				}
 
-				// Сохраняем индексы объектов удаляемой пары
+				// РЎРѕС…СЂР°РЅСЏРµРј РёРЅРґРµРєСЃС‹ РѕР±СЉРµРєС‚РѕРІ СѓРґР°Р»СЏРµРјРѕР№ РїР°СЂС‹
 				*ToRemove++ = udword(UP->id0)<<16|UP->id1;
 			}
 			else
@@ -1004,24 +1004,24 @@ udword ArraySAP::DumpPairs(SAP_CreatePair create_cb, SAP_DeletePair delete_cb, v
 	}
 
 	// #### try batch removal here
-	Entries = mData.GetEntries();	// На самом деле тут индексы объектов
+	Entries = mData.GetEntries();	// РќР° СЃР°РјРѕРј РґРµР»Рµ С‚СѓС‚ РёРЅРґРµРєСЃС‹ РѕР±СЉРµРєС‚РѕРІ
 	while(Entries!=ToRemove)
 	{
 		const udword ID = *Entries++;
 		const udword id0 = ID>>16;
 		const udword id1 = ID&0xffff;
 #ifdef _DEBUG
-		bool Status = mPairs.RemovePair(id0, id1);	// Удаляем по настоящему
+		bool Status = mPairs.RemovePair(id0, id1);	// РЈРґР°Р»СЏРµРј РїРѕ РЅР°СЃС‚РѕСЏС‰РµРјСѓ
 		ASSERT(Status);
 #else
-		mPairs.RemovePair(id0, id1);	// Удаляем по настоящему
+		mPairs.RemovePair(id0, id1);	// РЈРґР°Р»СЏРµРј РїРѕ РЅР°СЃС‚РѕСЏС‰РµРјСѓ
 #endif // _DEBUG
 	}
 
 #ifdef RELEASE_ON_RESET
 	mData.Empty();
 #endif
-	// Окончательно удаляем объекты и пары их пересечений
+	// РћРєРѕРЅС‡Р°С‚РµР»СЊРЅРѕ СѓРґР°Р»СЏРµРј РѕР±СЉРµРєС‚С‹ Рё РїР°СЂС‹ РёС… РїРµСЂРµСЃРµС‡РµРЅРёР№
 	BatchRemove();		
 
 	if(pairs)	*pairs = mPairs.mActivePairs;
@@ -1048,7 +1048,7 @@ inline_	void				ArraySAP::AddPair(const void* object0, const void* object1, uwor
 		ASSERT(!(int(object1)&1));
 		UP->object0 = object0;
 		UP->object1 = object1;
-		TRACEMSG2("Добавляется пара:", id0, id1, object0, object1);
+		TRACEMSG2("Р”РѕР±Р°РІР»СЏРµС‚СЃСЏ РїР°СЂР°:", id0, id1, object0, object1);
 		UP->SetInArray();
 		mData.Add(mPairs.GetPairIndex(UP));
 		UP->SetNew();

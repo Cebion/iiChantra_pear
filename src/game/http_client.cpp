@@ -11,8 +11,8 @@
 
 #define HTTP_PORT 80 // Thanks, cap!
 
-/* Юзер агент используется в highscores. Когда сервер получает запрос он проверяет юзерагент.
-   Можно было бы оставить просто iichantra, но такой юзерагент было бы слишком просто подобрать */
+/* Р®Р·РµСЂ Р°РіРµРЅС‚ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІ highscores. РљРѕРіРґР° СЃРµСЂРІРµСЂ РїРѕР»СѓС‡Р°РµС‚ Р·Р°РїСЂРѕСЃ РѕРЅ РїСЂРѕРІРµСЂСЏРµС‚ СЋР·РµСЂР°РіРµРЅС‚.
+   РњРѕР¶РЅРѕ Р±С‹Р»Рѕ Р±С‹ РѕСЃС‚Р°РІРёС‚СЊ РїСЂРѕСЃС‚Рѕ iichantra, РЅРѕ С‚Р°РєРѕР№ СЋР·РµСЂР°РіРµРЅС‚ Р±С‹Р»Рѕ Р±С‹ СЃР»РёС€РєРѕРј РїСЂРѕСЃС‚Рѕ РїРѕРґРѕР±СЂР°С‚СЊ */
 #define HTTP_USER_AGENT "iichantra/SDL"
 
 #define HTTP_RESPONSE_BUFFER_SIZE 10192
@@ -58,9 +58,9 @@ std::string urlencode(const std::string &c)
     return escaped;
 }
 
-/* На момент вызова этих функций SDL и SDLnet уже должны быть инициализированы */
+/* РќР° РјРѕРјРµРЅС‚ РІС‹Р·РѕРІР° СЌС‚РёС… С„СѓРЅРєС†РёР№ SDL Рё SDLnet СѓР¶Рµ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅС‹ */
 
-// Пример использования:
+// РџСЂРёРјРµСЂ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ:
 // http_send_request("127.0.0.1", "/index.php", content) 
 bool http_send_request(const std::string host, const std::string uri, std::string& content, const char method[] = "GET", std::map<std::string, std::string>* headers = NULL, std::map<std::string, std::string>* params = NULL)
 {
@@ -86,10 +86,10 @@ bool http_send_request(const std::string host, const std::string uri, std::strin
 	}
 
 	stringstream msg (stringstream::in | stringstream::out);
-	// Нельзя посылать HTTP/1.1, потому что ответ приходит в чанках, и это гемор.
-	// В 1.0 мы сразу знаем длину контента (из заголовка Content-Length)
-	// PS. По крайней мере это справедливо для apache/mod_Wsgi/django, больше нигде не проверял да и лень
-	// В джанге еще приходится вручную Content-Length указывать -_-
+	// РќРµР»СЊР·СЏ РїРѕСЃС‹Р»Р°С‚СЊ HTTP/1.1, РїРѕС‚РѕРјСѓ С‡С‚Рѕ РѕС‚РІРµС‚ РїСЂРёС…РѕРґРёС‚ РІ С‡Р°РЅРєР°С…, Рё СЌС‚Рѕ РіРµРјРѕСЂ.
+	// Р’ 1.0 РјС‹ СЃСЂР°Р·Сѓ Р·РЅР°РµРј РґР»РёРЅСѓ РєРѕРЅС‚РµРЅС‚Р° (РёР· Р·Р°РіРѕР»РѕРІРєР° Content-Length)
+	// PS. РџРѕ РєСЂР°Р№РЅРµР№ РјРµСЂРµ СЌС‚Рѕ СЃРїСЂР°РІРµРґР»РёРІРѕ РґР»СЏ apache/mod_Wsgi/django, Р±РѕР»СЊС€Рµ РЅРёРіРґРµ РЅРµ РїСЂРѕРІРµСЂСЏР» РґР° Рё Р»РµРЅСЊ
+	// Р’ РґР¶Р°РЅРіРµ РµС‰Рµ РїСЂРёС…РѕРґРёС‚СЃСЏ РІСЂСѓС‡РЅСѓСЋ Content-Length СѓРєР°Р·С‹РІР°С‚СЊ -_-
 	msg << method << " " << uri << " HTTP/1.0\r\n";
 	msg << "Host: " << host << "\r\n";
 	msg << "User-Agent: " << HTTP_USER_AGENT << "\r\n";
@@ -131,7 +131,7 @@ bool http_send_request(const std::string host, const std::string uri, std::strin
 		return false;
 	}
 
-	// Получаем результат
+	// РџРѕР»СѓС‡Р°РµРј СЂРµР·СѓР»СЊС‚Р°С‚
 	char response_buffer[HTTP_RESPONSE_BUFFER_SIZE];
 	memset(response_buffer, '\0', HTTP_RESPONSE_BUFFER_SIZE);
 	result = SDLNet_TCP_Recv(sock, response_buffer, HTTP_RESPONSE_BUFFER_SIZE-1);
@@ -141,7 +141,7 @@ bool http_send_request(const std::string host, const std::string uri, std::strin
 		return false;
 	}
 
-	/* Типовой ответ от сервера:
+	/* РўРёРїРѕРІРѕР№ РѕС‚РІРµС‚ РѕС‚ СЃРµСЂРІРµСЂР°:
 		HTTP/1.1 200 OK
 		Date: Thu, 06 Jan 2011 00:05:56 GMT
 		Server: Apache/2.2.16 (FreeBSD) DAV/2 mod_wsgi/3.2 Python/2.6.6 PHP/5.3.2 with Suhosin-Patch mod_ssl/2.2.16 OpenSSL/0.9.8k
@@ -167,13 +167,13 @@ bool http_send_request(const std::string host, const std::string uri, std::strin
 		 }
 
 		 if(line == "\r") {
-			 // Теперь начинается контент
+			 // РўРµРїРµСЂСЊ РЅР°С‡РёРЅР°РµС‚СЃСЏ РєРѕРЅС‚РµРЅС‚
 			 content_flag = true;
 		 }
 
 		 if(content_flag) {
 			 if(!content.empty()) {
-				 // Добавляем перенос строки
+				 // Р”РѕР±Р°РІР»СЏРµРј РїРµСЂРµРЅРѕСЃ СЃС‚СЂРѕРєРё
 				 content += "\n";
 			 }
 

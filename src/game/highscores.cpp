@@ -17,9 +17,9 @@ static const size_t HS_NICKNAME_MAX_LEN = 16;
 static const char HS_SALT[] = "UBW";
 static const char HS_HOST[] = "highscores.iichantra.ru";
 static const char HS_SUBMIT_URI[] =  "/submit/";
-// Это значение нужно менять с каждым релизом
-// Чтобы хайскоры записывались в таблицу привязанную к этому релизу
-// Чексуммы тоже будут привязаны к названию релиза
+// Р­С‚Рѕ Р·РЅР°С‡РµРЅРёРµ РЅСѓР¶РЅРѕ РјРµРЅСЏС‚СЊ СЃ РєР°Р¶РґС‹Рј СЂРµР»РёР·РѕРј
+// Р§С‚РѕР±С‹ С…Р°Р№СЃРєРѕСЂС‹ Р·Р°РїРёСЃС‹РІР°Р»РёСЃСЊ РІ С‚Р°Р±Р»РёС†Сѓ РїСЂРёРІСЏР·Р°РЅРЅСѓСЋ Рє СЌС‚РѕРјСѓ СЂРµР»РёР·Сѓ
+// Р§РµРєСЃСѓРјРјС‹ С‚РѕР¶Рµ Р±СѓРґСѓС‚ РїСЂРёРІСЏР·Р°РЅС‹ Рє РЅР°Р·РІР°РЅРёСЋ СЂРµР»РёР·Р°
 static const char HS_TABLE[] = "2011_winter";
 
 using namespace std;
@@ -62,8 +62,8 @@ bool hsSendScore(const char* nickname, const int score, const int seconds)
 	}
 
 #ifdef CHECKSUMS_ON
-	// Получаем список файлов на валидацию
-	// Будем считать crc32
+	// РџРѕР»СѓС‡Р°РµРј СЃРїРёСЃРѕРє С„Р°Р№Р»РѕРІ РЅР° РІР°Р»РёРґР°С†РёСЋ
+	// Р‘СѓРґРµРј СЃС‡РёС‚Р°С‚СЊ crc32
 	std::string validation_list = hsGetValidationList();
 	stringstream stream (stringstream::in | stringstream::out);
 	stream << validation_list;

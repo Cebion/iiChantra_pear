@@ -29,7 +29,7 @@ GuiWidget::~GuiWidget()
 	SCRIPT::RemoveFromRegistry(this->onFocus);
 	SCRIPT::RemoveFromRegistry(this->onUnFocus);
 
-	sLog(DEFAULT_GUI_LOG_NAME, LOG_INFO_EV, "Уничтожен виджет %s, id = %d по адресу %p", this->name, this->id, this);
+	sLog(DEFAULT_GUI_LOG_NAME, LOG_INFO_EV, "РЈРЅРёС‡С‚РѕР¶РµРЅ РІРёРґР¶РµС‚ %s, id = %d РїРѕ Р°РґСЂРµСЃСѓ %p", this->name, this->id, this);
 	DELETEARRAY(name);
 }
 
@@ -44,7 +44,7 @@ bool GuiWidget::SetSprite(const Proto* proto, const char* start_anim)
 	DELETESINGLE(this->sprite);
 
 	this->sprite = new Sprite(proto);
-	// Установка спрайта сбивает тот z, котрый был и заменяет на z из прототипа.
+	// РЈСЃС‚Р°РЅРѕРІРєР° СЃРїСЂР°Р№С‚Р° СЃР±РёРІР°РµС‚ С‚РѕС‚ z, РєРѕС‚СЂС‹Р№ Р±С‹Р» Рё Р·Р°РјРµРЅСЏРµС‚ РЅР° z РёР· РїСЂРѕС‚РѕС‚РёРїР°.
 	this->z = this->sprite->z;
 	if (start_anim)
 		this->sprite->SetAnimation(string(start_anim));
@@ -160,7 +160,7 @@ void GuiWidget::ProcessSprite()
 					{
 						StackElement* sd = this->sprite->stack->Pop();
 						if (  (rand() % 256) > sd->data.intData && !this->sprite->JumpFrame( a->frames[a->current].param ) )
-							sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Невозможный прыжок в анимации %s.", this->sprite->cur_anim.c_str());
+							sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "РќРµРІРѕР·РјРѕР¶РЅС‹Р№ РїСЂС‹Р¶РѕРє РІ Р°РЅРёРјР°С†РёРё %s.", this->sprite->cur_anim.c_str());
 						DELETESINGLE(sd);
 					}
 					break;
@@ -278,8 +278,8 @@ void GuiWidget::OnKeyDown( USHORT vkey )
 		lua_pushinteger(lua, vkey);
 		if (SCRIPT::ExecChunkFromReg(this->onKeyDown, 2))
 		{
-			// В скрипте произошла какая-то ошибка.
-			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "В обработчике OnKeyDown() виджета %s произошла ошибка", this->name);
+			// Р’ СЃРєСЂРёРїС‚Рµ РїСЂРѕРёР·РѕС€Р»Р° РєР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР°.
+			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Р’ РѕР±СЂР°Р±РѕС‚С‡РёРєРµ OnKeyDown() РІРёРґР¶РµС‚Р° %s РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°", this->name);
 		}
 	}
 }
@@ -292,8 +292,8 @@ void GuiWidget::OnKeyInput( Uint16 symbol )
 		lua_pushinteger(lua, (int)symbol);
 		if (SCRIPT::ExecChunkFromReg(this->onKeyInput, 2))
 		{
-			// В скрипте произошла какая-то ошибка.
-			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "В обработчике OnKeyInput() виджета %s произошла ошибка", this->name);
+			// Р’ СЃРєСЂРёРїС‚Рµ РїСЂРѕРёР·РѕС€Р»Р° РєР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР°.
+			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Р’ РѕР±СЂР°Р±РѕС‚С‡РёРєРµ OnKeyInput() РІРёРґР¶РµС‚Р° %s РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°", this->name);
 		}
 	}
 }
@@ -306,8 +306,8 @@ void GuiWidget::OnKeyPress( USHORT vkey )
 		lua_pushinteger(lua, vkey);
 		if (SCRIPT::ExecChunkFromReg(this->onKeyPress, 2))
 		{
-			// В скрипте произошла какая-то ошибка.
-			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "В обработчике OnKeyPress() виджета %s произошла ошибка", this->name);
+			// Р’ СЃРєСЂРёРїС‚Рµ РїСЂРѕРёР·РѕС€Р»Р° РєР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР°.
+			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Р’ РѕР±СЂР°Р±РѕС‚С‡РёРєРµ OnKeyPress() РІРёРґР¶РµС‚Р° %s РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°", this->name);
 		}
 	}
 }
@@ -319,8 +319,8 @@ void GuiWidget::OnFocus()
 		lua_pushinteger(lua, this->id);
 		if (SCRIPT::ExecChunkFromReg(this->onFocus, 1))
 		{
-			// В скрипте произошла какая-то ошибка.
-			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "В обработчике OnFocus() виджета %s произошла ошибка", this->name);
+			// Р’ СЃРєСЂРёРїС‚Рµ РїСЂРѕРёР·РѕС€Р»Р° РєР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР°.
+			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Р’ РѕР±СЂР°Р±РѕС‚С‡РёРєРµ OnFocus() РІРёРґР¶РµС‚Р° %s РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°", this->name);
 		}
 	}
 }
@@ -332,8 +332,8 @@ void GuiWidget::OnUnFocus()
 		lua_pushinteger(lua, this->id);
 		if (SCRIPT::ExecChunkFromReg(this->onUnFocus, 1))
 		{
-			// В скрипте произошла какая-то ошибка.
-			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "В обработчике OnUnFocus() виджета %s произошла ошибка", this->name);
+			// Р’ СЃРєСЂРёРїС‚Рµ РїСЂРѕРёР·РѕС€Р»Р° РєР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР°.
+			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Р’ РѕР±СЂР°Р±РѕС‚С‡РёРєРµ OnUnFocus() РІРёРґР¶РµС‚Р° %s РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°", this->name);
 		}
 	}
 }
@@ -345,8 +345,8 @@ void GuiWidget::OnResize()
 		lua_pushinteger(lua, this->id);
 		if (SCRIPT::ExecChunkFromReg(this->onResize, 1))
 		{
-			// В скрипте произошла какая-то ошибка.
-			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "В обработчике OnResize() виджета %s произошла ошибка", this->name);
+			// Р’ СЃРєСЂРёРїС‚Рµ РїСЂРѕРёР·РѕС€Р»Р° РєР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР°.
+			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Р’ РѕР±СЂР°Р±РѕС‚С‡РёРєРµ OnResize() РІРёРґР¶РµС‚Р° %s РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°", this->name);
 		}
 	}
 }
@@ -377,7 +377,7 @@ void GuiWidget::StartTyper()
 	if (typer)
 		typer->Start();
 	else
-		sLog(DEFAULT_GUI_LOG_NAME, logLevelWarning, "Попытка запустить TextTyper, когда его нет в виджете %d %s", id, name);
+		sLog(DEFAULT_GUI_LOG_NAME, logLevelWarning, "РџРѕРїС‹С‚РєР° Р·Р°РїСѓСЃС‚РёС‚СЊ TextTyper, РєРѕРіРґР° РµРіРѕ РЅРµС‚ РІ РІРёРґР¶РµС‚Рµ %d %s", id, name);
 }
 
 
@@ -386,5 +386,5 @@ void GuiWidget::StopTyper()
 	if (typer)
 		typer->Stop();
 	else
-		sLog(DEFAULT_GUI_LOG_NAME, logLevelWarning, "Попытка остановить TextTyper, когда его нет в виджете %d %s", id, name);
+		sLog(DEFAULT_GUI_LOG_NAME, logLevelWarning, "РџРѕРїС‹С‚РєР° РѕСЃС‚Р°РЅРѕРІРёС‚СЊ TextTyper, РєРѕРіРґР° РµРіРѕ РЅРµС‚ РІ РІРёРґР¶РµС‚Рµ %d %s", id, name);
 }

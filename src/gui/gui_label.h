@@ -3,7 +3,7 @@
 
 #include "gui_widget.h"
 
-// Кнопочка, реагирует на нажатия
+// РљРЅРѕРїРѕС‡РєР°, СЂРµР°РіРёСЂСѓРµС‚ РЅР° РЅР°Р¶Р°С‚РёСЏ
 class GuiLabel : public GuiWidget
 {
 public:

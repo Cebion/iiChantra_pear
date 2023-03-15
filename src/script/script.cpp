@@ -17,7 +17,7 @@ extern char path_app[MAX_PATH];
 extern char path_scripts[MAX_PATH];
 
 //////////////////////////////////////////////////////////////////////////
-// Инициализирует скриптовую систему
+// РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ СЃРєСЂРёРїС‚РѕРІСѓСЋ СЃРёСЃС‚РµРјСѓ
 bool SCRIPT::InitScript()
 {
 	if (lua)
@@ -25,25 +25,25 @@ bool SCRIPT::InitScript()
 		FreeScript();
 	}
 
-	lua = luaL_newstate();			// Создаем виртуальную машину Lua
+	lua = luaL_newstate();			// РЎРѕР·РґР°РµРј РІРёСЂС‚СѓР°Р»СЊРЅСѓСЋ РјР°С€РёРЅСѓ Lua
 	if ( lua == NULL )
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Ошибка создания Lua" );
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_ERROR_EV, "Ошибка создания Lua" );
+		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ Lua" );
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_ERROR_EV, "РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ Lua" );
 		return true;
 	}
-	sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_INFO_EV, "Lua создан.");
+	sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_INFO_EV, "Lua СЃРѕР·РґР°РЅ.");
 
 	luaL_openlibs ( lua );                              // open standart libraries
 
 	lua_atpanic(lua, SCRIPT::Panic);
 
-	scriptApi::RegisterAPI(lua);			// Инициализируем константы, привязываем C-функции.
+	scriptApi::RegisterAPI(lua);			// РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РєРѕРЅСЃС‚Р°РЅС‚С‹, РїСЂРёРІСЏР·С‹РІР°РµРј C-С„СѓРЅРєС†РёРё.
 
 	return false;
 }
 
-// Освобождает скриптовую систему
+// РћСЃРІРѕР±РѕР¶РґР°РµС‚ СЃРєСЂРёРїС‚РѕРІСѓСЋ СЃРёСЃС‚РµРјСѓ
 void SCRIPT::FreeScript()
 {
 	if (lua)
@@ -52,11 +52,11 @@ void SCRIPT::FreeScript()
 
 		lua_close(lua);
 		lua = NULL;
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_INFO_EV, "Lua уничтожен." );
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_INFO_EV, "Lua СѓРЅРёС‡С‚РѕР¶РµРЅ." );
 	}
 }
 
-// Срабатывает при критических ошибках Lua
+// РЎСЂР°Р±Р°С‚С‹РІР°РµС‚ РїСЂРё РєСЂРёС‚РёС‡РµСЃРєРёС… РѕС€РёР±РєР°С… Lua
 int SCRIPT::Panic(lua_State* L)
 {
 	const char* msg = lua_tostring(L, -1);
@@ -74,20 +74,20 @@ int SCRIPT::Panic(lua_State* L)
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-// Загружает файл и оставляет чанк на вершине стека
+// Р—Р°РіСЂСѓР¶Р°РµС‚ С„Р°Р№Р» Рё РѕСЃС‚Р°РІР»СЏРµС‚ С‡Р°РЅРє РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР°
 bool SCRIPT::LoadFile( const char* filename )
 {
 	if (!filename)
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка исполнения файла. Передана пустая строка-имя файла." );
+			"РћС€РёР±РєР° РёСЃРїРѕР»РЅРµРЅРёСЏ С„Р°Р№Р»Р°. РџРµСЂРµРґР°РЅР° РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°-РёРјСЏ С„Р°Р№Р»Р°." );
 		return true;
 	}
 
 	if (!lua)
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка загрузки файла \"%s\". Lua не создана.", filename);
+			"РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё С„Р°Р№Р»Р° \"%s\". Lua РЅРµ СЃРѕР·РґР°РЅР°.", filename);
 		return true;
 	}
 
@@ -103,23 +103,23 @@ bool SCRIPT::LoadFile( const char* filename )
 
 	//SetCurrentDirectory(path_app);
 	ChangeDir(path_app);
-	// Стек: func
+	// РЎС‚РµРє: func
 	return false;
 }
 
-// Загружает строку скрипта и оставляет чанк на вершине стека
+// Р—Р°РіСЂСѓР¶Р°РµС‚ СЃС‚СЂРѕРєСѓ СЃРєСЂРёРїС‚Р° Рё РѕСЃС‚Р°РІР»СЏРµС‚ С‡Р°РЅРє РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР°
 bool SCRIPT::LoadString( const char* str )
 {
 	if (!str)
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка загрузки команды. Передана пустая строка." );
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё РєРѕРјР°РЅРґС‹. РџРµСЂРµРґР°РЅР° РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°." );
 		return true;
 	}
 
 	if (!lua)
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка загрузки команды: %s. Lua не создана.", str);
+			"РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё РєРѕРјР°РЅРґС‹: %s. Lua РЅРµ СЃРѕР·РґР°РЅР°.", str);
 		return true;
 	}
 
@@ -133,7 +133,7 @@ bool SCRIPT::LoadString( const char* str )
 	return false;
 }
 
-// Выполняет функцию (чанк) в конце стека
+// Р’С‹РїРѕР»РЅСЏРµС‚ С„СѓРЅРєС†РёСЋ (С‡Р°РЅРє) РІ РєРѕРЅС†Рµ СЃС‚РµРєР°
 bool SCRIPT::ExecChunk()
 {
 	return SCRIPT::ExecChunk(0);
@@ -151,22 +151,22 @@ bool SCRIPT::ExecChunk(UINT args)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Заносит в реестр то, что лежит на вершине стека, и возвращает ссылку на него
-// При этом с вершины стека оно удаляется
+// Р—Р°РЅРѕСЃРёС‚ РІ СЂРµРµСЃС‚СЂ С‚Рѕ, С‡С‚Рѕ Р»РµР¶РёС‚ РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР°, Рё РІРѕР·РІСЂР°С‰Р°РµС‚ СЃСЃС‹Р»РєСѓ РЅР° РЅРµРіРѕ
+// РџСЂРё СЌС‚РѕРј СЃ РІРµСЂС€РёРЅС‹ СЃС‚РµРєР° РѕРЅРѕ СѓРґР°Р»СЏРµС‚СЃСЏ
 int SCRIPT::AddToRegistry()
 {
-	// Стек: ... data
-	return luaL_ref(lua, LUA_REGISTRYINDEX);	// Стек:
+	// РЎС‚РµРє: ... data
+	return luaL_ref(lua, LUA_REGISTRYINDEX);	// РЎС‚РµРє:
 }
 
-// Удаляет из реестра содержимое по ссылке
+// РЈРґР°Р»СЏРµС‚ РёР· СЂРµРµСЃС‚СЂР° СЃРѕРґРµСЂР¶РёРјРѕРµ РїРѕ СЃСЃС‹Р»РєРµ
 void SCRIPT::RemoveFromRegistry(int& r)
 {
 	lua_unref(lua, r);
 	r = LUA_NOREF;
 }
 
-// Помещает на верхушку стека значенее из реестра
+// РџРѕРјРµС‰Р°РµС‚ РЅР° РІРµСЂС…СѓС€РєСѓ СЃС‚РµРєР° Р·РЅР°С‡РµРЅРµРµ РёР· СЂРµРµСЃС‚СЂР°
 void SCRIPT::GetFromRegistry(lua_State* L, int r)
 {
 	//lua_rawgeti(L, LUA_REGISTRYINDEX, r);
@@ -176,7 +176,7 @@ void SCRIPT::GetFromRegistry(lua_State* L, int r)
 
 //////////////////////////////////////////////////////////////////////////
 
-// Помещает в procref ссылку реестра луа на функцию, находящуюся в стеке под номером n
+// РџРѕРјРµС‰Р°РµС‚ РІ procref СЃСЃС‹Р»РєСѓ СЂРµРµСЃС‚СЂР° Р»СѓР° РЅР° С„СѓРЅРєС†РёСЋ, РЅР°С…РѕРґСЏС‰СѓСЋСЃСЏ РІ СЃС‚РµРєРµ РїРѕРґ РЅРѕРјРµСЂРѕРј n
 void SCRIPT::RegProc(lua_State* L, int* procref, int n)
 {
 	luaL_argcheck(L, lua_isfunction(L, n) || lua_isnil(L, n), n, "Function or nil expected");
@@ -186,8 +186,8 @@ void SCRIPT::RegProc(lua_State* L, int* procref, int n)
 
 	if(!lua_isnil(L, n))
 	{
-		// TODO: сделать перемещение функции на самый верх стека и забирать ее оттуда
-		// Сейчас же просто забирается одно верхнее значение со стека, это может быть и не функция
+		// TODO: СЃРґРµР»Р°С‚СЊ РїРµСЂРµРјРµС‰РµРЅРёРµ С„СѓРЅРєС†РёРё РЅР° СЃР°РјС‹Р№ РІРµСЂС… СЃС‚РµРєР° Рё Р·Р°Р±РёСЂР°С‚СЊ РµРµ РѕС‚С‚СѓРґР°
+		// РЎРµР№С‡Р°СЃ Р¶Рµ РїСЂРѕСЃС‚Рѕ Р·Р°Р±РёСЂР°РµС‚СЃСЏ РѕРґРЅРѕ РІРµСЂС…РЅРµРµ Р·РЅР°С‡РµРЅРёРµ СЃРѕ СЃС‚РµРєР°, СЌС‚Рѕ РјРѕР¶РµС‚ Р±С‹С‚СЊ Рё РЅРµ С„СѓРЅРєС†РёСЏ
 		lua_xmove(L, lua, 1);
 		*procref = SCRIPT::AddToRegistry();
 	}
@@ -195,7 +195,7 @@ void SCRIPT::RegProc(lua_State* L, int* procref, int n)
 
 //////////////////////////////////////////////////////////////////////////
 
-// Очищает стек и исполняет файл скрипта
+// РћС‡РёС‰Р°РµС‚ СЃС‚РµРє Рё РёСЃРїРѕР»РЅСЏРµС‚ С„Р°Р№Р» СЃРєСЂРёРїС‚Р°
 bool SCRIPT::ExecFile( const char* filename )
 {
 	if (lua)
@@ -206,25 +206,25 @@ bool SCRIPT::ExecFile( const char* filename )
 	return false;
 }
 
-// Очищает стек и исполняет строку скрипта
+// РћС‡РёС‰Р°РµС‚ СЃС‚РµРє Рё РёСЃРїРѕР»РЅСЏРµС‚ СЃС‚СЂРѕРєСѓ СЃРєСЂРёРїС‚Р°
 bool SCRIPT::ExecString( const char* str )
 {
 	return !LoadString(str) ? ExecChunk() : true;
 }
 
-// Загружает файл скрипта и заносит его в реестр
+// Р—Р°РіСЂСѓР¶Р°РµС‚ С„Р°Р№Р» СЃРєСЂРёРїС‚Р° Рё Р·Р°РЅРѕСЃРёС‚ РµРіРѕ РІ СЂРµРµСЃС‚СЂ
 int SCRIPT::LoadFileToReg(const char* filename)
 {
 	return !LoadFile(filename) ? AddToRegistry() : 1;
 }
 
-// Загружает строку скрипта и заносит её в реестр
+// Р—Р°РіСЂСѓР¶Р°РµС‚ СЃС‚СЂРѕРєСѓ СЃРєСЂРёРїС‚Р° Рё Р·Р°РЅРѕСЃРёС‚ РµС‘ РІ СЂРµРµСЃС‚СЂ
 int SCRIPT::LoadStringToReg(const char* str)
 {
 	return !LoadString(str) ? AddToRegistry() : 1;
 }
 
-// Берет функцию из реестра и выполяняет ее
+// Р‘РµСЂРµС‚ С„СѓРЅРєС†РёСЋ РёР· СЂРµРµСЃС‚СЂР° Рё РІС‹РїРѕР»СЏРЅСЏРµС‚ РµРµ
 bool SCRIPT::ExecChunkFromReg(int r, UINT args)
 {
 	GetFromRegistry(lua, r);
@@ -246,96 +246,96 @@ bool SCRIPT::ExecChunkFromReg(int r)
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-// Загружает в стек таблицу и берет из нее значение переменной с заданным именем.
-// Возвращает стек в исххожное состояние.
+// Р—Р°РіСЂСѓР¶Р°РµС‚ РІ СЃС‚РµРє С‚Р°Р±Р»РёС†Сѓ Рё Р±РµСЂРµС‚ РёР· РЅРµРµ Р·РЅР°С‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ СЃ Р·Р°РґР°РЅРЅС‹Рј РёРјРµРЅРµРј.
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РµРє РІ РёСЃС…С…РѕР¶РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ.
 void SCRIPT::GetUIntFieldByName(lua_State* L, const char* table, const char* name, UINT* val)
 {
-	// Стек: ...
-	lua_getglobal(L, table);		// Стек: ..., table
+	// РЎС‚РµРє: ...
+	lua_getglobal(L, table);		// РЎС‚РµРє: ..., table
 	if (lua_istable(L, -1))
 	{
-		lua_getfield(L, -1, name);	// Стек: ..., table, name
+		lua_getfield(L, -1, name);	// РЎС‚РµРє: ..., table, name
 		if (lua_isnumber(L, -1))
 		{
 			*val = (UINT)lua_tonumber(L, -1);
 		}
-		lua_pop(L, 1);		// Стек: ..., table
+		lua_pop(L, 1);		// РЎС‚РµРє: ..., table
 	}
-	lua_pop(L, 1); // Стек: ...
+	lua_pop(L, 1); // РЎС‚РµРє: ...
 }
 
-// Берет из таблицы на вершине стека значение переменной с заданным именем.
-// Возвращает стек в исходное состояние.
+// Р‘РµСЂРµС‚ РёР· С‚Р°Р±Р»РёС†С‹ РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР° Р·РЅР°С‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ СЃ Р·Р°РґР°РЅРЅС‹Рј РёРјРµРЅРµРј.
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РµРє РІ РёСЃС…РѕРґРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ.
 void SCRIPT::GetIntFieldByName(lua_State* L, const char* name, int* val)
 {
-	// Стек: ..., table
-	lua_getfield(L, -1, name);	// Стек: ..., table, name
+	// РЎС‚РµРє: ..., table
+	lua_getfield(L, -1, name);	// РЎС‚РµРє: ..., table, name
 	if (lua_isnumber(L, -1))
 	{
 		*val = lua_tointeger(L, -1);
 	}
-	lua_pop(L, 1);		// Стек: ..., table
+	lua_pop(L, 1);		// РЎС‚РµРє: ..., table
 }
 
-// Берет из таблицы на вершине стека значение переменной с заданным именем.
-// Возвращает стек в исходное состояние.
+// Р‘РµСЂРµС‚ РёР· С‚Р°Р±Р»РёС†С‹ РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР° Р·РЅР°С‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ СЃ Р·Р°РґР°РЅРЅС‹Рј РёРјРµРЅРµРј.
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РµРє РІ РёСЃС…РѕРґРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ.
 void SCRIPT::GetUIntFieldByName(lua_State* L, const char* name, UINT* val)
 {
-	// Стек: ..., table
-	lua_getfield(L, -1, name);	// Стек: ..., table, name
+	// РЎС‚РµРє: ..., table
+	lua_getfield(L, -1, name);	// РЎС‚РµРє: ..., table, name
 	if (lua_isnumber(L, -1))
 	{
 		*val = (UINT)lua_tonumber(L, -1);
 	}
-	lua_pop(L, 1);		// Стек: ..., table
+	lua_pop(L, 1);		// РЎС‚РµРє: ..., table
 }
 
-// Берет из таблицы на вершине стека значение переменной с заданным именем.
-// Возвращает стек в исходное состояние.
+// Р‘РµСЂРµС‚ РёР· С‚Р°Р±Р»РёС†С‹ РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР° Р·РЅР°С‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ СЃ Р·Р°РґР°РЅРЅС‹Рј РёРјРµРЅРµРј.
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РµРє РІ РёСЃС…РѕРґРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ.
 void SCRIPT::GetFloatFieldByName(lua_State* L, const char* name, float* val)
 {
-	// Стек: ..., table
-	lua_getfield(L, -1, name);	// Стек: ..., table, name
+	// РЎС‚РµРє: ..., table
+	lua_getfield(L, -1, name);	// РЎС‚РµРє: ..., table, name
 	if (lua_isnumber(L, -1))
 	{
 		*val = (float)lua_tonumber(L, -1);
 	}
-	lua_pop(L, 1);		// Стек: ..., table
+	lua_pop(L, 1);		// РЎС‚РµРє: ..., table
 }
 
-// Берет из таблицы на вершине стека значение переменной с заданным именем.
-// Возвращает стек в исходное состояние.
+// Р‘РµСЂРµС‚ РёР· С‚Р°Р±Р»РёС†С‹ РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР° Р·РЅР°С‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ СЃ Р·Р°РґР°РЅРЅС‹Рј РёРјРµРЅРµРј.
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РµРє РІ РёСЃС…РѕРґРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ.
 void SCRIPT::GetStringFieldByName(lua_State* L, const char* name, char** val)
 {
-	// Стек: ..., table
-	lua_getfield(L, -1, name);	// Стек: ..., table, name
+	// РЎС‚РµРє: ..., table
+	lua_getfield(L, -1, name);	// РЎС‚РµРє: ..., table, name
 	if (lua_isstring(L, -1))
 	{
 		const char* str = lua_tostring(L, -1);
 		*val = new char[strlen(str) + 1];
 		strcpy(*val, str);
 	}
-	lua_pop(L, 1);		// Стек: ..., table
+	lua_pop(L, 1);		// РЎС‚РµРє: ..., table
 
 }
 
-// Берет из таблицы на вершине стека таблицу с заданным именем и пытается
-// из нее загрущить первые четыре значения массива.
-// Возвращает стек в исходное состояние.
+// Р‘РµСЂРµС‚ РёР· С‚Р°Р±Р»РёС†С‹ РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР° С‚Р°Р±Р»РёС†Сѓ СЃ Р·Р°РґР°РЅРЅС‹Рј РёРјРµРЅРµРј Рё РїС‹С‚Р°РµС‚СЃСЏ
+// РёР· РЅРµРµ Р·Р°РіСЂСѓС‰РёС‚СЊ РїРµСЂРІС‹Рµ С‡РµС‚С‹СЂРµ Р·РЅР°С‡РµРЅРёСЏ РјР°СЃСЃРёРІР°.
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РµРє РІ РёСЃС…РѕРґРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ.
 void SCRIPT::GetColorFieldByName(lua_State* L, const char* name, RGBAf& val)
 {
-	// Стек: ..., table
-	lua_getfield(L, -1, name);	// Стек: ..., table, name
+	// РЎС‚РµРє: ..., table
+	lua_getfield(L, -1, name);	// РЎС‚РµРє: ..., table, name
 	SCRIPT::GetColorFromTable(L, -1, val);
-	lua_pop(L, 1);		// Стек: ..., table
+	lua_pop(L, 1);		// РЎС‚РµРє: ..., table
 }
 
-// Пытается загрузить первые четыре значения массива из таблице в стеке на позиции n.
+// РџС‹С‚Р°РµС‚СЃСЏ Р·Р°РіСЂСѓР·РёС‚СЊ РїРµСЂРІС‹Рµ С‡РµС‚С‹СЂРµ Р·РЅР°С‡РµРЅРёСЏ РјР°СЃСЃРёРІР° РёР· С‚Р°Р±Р»РёС†Рµ РІ СЃС‚РµРєРµ РЅР° РїРѕР·РёС†РёРё n.
 void SCRIPT::GetColorFromTable(lua_State* L, int n, RGBAf& val)
 {
 	if (lua_istable(L, n))
 	{
-		// Стек: ..., color, ...
+		// РЎС‚РµРє: ..., color, ...
 		lua_rawgeti(L, n, 1);	val.r = (float)lua_tonumber(L, -1); lua_pop(L, 1);
 		lua_rawgeti(L, n, 2);	val.g = (float)lua_tonumber(L, -1); lua_pop(L, 1);
 		lua_rawgeti(L, n, 3);	val.b = (float)lua_tonumber(L, -1); lua_pop(L, 1);
@@ -345,8 +345,8 @@ void SCRIPT::GetColorFromTable(lua_State* L, int n, RGBAf& val)
 
 void SCRIPT::GetIntVectorFieldByName(lua_State* L, const char* name, vector<int>& val, bool add)
 {
-	// Стек: ..., table
-	lua_getfield(L, -1, name);	// Стек: ..., table, name
+	// РЎС‚РµРє: ..., table
+	lua_getfield(L, -1, name);	// РЎС‚РµРє: ..., table, name
 	//val = new vector<int>;
 	if (lua_istable(L, -1))
 	{
@@ -361,12 +361,12 @@ void SCRIPT::GetIntVectorFieldByName(lua_State* L, const char* name, vector<int>
 			lua_pop( L, 1 );
 		}
 	}
-	lua_pop(L, 1);		// Стек: ..., table
+	lua_pop(L, 1);		// РЎС‚РµРє: ..., table
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-// Выводит в лог дамп содержимого стека. Использовать для отладки функций.
+// Р’С‹РІРѕРґРёС‚ РІ Р»РѕРі РґР°РјРї СЃРѕРґРµСЂР¶РёРјРѕРіРѕ СЃС‚РµРєР°. РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РґР»СЏ РѕС‚Р»Р°РґРєРё С„СѓРЅРєС†РёР№.
 void SCRIPT::StackDumpToLog(lua_State *L)
 {
 	int i;
@@ -394,8 +394,8 @@ void SCRIPT::StackDumpToLog(lua_State *L)
 			break;
 
 		case LUA_TNUMBER: /* numbers */
-			// TODO: sprintf_s и snprintf немного отличаются поведением.
-			// sprintf_s гарантирует, что в конце буефера будет 0.
+			// TODO: sprintf_s Рё snprintf РЅРµРјРЅРѕРіРѕ РѕС‚Р»РёС‡Р°СЋС‚СЃСЏ РїРѕРІРµРґРµРЅРёРµРј.
+			// sprintf_s РіР°СЂР°РЅС‚РёСЂСѓРµС‚, С‡С‚Рѕ РІ РєРѕРЅС†Рµ Р±СѓРµС„РµСЂР° Р±СѓРґРµС‚ 0.
 #ifdef WIN32
 			sprintf_s(buf, 20, "%f", lua_tonumber(L, i));
 #else
@@ -406,8 +406,8 @@ void SCRIPT::StackDumpToLog(lua_State *L)
 
 		case LUA_TTHREAD:
 			//char buf[20];
-			// TODO: sprintf_s и snprintf немного отличаются поведением.
-			// sprintf_s гарантирует, что в конце буефера будет 0.
+			// TODO: sprintf_s Рё snprintf РЅРµРјРЅРѕРіРѕ РѕС‚Р»РёС‡Р°СЋС‚СЃСЏ РїРѕРІРµРґРµРЅРёРµРј.
+			// sprintf_s РіР°СЂР°РЅС‚РёСЂСѓРµС‚, С‡С‚Рѕ РІ РєРѕРЅС†Рµ Р±СѓРµС„РµСЂР° Р±СѓРґРµС‚ 0.
 #ifdef WIN32
 			sprintf_s(buf, 20, "0x%p", (void*)lua_tothread(L, i));
 #else
@@ -430,21 +430,21 @@ void SCRIPT::StackDumpToLog(lua_State *L)
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-// Помещает в стек таблицу, представляющую вектор
+// РџРѕРјРµС‰Р°РµС‚ РІ СЃС‚РµРє С‚Р°Р±Р»РёС†Сѓ, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰СѓСЋ РІРµРєС‚РѕСЂ
 void SCRIPT::PushVector(lua_State* L, Vector2& v)
 {
-	// Стек: obj
-	lua_createtable(L, 0, 2);	// Стек: obj vector
+	// РЎС‚РµРє: obj
+	lua_createtable(L, 0, 2);	// РЎС‚РµРє: obj vector
 
 	lua_pushnumber(L, v.x); lua_setfield(L, -2, "x");
 	lua_pushnumber(L, v.y); lua_setfield(L, -2, "y");
 }
 
-// Помещает в стек таблицу, представляющую AABB
+// РџРѕРјРµС‰Р°РµС‚ РІ СЃС‚РµРє С‚Р°Р±Р»РёС†Сѓ, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰СѓСЋ AABB
 void SCRIPT::PushAABB(lua_State* L, CAABB& a)
 {
-	// Стек: obj
-	lua_createtable(L, 0, 3);	// Стек: obj aabb
+	// РЎС‚РµРє: obj
+	lua_createtable(L, 0, 3);	// РЎС‚РµРє: obj aabb
 
 	PushVector(L, a.p);		lua_setfield(L, -2, "p");
 	lua_pushnumber(L, a.H); lua_setfield(L, -2, "H");

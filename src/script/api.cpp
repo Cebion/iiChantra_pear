@@ -74,17 +74,17 @@ extern Player* playerControl;
 
 void scriptApi::RegisterAPI(lua_State* L)
 {
-	// Меняем значение package.path, чтобы команда require искала фалы в папке скриптов
-	lua_getglobal(L, "package");		// Стек: package
+	// РњРµРЅСЏРµРј Р·РЅР°С‡РµРЅРёРµ package.path, С‡С‚РѕР±С‹ РєРѕРјР°РЅРґР° require РёСЃРєР°Р»Р° С„Р°Р»С‹ РІ РїР°РїРєРµ СЃРєСЂРёРїС‚РѕРІ
+	lua_getglobal(L, "package");		// РЎС‚РµРє: package
 	char* new_path = new char[strlen(path_scripts) + 1+6];
 	memset(new_path,'\0', strlen(path_scripts) + 1+6);
 	sprintf(new_path, "%s\?.lua", path_scripts);
-	lua_pushstring(L, new_path);		// Стек: package new_path
-	lua_setfield(L, -2, "path");		// Стек: package
-	lua_pop(L, 1);						// Стек:
+	lua_pushstring(L, new_path);		// РЎС‚РµРє: package new_path
+	lua_setfield(L, -2, "path");		// РЎС‚РµРє: package
+	lua_pop(L, 1);						// РЎС‚РµРє:
 	DELETEARRAY(new_path);
 
-	// Привязываем С-функции
+	// РџСЂРёРІСЏР·С‹РІР°РµРј РЎ-С„СѓРЅРєС†РёРё
 	lua_register(L, "LoadConfig", &scriptApi::LoadConfig);
 	lua_register(L, "SaveConfig", &scriptApi::SaveConfig);
 	lua_register(L, "LoadTexture", &scriptApi::LoadTexture);
@@ -311,35 +311,35 @@ void scriptApi::RegisterAPI(lua_State* L)
 	lua_register(L, "EditorToggleBorders", &scriptApi::EditorToggleBorders);
 	lua_register(L, "RegEditorGetObjectsProc", &scriptApi::RegEditorGetObjectsProc);
 
-	// TODO: Зарегестрировать разные константы движка, чтобы были доступны в скриптах.
-	// Стандартный шрифт. Виртуал-кейс и т. п. Было в одном из уроков на ilovelua
+	// TODO: Р—Р°СЂРµРіРµСЃС‚СЂРёСЂРѕРІР°С‚СЊ СЂР°Р·РЅС‹Рµ РєРѕРЅСЃС‚Р°РЅС‚С‹ РґРІРёР¶РєР°, С‡С‚РѕР±С‹ Р±С‹Р»Рё РґРѕСЃС‚СѓРїРЅС‹ РІ СЃРєСЂРёРїС‚Р°С….
+	// РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ С€СЂРёС„С‚. Р’РёСЂС‚СѓР°Р»-РєРµР№СЃ Рё С‚. Рї. Р‘С‹Р»Рѕ РІ РѕРґРЅРѕРј РёР· СѓСЂРѕРєРѕРІ РЅР° ilovelua
 
-	// Регистрируем константные названия для клавиш.
-	lua_newtable(L);			// Создаем новую таблицу. Стек: таблица
+	// Р РµРіРёСЃС‚СЂРёСЂСѓРµРј РєРѕРЅСЃС‚Р°РЅС‚РЅС‹Рµ РЅР°Р·РІР°РЅРёСЏ РґР»СЏ РєР»Р°РІРёС€.
+	lua_newtable(L);			// РЎРѕР·РґР°РµРј РЅРѕРІСѓСЋ С‚Р°Р±Р»РёС†Сѓ. РЎС‚РµРє: С‚Р°Р±Р»РёС†Р°
 	{
-		char ch[MAX_VKEY_NAME_LEN] = "";	// Буфер для названий
+		char ch[MAX_VKEY_NAME_LEN] = "";	// Р‘СѓС„РµСЂ РґР»СЏ РЅР°Р·РІР°РЅРёР№
 
-		for (UINT i = 1; i < inpmgr.keys_count; i++)		// Цикл по всем возможным кодам
+		for (UINT i = 1; i < inpmgr.keys_count; i++)		// Р¦РёРєР» РїРѕ РІСЃРµРј РІРѕР·РјРѕР¶РЅС‹Рј РєРѕРґР°Рј
 		{
 			GetVKeyByNum(i, ch);
-			lua_pushinteger(L,i);		// Помещаем в стек код клавиши. Стек: таблица, i
-			lua_setfield(L, -2, ch);	// Заносим в таблицу перменную с именем и значением. Стек: таблица
+			lua_pushinteger(L,i);		// РџРѕРјРµС‰Р°РµРј РІ СЃС‚РµРє РєРѕРґ РєР»Р°РІРёС€Рё. РЎС‚РµРє: С‚Р°Р±Р»РёС†Р°, i
+			lua_setfield(L, -2, ch);	// Р—Р°РЅРѕСЃРёРј РІ С‚Р°Р±Р»РёС†Сѓ РїРµСЂРјРµРЅРЅСѓСЋ СЃ РёРјРµРЅРµРј Рё Р·РЅР°С‡РµРЅРёРµРј. РЎС‚РµРє: С‚Р°Р±Р»РёС†Р°
 		}
 	}
-	lua_setglobal(L, "keys");		// Заносим таблицу в глобальную переменную. Стек:
+	lua_setglobal(L, "keys");		// Р—Р°РЅРѕСЃРёРј С‚Р°Р±Р»РёС†Сѓ РІ РіР»РѕР±Р°Р»СЊРЅСѓСЋ РїРµСЂРµРјРµРЅРЅСѓСЋ. РЎС‚РµРє:
 
-	lua_newtable(L);			// Создаем новую таблицу. Стек: таблица
+	lua_newtable(L);			// РЎРѕР·РґР°РµРј РЅРѕРІСѓСЋ С‚Р°Р±Р»РёС†Сѓ. РЎС‚РµРє: С‚Р°Р±Р»РёС†Р°
 	{
-		for (size_t i = 0; i < cakLastKey; i++)		// Цикл по всем возможным кнопкам в конфиге
+		for (size_t i = 0; i < cakLastKey; i++)		// Р¦РёРєР» РїРѕ РІСЃРµРј РІРѕР·РјРѕР¶РЅС‹Рј РєРЅРѕРїРєР°Рј РІ РєРѕРЅС„РёРіРµ
 		{
 			lua_pushinteger(L, (int)i);
 			lua_setfield(L, -2, GetConfigKeyName((ConfigActionKeys)i));
 		}
 	}
-	lua_setglobal(L, "config_keys");		// Заносим таблицу в глобальную переменную. Стек:
+	lua_setglobal(L, "config_keys");		// Р—Р°РЅРѕСЃРёРј С‚Р°Р±Р»РёС†Сѓ РІ РіР»РѕР±Р°Р»СЊРЅСѓСЋ РїРµСЂРµРјРµРЅРЅСѓСЋ. РЎС‚РµРє:
 
-	// Различные именованые константы
-	lua_newtable(L);		// Стек: таблица
+	// Р Р°Р·Р»РёС‡РЅС‹Рµ РёРјРµРЅРѕРІР°РЅС‹Рµ РєРѕРЅСЃС‚Р°РЅС‚С‹
+	lua_newtable(L);		// РЎС‚РµРє: С‚Р°Р±Р»РёС†Р°
 	{
 		lua_pushinteger(L, protoNullBeh);		lua_setfield(L, -2, "NullBehaviour");
 		lua_pushinteger(L, protoPlayer);		lua_setfield(L, -2, "PlayerBehaviour");
@@ -347,7 +347,7 @@ void scriptApi::RegisterAPI(lua_State* L)
 		lua_pushinteger(L, protoPowerup);		lua_setfield(L, -2, "PowerUpBehaviour");
 		lua_pushinteger(L, protoSprite);		lua_setfield(L, -2, "SpriteBehaviour");
 
-		// Параметры для SetCamFocusOnObjPos
+		// РџР°СЂР°РјРµС‚СЂС‹ РґР»СЏ SetCamFocusOnObjPos
 		lua_pushinteger(L, CamFocusLeftBottomCorner);	lua_setfield(L, -2, "CamFocusLeftBottomCorner");
 		lua_pushinteger(L, CamFocusLeftCenter);			lua_setfield(L, -2, "CamFocusLeftCenter");
 		lua_pushinteger(L, CamFocusLeftTopCorner);		lua_setfield(L, -2, "CamFocusLeftTopCorner");
@@ -358,7 +358,7 @@ void scriptApi::RegisterAPI(lua_State* L)
 		lua_pushinteger(L, CamFocusCenter);				lua_setfield(L, -2, "CamFocusCenter");
 		lua_pushinteger(L, CamFocusTopCenter);			lua_setfield(L, -2, "CamFocusTopCenter");
 
-		// Параметры для CreateMap
+		// РџР°СЂР°РјРµС‚СЂС‹ РґР»СЏ CreateMap
 		lua_pushinteger(L, otSprite);		lua_setfield(L, -2, "ObjSprite");
 		lua_pushinteger(L, otPlayer);		lua_setfield(L, -2, "ObjPlayer");
 		lua_pushinteger(L, otEnemy);		lua_setfield(L, -2, "ObjEnemy");
@@ -371,7 +371,7 @@ void scriptApi::RegisterAPI(lua_State* L)
 		lua_pushinteger(L, otRibbon);		lua_setfield(L, -2, "ObjRibbon");
 		lua_pushinteger(L, otNone);			lua_setfield(L, -2, "ObjNone");
 
-		// Команды анимаций
+		// РљРѕРјР°РЅРґС‹ Р°РЅРёРјР°С†РёР№
 		lua_pushinteger(L, afcNone);					lua_setfield(L, -2, "AnimComNone");
 		lua_pushinteger(L, afcBreakpoint);				lua_setfield(L, -2, "AnimComBreakpoint");
 		lua_pushinteger(L, afcSetDamageMult);			lua_setfield(L, -2, "AnimComSetDamageMult");
@@ -497,24 +497,24 @@ void scriptApi::RegisterAPI(lua_State* L)
 		lua_pushinteger(L, afcCallFunction);			lua_setfield(L, -2, "AnimComCallFunction");
 		lua_pushinteger(L, afcCallFunctionWithStackParameter);	lua_setfield(L, -2, "AnimComCallFunctionWithStackParameter");
 
-		// Параметры для A	nimComShootBeh
+		// РџР°СЂР°РјРµС‚СЂС‹ РґР»СЏ A	nimComShootBeh
 		lua_pushinteger(L, csbNoShooting);		lua_setfield(L, -2, "csbNoShooting");
 		lua_pushinteger(L, csbFreeShooting);	lua_setfield(L, -2, "csbFreeShooting");
 		lua_pushinteger(L, csbOnAnimCommand);	lua_setfield(L, -2, "csbOnAnimCommand");
 
-		// Параметры для AnimComShootDir
+		// РџР°СЂР°РјРµС‚СЂС‹ РґР»СЏ AnimComShootDir
 		lua_pushinteger(L, cgdNone);			lua_setfield(L, -2, "cgdNone");
 		lua_pushinteger(L, cgdUp);				lua_setfield(L, -2, "cgdUp");
 		lua_pushinteger(L, cgdDown);			lua_setfield(L, -2, "cgdDown");
 
-		// Параметры для CreateWidget
+		// РџР°СЂР°РјРµС‚СЂС‹ РґР»СЏ CreateWidget
 		lua_pushinteger(L, wt_Widget);			lua_setfield(L, -2, "wt_Widget");
 		lua_pushinteger(L, wt_Button);			lua_setfield(L, -2, "wt_Button");
 		lua_pushinteger(L, wt_Picture);			lua_setfield(L, -2, "wt_Picture");
 		lua_pushinteger(L, wt_Label);			lua_setfield(L, -2, "wt_Label");
 		lua_pushinteger(L, wt_Textfield);		lua_setfield(L, -2, "wt_Textfield");
 
-		// Методы обнаружения касаний
+		// РњРµС‚РѕРґС‹ РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ РєР°СЃР°РЅРёР№
 		lua_pushinteger(L, tdtAlways);			lua_setfield(L, -2, "tdtAlways");
 		lua_pushinteger(L, tdtFromBottom);		lua_setfield(L, -2, "tdtFromBottom");
 		lua_pushinteger(L, tdtFromEverywhere);	lua_setfield(L, -2, "tdtFromEverywhere");
@@ -522,28 +522,28 @@ void scriptApi::RegisterAPI(lua_State* L)
 		lua_pushinteger(L, tdtFromSides);		lua_setfield(L, -2, "tdtFromSides");
 		lua_pushinteger(L, tdtTopAndSides);		lua_setfield(L, -2, "tdtTopAndSides");
 
-		// Параметры для GuiSetNavMode
+		// РџР°СЂР°РјРµС‚СЂС‹ РґР»СЏ GuiSetNavMode
 		lua_pushinteger(L, gnm_None);			lua_setfield(L, -2, "gnm_None");
 		lua_pushinteger(L, gnm_Normal);			lua_setfield(L, -2, "gnm_Normal");
 
-		//Уровни логов
+		//РЈСЂРѕРІРЅРё Р»РѕРіРѕРІ
 		lua_pushinteger(L, logLevelNone);		lua_setfield(L, -2, "logLevelNone");
 		lua_pushinteger(L, logLevelError);		lua_setfield(L, -2, "logLevelError");
 		lua_pushinteger(L, logLevelWarning);	lua_setfield(L, -2, "logLevelWarning");
 		lua_pushinteger(L, logLevelInfo);		lua_setfield(L, -2, "logLevelInfo");
 
-		//Поведение объектов за кадром
+		//РџРѕРІРµРґРµРЅРёРµ РѕР±СЉРµРєС‚РѕРІ Р·Р° РєР°РґСЂРѕРј
 		lua_pushinteger(L, cobNone);		lua_setfield(L, -2, "offscreenDoNothing");
 		lua_pushinteger(L, cobSleep);		lua_setfield(L, -2, "offscreenSleep");
 		lua_pushinteger(L, cobDie);			lua_setfield(L, -2, "offscreenDestroy");
 		lua_pushinteger(L, cobAnim);		lua_setfield(L, -2, "offscreenSwitchAnim");
 
-		//Соотношение направления взгляда и отражения спрайта
+		//РЎРѕРѕС‚РЅРѕС€РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ РІР·РіР»СЏРґР° Рё РѕС‚СЂР°Р¶РµРЅРёСЏ СЃРїСЂР°Р№С‚Р°
 		lua_pushinteger(L, ofNormal);		lua_setfield(L, -2, "facingNormal");
 		lua_pushinteger(L, ofMoonwalking);	lua_setfield(L, -2, "facingMoonwalking");
 		lua_pushinteger(L, ofFixed);		lua_setfield(L, -2, "facingFixed");
 
-		//Траектории частиц и выстрелов.
+		//РўСЂР°РµРєС‚РѕСЂРёРё С‡Р°СЃС‚РёС† Рё РІС‹СЃС‚СЂРµР»РѕРІ.
 		lua_pushinteger(L, pttLine);		lua_setfield(L, -2, "pttLine");
 		lua_pushinteger(L, pttSine);		lua_setfield(L, -2, "pttSine");
 		lua_pushinteger(L, pttCosine);		lua_setfield(L, -2, "pttCosine");
@@ -554,7 +554,7 @@ void scriptApi::RegisterAPI(lua_State* L)
 		lua_pushinteger(L, pttOrbit);		lua_setfield(L, -2, "pttOrbit");
 		lua_pushinteger(L, pttGlobalSine);	lua_setfield(L, -2, "pttGlobalSine");
 
-		//Направления.
+		//РќР°РїСЂР°РІР»РµРЅРёСЏ.
 		lua_pushinteger(L, dirNone);		lua_setfield(L, -2, "dirNone");
 		lua_pushinteger(L, dirLeft);		lua_setfield(L, -2, "dirLeft");
 		lua_pushinteger(L, dirRight);		lua_setfield(L, -2, "dirRight");
@@ -564,10 +564,10 @@ void scriptApi::RegisterAPI(lua_State* L)
 		lua_pushinteger(L, dirHorizontal);	lua_setfield(L, -2, "dirHorizontal");
 		lua_pushinteger(L, dirVertical);	lua_setfield(L, -2, "dirVertical");
 
-		// Количество наборов кнопок в конфиге
+		// РљРѕР»РёС‡РµСЃС‚РІРѕ РЅР°Р±РѕСЂРѕРІ РєРЅРѕРїРѕРє РІ РєРѕРЅС„РёРіРµ
 		lua_pushinteger(L, KEY_SETS_NUMBER);lua_setfield(L, -2, "configKeySetsNumber");
 
-		// Методы рендеринга спрайтов
+		// РњРµС‚РѕРґС‹ СЂРµРЅРґРµСЂРёРЅРіР° СЃРїСЂР°Р№С‚РѕРІ
 		lua_pushinteger(L, rsmStandart);	lua_setfield(L, -2, "rsmStandart");
 		lua_pushinteger(L, rsmStretch);		lua_setfield(L, -2, "rsmStretch");
 		lua_pushinteger(L, rsmCrop);		lua_setfield(L, -2, "rsmCrop");
@@ -575,7 +575,7 @@ void scriptApi::RegisterAPI(lua_State* L)
 		lua_pushinteger(L, rsmRepeatY);		lua_setfield(L, -2, "rsmRepeatY");
 		lua_pushinteger(L, rsmRepeatXY);	lua_setfield(L, -2, "rsmRepeatXY");
 	}
-	lua_setglobal(L, "constants");		// Заносим таблицу в глобальную переменную. Стек:
+	lua_setglobal(L, "constants");		// Р—Р°РЅРѕСЃРёРј С‚Р°Р±Р»РёС†Сѓ РІ РіР»РѕР±Р°Р»СЊРЅСѓСЋ РїРµСЂРµРјРµРЅРЅСѓСЋ. РЎС‚РµРє:
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -602,43 +602,43 @@ int scriptApi::LoadTexture (lua_State* L)
 
 	if (!textureMgr)
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Менеджер текстур не создан");
+		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "РњРµРЅРµРґР¶РµСЂ С‚РµРєСЃС‚СѓСЂ РЅРµ СЃРѕР·РґР°РЅ");
 		return 0;
 	}
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя текстуры");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ С‚РµРєСЃС‚СѓСЂС‹");
 
 	const char* tex_name = lua_tostring(L, 1);
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Загружаем текстуру: %s", tex_name);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Р—Р°РіСЂСѓР¶Р°РµРј С‚РµРєСЃС‚СѓСЂСѓ: %s", tex_name);
 
 	if ( textureMgr->GetByName(tex_name) == NULL)
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка загрузки текстуры.");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё С‚РµРєСЃС‚СѓСЂС‹.");
 
 	return 0;
 }
 
-// Загрузка шрифта. Принимает 2 или 4 аргумента в зависимости
-// от типа шрифта (текстурный или Windows-шрифт).
-// Возврщает результат загрузки true или false
+// Р—Р°РіСЂСѓР·РєР° С€СЂРёС„С‚Р°. РџСЂРёРЅРёРјР°РµС‚ 2 РёР»Рё 4 Р°СЂРіСѓРјРµРЅС‚Р° РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё
+// РѕС‚ С‚РёРїР° С€СЂРёС„С‚Р° (С‚РµРєСЃС‚СѓСЂРЅС‹Р№ РёР»Рё Windows-С€СЂРёС„С‚).
+// Р’РѕР·РІСЂС‰Р°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ Р·Р°РіСЂСѓР·РєРё true РёР»Рё false
 int scriptApi::LoadFont (lua_State* L)
 {
 	int num = lua_gettop ( L );
 	bool res = false;
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя шрифта");
-	luaL_argcheck(L, lua_isstring(L, num), num, "Ожидается имя шрифта для игры");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ С€СЂРёС„С‚Р°");
+	luaL_argcheck(L, lua_isstring(L, num), num, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ С€СЂРёС„С‚Р° РґР»СЏ РёРіСЂС‹");
 
 	const char* font_name = lua_tostring(L, 1);
 	const char* out_name = lua_tostring(L, num);
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Загружаем шрифт: %s", font_name);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Р—Р°РіСЂСѓР¶Р°РµРј С€СЂРёС„С‚: %s", font_name);
 
 #ifdef WIN32
 	if (num == 4)
 	{
-		luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается высота шрифта");
-		luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается ширина шрифта");
+		luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РІС‹СЃРѕС‚Р° С€СЂРёС„С‚Р°");
+		luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ С€РёСЂРёРЅР° С€СЂРёС„С‚Р°");
 
 		UINT height = (UINT)lua_tointeger(L, 2);
 		UINT weight = (UINT)lua_tointeger(L, 3);
@@ -653,7 +653,7 @@ int scriptApi::LoadFont (lua_State* L)
 		}
 
 		if (!res)
-			sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка загрузки шрифта.");
+			sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё С€СЂРёС„С‚Р°.");
 
 		lua_settop(L, num);
 		lua_pushboolean(L, res);
@@ -661,40 +661,40 @@ int scriptApi::LoadFont (lua_State* L)
 }
 
 
-// Загруза прототипа игрового объекта из файла
+// Р—Р°РіСЂСѓР·Р° РїСЂРѕС‚РѕС‚РёРїР° РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р° РёР· С„Р°Р№Р»Р°
 int scriptApi::LoadPrototype(lua_State* L)
 {
 	if (!protoMgr)
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Менеджер прототипов не создан");
+		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "РњРµРЅРµРґР¶РµСЂ РїСЂРѕС‚РѕС‚РёРїРѕРІ РЅРµ СЃРѕР·РґР°РЅ");
 		return 0;
 	}
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя прототипа");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ РїСЂРѕС‚РѕС‚РёРїР°");
 
-	// Стек: proto_name
+	// РЎС‚РµРє: proto_name
 	const char* proto_name = lua_tostring(L, 1);
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Загружаем прототип: %s", proto_name);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Р—Р°РіСЂСѓР¶Р°РµРј РїСЂРѕС‚РѕС‚РёРї: %s", proto_name);
 
 	if ( protoMgr->GetByName(proto_name) == NULL)
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка загрузки прототипа.");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё РїСЂРѕС‚РѕС‚РёРїР°.");
 
 	return 0;
 }
 
 int scriptApi::LoadSound(lua_State* L)
 {
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя звука");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ Р·РІСѓРєР°");
 
 	const char* file_name = lua_tostring(L, 1);
 	char* snd_file = new char[strlen(path_sounds) + strlen(file_name) + 1];
 	memset(snd_file, '\0', strlen(path_sounds) + strlen(file_name) + 1);
 	sprintf(snd_file, "%s%s", path_sounds, file_name);
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Загружаем звук: %s", file_name);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Р—Р°РіСЂСѓР¶Р°РµРј Р·РІСѓРє: %s", file_name);
 
 	if (!soundMgr || !::soundMgr->GetByName(snd_file))
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка загрузки звука.");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё Р·РІСѓРєР°.");
 
 	DELETEARRAY(snd_file);
 
@@ -719,8 +719,8 @@ int scriptApi::InitNewGame(lua_State* L)
 int scriptApi::DestroyGame(lua_State* L)
 {
 	UNUSED_ARG(L);
-	// TODO: опасно. Можно вызвать из обработки объекта - тогда игра упадет.
-	// Надо сделать что-то вроде need_destroying. 
+	// TODO: РѕРїР°СЃРЅРѕ. РњРѕР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РёР· РѕР±СЂР°Р±РѕС‚РєРё РѕР±СЉРµРєС‚Р° - С‚РѕРіРґР° РёРіСЂР° СѓРїР°РґРµС‚.
+	// РќР°РґРѕ СЃРґРµР»Р°С‚СЊ С‡С‚Рѕ-С‚Рѕ РІСЂРѕРґРµ need_destroying. 
 	game::FreeGame(true);
 	return 0;
 }
@@ -736,8 +736,8 @@ int scriptApi::ExitGame(lua_State* L)
 
 int scriptApi::AddTimerEvent(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается интервал времени");
-	luaL_argcheck(L, lua_isfunction(L, 2), 2, "Ожидается функция");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРЅС‚РµСЂРІР°Р» РІСЂРµРјРµРЅРё");
+	luaL_argcheck(L, lua_isfunction(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ С„СѓРЅРєС†РёСЏ");
 
 	//SCRIPT::StackDumpToLog(L);
 
@@ -745,22 +745,22 @@ int scriptApi::AddTimerEvent(lua_State* L)
 	UINT period = 0;
 	UINT maxCalls = 0;
 
-	int num = lua_gettop ( L );	// Берем количество элементов в стеке (количество переданных аргументов)
+	int num = lua_gettop ( L );	// Р‘РµСЂРµРј РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РІ СЃС‚РµРєРµ (РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµРґР°РЅРЅС‹С… Р°СЂРіСѓРјРµРЅС‚РѕРІ)
 	if (num == 4)
 	{
-		luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается период");
-		luaL_argcheck(L, lua_isnumber(L, 4), 4, "Ожидается количество повторений");
+		luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РїРµСЂРёРѕРґ");
+		luaL_argcheck(L, lua_isnumber(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРІС‚РѕСЂРµРЅРёР№");
 
 		period = (UINT)lua_tointeger(L, 3);
 		maxCalls = (UINT)lua_tointeger(L, 4);
 	}
 
 
-	lua_settop(L, 2);	// Таким образом функция окажется на вершине стека
+	lua_settop(L, 2);	// РўР°РєРёРј РѕР±СЂР°Р·РѕРј С„СѓРЅРєС†РёСЏ РѕРєР°Р¶РµС‚СЃСЏ РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР°
 	//SCRIPT::StackDumpToLog(L);
 	int action = SCRIPT::AddToRegistry();
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Создаем событие таймера.");
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "РЎРѕР·РґР°РµРј СЃРѕР±С‹С‚РёРµ С‚Р°Р№РјРµСЂР°.");
 
 	int result = 0;
 	if (num == 2)
@@ -770,7 +770,7 @@ int scriptApi::AddTimerEvent(lua_State* L)
 
 	if (!result)
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка создания события таймера.");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ СЃРѕР±С‹С‚РёСЏ С‚Р°Р№РјРµСЂР°.");
 	}
 
 	return 0;
@@ -779,10 +779,10 @@ int scriptApi::AddTimerEvent(lua_State* L)
 
 ///////////////////////////////////////
 
-// Запись в лог. Работает как print
+// Р—Р°РїРёСЃСЊ РІ Р»РѕРі. Р Р°Р±РѕС‚Р°РµС‚ РєР°Рє print
 int scriptApi::Log(lua_State* L)
 {
-	int num = lua_gettop ( L );	// Берем количество элементов в стеке (количество переданных аргументов)
+	int num = lua_gettop ( L );	// Р‘РµСЂРµРј РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РІ СЃС‚РµРєРµ (РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµРґР°РЅРЅС‹С… Р°СЂРіСѓРјРµРЅС‚РѕРІ)
 
 	string buf("");
 	char char_buf[20];
@@ -805,8 +805,8 @@ int scriptApi::Log(lua_State* L)
 
 		case LUA_TNUMBER: /* numbers */
 			{
-				// TODO: sprintf_s и snprintf немного отличаются поведением.
-				// sprintf_s гарантирует, что в конце буефера будет 0.
+				// TODO: sprintf_s Рё snprintf РЅРµРјРЅРѕРіРѕ РѕС‚Р»РёС‡Р°СЋС‚СЃСЏ РїРѕРІРµРґРµРЅРёРµРј.
+				// sprintf_s РіР°СЂР°РЅС‚РёСЂСѓРµС‚, С‡С‚Рѕ РІ РєРѕРЅС†Рµ Р±СѓРµС„РµСЂР° Р±СѓРґРµС‚ 0.
 #ifdef WIN32
 				sprintf_s(char_buf, 20, "%f", lua_tonumber(L, i));
 #else
@@ -822,8 +822,8 @@ int scriptApi::Log(lua_State* L)
 
 		default:
 			{
-				// TODO: sprintf_s и snprintf немного отличаются поведением.
-				// sprintf_s гарантирует, что в конце буефера будет 0.
+				// TODO: sprintf_s Рё snprintf РЅРµРјРЅРѕРіРѕ РѕС‚Р»РёС‡Р°СЋС‚СЃСЏ РїРѕРІРµРґРµРЅРёРµРј.
+				// sprintf_s РіР°СЂР°РЅС‚РёСЂСѓРµС‚, С‡С‚Рѕ РІ РєРѕРЅС†Рµ Р±СѓРµС„РµСЂР° Р±СѓРґРµС‚ 0.
 #ifdef WIN32
 				sprintf_s(char_buf, 20, "0x%p", lua_topointer(L, i));
 #else
@@ -838,13 +838,13 @@ int scriptApi::Log(lua_State* L)
 
 	sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_SCRIPT_EV, buf.c_str());
 
-	lua_pop(L, num);	// Стек:
+	lua_pop(L, num);	// РЎС‚РµРє:
 	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-// Задаёт коэффициент отставания камеры
+// Р—Р°РґР°С‘С‚ РєРѕСЌС„С„РёС†РёРµРЅС‚ РѕС‚СЃС‚Р°РІР°РЅРёСЏ РєР°РјРµСЂС‹
 int scriptApi::SetCamLag(lua_State* L)
 {
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "CAMERA_LAG expected!");
@@ -856,7 +856,7 @@ int scriptApi::SetCamLag(lua_State* L)
 	return 0;
 }
 
-// Фоксирует камеру на объекте. Объект задается по его id
+// Р¤РѕРєСЃРёСЂСѓРµС‚ РєР°РјРµСЂСѓ РЅР° РѕР±СЉРµРєС‚Рµ. РћР±СЉРµРєС‚ Р·Р°РґР°РµС‚СЃСЏ РїРѕ РµРіРѕ id
 int scriptApi::SetCamAttachedObj(lua_State* L)
 {
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Object id expected");
@@ -874,7 +874,7 @@ int scriptApi::SetCamAttachedObj(lua_State* L)
 	return 0;
 }
 
-// Камера будет смещаться только по заданным осям, следя за объектом
+// РљР°РјРµСЂР° Р±СѓРґРµС‚ СЃРјРµС‰Р°С‚СЊСЃСЏ С‚РѕР»СЊРєРѕ РїРѕ Р·Р°РґР°РЅРЅС‹Рј РѕСЃСЏРј, СЃР»РµРґСЏ Р·Р° РѕР±СЉРµРєС‚РѕРј
 int scriptApi::SetCamAttachedAxis(lua_State* L)
 {
 	luaL_argcheck(L, lua_isboolean(L, 1), 1, "Boolean expected");
@@ -885,7 +885,7 @@ int scriptApi::SetCamAttachedAxis(lua_State* L)
 	return 0;
 }
 
-// Фокусирует камеру на точке, заданной координатами
+// Р¤РѕРєСѓСЃРёСЂСѓРµС‚ РєР°РјРµСЂСѓ РЅР° С‚РѕС‡РєРµ, Р·Р°РґР°РЅРЅРѕР№ РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё
 int scriptApi::CamMoveToPos(lua_State* L)
 {
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Number expected");
@@ -897,7 +897,7 @@ int scriptApi::CamMoveToPos(lua_State* L)
 }
 
 
-// ЗАдает смещение камеры относительно объекта
+// Р—РђРґР°РµС‚ СЃРјРµС‰РµРЅРёРµ РєР°РјРµСЂС‹ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РѕР±СЉРµРєС‚Р°
 int scriptApi::SetCamObjOffset(lua_State* L)
 {
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Number expected");
@@ -909,7 +909,7 @@ int scriptApi::SetCamObjOffset(lua_State* L)
 }
 
 
-// Задает току объекта, на котрой фокусируется камера
+// Р—Р°РґР°РµС‚ С‚РѕРєСѓ РѕР±СЉРµРєС‚Р°, РЅР° РєРѕС‚СЂРѕР№ С„РѕРєСѓСЃРёСЂСѓРµС‚СЃСЏ РєР°РјРµСЂР°
 int scriptApi::SetCamFocusOnObjPos(lua_State* L)
 {
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Number expected");
@@ -963,30 +963,30 @@ int scriptApi::CreateRibbon(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя прототипа");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата X");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата Y");
-	luaL_argcheck(L, lua_isnumber(L, 4), 4, "Ожидается коэффициент скорости по x");
-	luaL_argcheck(L, lua_isnumber(L, 5), 5, "Ожидается коэффициент скорости по y");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ РїСЂРѕС‚РѕС‚РёРїР°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y");
+	luaL_argcheck(L, lua_isnumber(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕСЌС„С„РёС†РёРµРЅС‚ СЃРєРѕСЂРѕСЃС‚Рё РїРѕ x");
+	luaL_argcheck(L, lua_isnumber(L, 5), 5, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕСЌС„С„РёС†РёРµРЅС‚ СЃРєРѕСЂРѕСЃС‚Рё РїРѕ y");
 	const char* proto_name = lua_tostring(L, 1);
 	float x = (float)lua_tonumber(L, 2);
 	float y = (float)lua_tonumber(L, 3);
 	float fact = (float)lua_tonumber(L, 4);
 	float fact_y = (float)lua_tonumber(L, 5);
-	lua_pop(L, lua_gettop ( L ));	// Стек:
+	lua_pop(L, lua_gettop ( L ));	// РЎС‚РµРє:
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Cоздаем Ribbon: %s", proto_name);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "CРѕР·РґР°РµРј Ribbon: %s", proto_name);
 	Ribbon* r = NULL;
 	r = ::CreateRibbon(proto_name, Vector2(x, y), fact, fact_y);
 	if (r)
 	{
 
-		lua_pushnumber(L, r->id);	// Стек: r->id
+		lua_pushnumber(L, r->id);	// РЎС‚РµРє: r->id
 	}
 	else
 	{
-		lua_pushnil(L);				// Стек: nil
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка cоздания спрайта");
+		lua_pushnil(L);				// РЎС‚РµРє: nil
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° cРѕР·РґР°РЅРёСЏ СЃРїСЂР°Р№С‚Р°");
 	}
 
 	return 1;
@@ -996,8 +996,8 @@ int scriptApi::SetRibbonZ(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Номер ленты");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата Z");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РќРѕРјРµСЂ Р»РµРЅС‚С‹");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Z");
 
 	Ribbon* r = GetRibbon(lua_tointeger(L,1));
 	if (r && r->sprite)
@@ -1011,7 +1011,7 @@ int scriptApi::SetRibbonAttatachToY(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Номер ленты");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РќРѕРјРµСЂ Р»РµРЅС‚С‹");
 	luaL_argcheck(L, lua_isboolean(L, 2), 2, "bool");
 
 	Ribbon* r = GetRibbon(lua_tointeger(L,1));
@@ -1025,11 +1025,11 @@ int scriptApi::SetRibbonAttatachToY(lua_State* L)
 int scriptApi::SetRibbonBounds(lua_State* L)
 {
 	CHECKGAME;
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Номер ленты");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата X1 границ");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата Y1 границ");
-	luaL_argcheck(L, lua_isnumber(L, 4), 4, "Ожидается координата X2 границ");
-	luaL_argcheck(L, lua_isnumber(L, 5), 5, "Ожидается координата Y2 границ");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РќРѕРјРµСЂ Р»РµРЅС‚С‹");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X1 РіСЂР°РЅРёС†");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y1 РіСЂР°РЅРёС†");
+	luaL_argcheck(L, lua_isnumber(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X2 РіСЂР°РЅРёС†");
+	luaL_argcheck(L, lua_isnumber(L, 5), 5, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y2 РіСЂР°РЅРёС†");
 
 	Ribbon* r = GetRibbon(lua_tointeger(L,1));
 	if (r)
@@ -1048,10 +1048,10 @@ int scriptApi::SetRibbonBounds(lua_State* L)
 
 int scriptApi::PlaySnd(lua_State* L)
 {
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя звука");
-	luaL_argcheck(L, lua_isboolean(L, 2), 2, "Ожидается bool");
-	luaL_argcheck(L, lua_isnumber(L, 3)||lua_isnil(L, 3)||lua_isnone(L, 3), 2, "Ожидается x");
-	luaL_argcheck(L, lua_isnumber(L, 4)||lua_isnil(L, 4)||lua_isnone(L, 4), 2, "Ожидается y");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ Р·РІСѓРєР°");
+	luaL_argcheck(L, lua_isboolean(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ bool");
+	luaL_argcheck(L, lua_isnumber(L, 3)||lua_isnil(L, 3)||lua_isnone(L, 3), 2, "РћР¶РёРґР°РµС‚СЃСЏ x");
+	luaL_argcheck(L, lua_isnumber(L, 4)||lua_isnil(L, 4)||lua_isnone(L, 4), 2, "РћР¶РёРґР°РµС‚СЃСЏ y");
 	const char* sound_name = lua_tostring(L, 1);
 	bool restart = lua_toboolean(L, 2) != 0;
 	if (soundMgr)
@@ -1066,7 +1066,7 @@ int scriptApi::PlaySnd(lua_State* L)
 
 int scriptApi::PauseSnd(lua_State* L)
 {
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя звука");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ Р·РІСѓРєР°");
 	const char* sound_name = lua_tostring(L, 1);
 	if (soundMgr)
 		soundMgr->PauseSnd(string(sound_name));
@@ -1075,7 +1075,7 @@ int scriptApi::PauseSnd(lua_State* L)
 
 int scriptApi::StopSnd(lua_State* L)
 {
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя звука");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ Р·РІСѓРєР°");
 	const char* sound_name = lua_tostring(L, 1);
 	if (soundMgr)
 		soundMgr->StopSnd(string(sound_name));
@@ -1101,7 +1101,7 @@ int scriptApi::GetMasterSoundVolume(lua_State* L)
 
 int scriptApi::SetMasterSoundVolume(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается уровень громкости");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ СѓСЂРѕРІРµРЅСЊ РіСЂРѕРјРєРѕСЃС‚Рё");
 	if (soundMgr)
 		soundMgr->SetVolume((float)lua_tonumber(L, 1));
 	return 0;
@@ -1118,7 +1118,7 @@ int scriptApi::GetMasterSFXVolume(lua_State* L)
 
 int scriptApi::SetMasterSFXVolume(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается уровень громкости");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ СѓСЂРѕРІРµРЅСЊ РіСЂРѕРјРєРѕСЃС‚Рё");
 	if (soundMgr)
 		soundMgr->SetSoundVolume((float)lua_tonumber(L, 1));
 	return 0;
@@ -1135,7 +1135,7 @@ int scriptApi::GetMasterMusicVolume(lua_State* L)
 
 int scriptApi::SetMasterMusicVolume(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается уровень громкости");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ СѓСЂРѕРІРµРЅСЊ РіСЂРѕРјРєРѕСЃС‚Рё");
 	if (soundMgr)
 		soundMgr->SetMusicVolume((float)lua_tonumber(L, 1));
 	return 0;
@@ -1143,7 +1143,7 @@ int scriptApi::SetMasterMusicVolume(lua_State* L)
 
 int scriptApi::GetSoundVolume(lua_State* L)
 {
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя звука");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ Р·РІСѓРєР°");
 	if (soundMgr)
 		lua_pushnumber(L, soundMgr->GetSndVolume(string(lua_tostring(L, 1))) );
 	else
@@ -1153,8 +1153,8 @@ int scriptApi::GetSoundVolume(lua_State* L)
 
 int scriptApi::SetSoundVolume(lua_State* L)
 {
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя звука");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается уровень громкости");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ Р·РІСѓРєР°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ СѓСЂРѕРІРµРЅСЊ РіСЂРѕРјРєРѕСЃС‚Рё");
 	if (soundMgr)
 		soundMgr->SetSndVolume(string(lua_tostring(L, 1)), (float)lua_tonumber(L, 2));
 	return 0;
@@ -1162,7 +1162,7 @@ int scriptApi::SetSoundVolume(lua_State* L)
 
 int scriptApi::PlayBackMusic(lua_State* L)
 {
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя звука");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ Р·РІСѓРєР°");
 	if (soundMgr)
 		soundMgr->PlayBackMusic(string(lua_tostring(L, 1)));
 	return 0;
@@ -1222,29 +1222,29 @@ void scriptApi::MapVarAdd( lua_State* L, char const * var_name, int amount )
 
 int scriptApi::IsConfKeyPressed(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается номер кнопки в конфиге (из config_keys)");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РЅРѕРјРµСЂ РєРЅРѕРїРєРё РІ РєРѕРЅС„РёРіРµ (РёР· config_keys)");
 	lua_pushboolean(L, inpmgr.IsPressed( ((ConfigActionKeys)lua_tointeger(L, 1)) ) );
 	return 1;
 }
 
 int scriptApi::IsConfKeyHolded(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается номер кнопки в конфиге (из config_keys)");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РЅРѕРјРµСЂ РєРЅРѕРїРєРё РІ РєРѕРЅС„РёРіРµ (РёР· config_keys)");
 	lua_pushboolean(L, inpmgr.IsHolded( ((ConfigActionKeys)lua_tointeger(L, 1)) ) );
 	return 1;
 }
 
 int scriptApi::IsConfKeyReleased(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается номер кнопки в конфиге (из config_keys)");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РЅРѕРјРµСЂ РєРЅРѕРїРєРё РІ РєРѕРЅС„РёРіРµ (РёР· config_keys)");
 	lua_pushboolean(L, inpmgr.IsReleased( ((ConfigActionKeys)lua_tointeger(L, 1)) ) );
 	return 1;
 }
 
 int scriptApi::IsConfKey(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается кнопка");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается номер кнопки в конфиге (из config_keys)");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РєРЅРѕРїРєР°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РЅРѕРјРµСЂ РєРЅРѕРїРєРё РІ РєРѕРЅС„РёРіРµ (РёР· config_keys)");
 	bool is_key = false;
 	UINT key = (UINT)lua_tointeger(L, 1);
 	ConfigActionKeys cak = (ConfigActionKeys)lua_tointeger(L, 2);
@@ -1258,7 +1258,7 @@ int scriptApi::IsConfKey(lua_State* L)
 
 int scriptApi::PushButton(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 2, "Ожидается кнопка");
+	luaL_argcheck(L, lua_isnumber(L, 1), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРЅРѕРїРєР°");
 	UINT keynum = (UINT)lua_tointeger(L, 1);
 	lua_pushboolean(L, (int)inpmgr.IsHolded( keynum ));
 	return 1;
@@ -1266,7 +1266,7 @@ int scriptApi::PushButton(lua_State* L)
 
 int scriptApi::TogglePause(lua_State* L)
 {
-	luaL_argcheck(L, lua_isboolean(L,1)||lua_isnone(L,1)||lua_isnil(L,1), 1, "Ожидается состояние или ничего.");
+	luaL_argcheck(L, lua_isboolean(L,1)||lua_isnone(L,1)||lua_isnil(L,1), 1, "РћР¶РёРґР°РµС‚СЃСЏ СЃРѕСЃС‚РѕСЏРЅРёРµ РёР»Рё РЅРёС‡РµРіРѕ.");
 	if ( lua_isboolean(L,1) )
 			game::TogglePause( lua_toboolean(L,1) != 0 );
 	else
@@ -1284,7 +1284,7 @@ int scriptApi::DumpKeys(lua_State* L)
 
 int scriptApi::PushKeyName(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается кнопка");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РєРЅРѕРїРєР°");
 	int keynum = lua_tointeger(L, 1);
 	char ch[MAX_VKEY_NAME_LEN] = "";
 	GetVKeyByNum(keynum, ch);
@@ -1294,8 +1294,8 @@ int scriptApi::PushKeyName(lua_State* L)
 
 int scriptApi::GetField(lua_State* L)
 {
-	luaL_argcheck(L, lua_istable(L, 1), 1, "Ожидается таблица");
-	luaL_argcheck(L, lua_isstring(L, 2), 2,"Ожидается название поля");
+	luaL_argcheck(L, lua_istable(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ С‚Р°Р±Р»РёС†Р°");
+	luaL_argcheck(L, lua_isstring(L, 2), 2,"РћР¶РёРґР°РµС‚СЃСЏ РЅР°Р·РІР°РЅРёРµ РїРѕР»СЏ");
 	//lua_gettable(L, 1);
 	lua_getfield(L, 1, lua_tostring(L, 2));
 	return 1;
@@ -1303,8 +1303,8 @@ int scriptApi::GetField(lua_State* L)
 
 int scriptApi::SetField(lua_State* L)
 {
-	luaL_argcheck(L, lua_istable(L, 1), 1, "Ожидается таблица");
-	luaL_argcheck(L, lua_isstring(L, 2), 2, "Ожидается название поля");
+	luaL_argcheck(L, lua_istable(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ С‚Р°Р±Р»РёС†Р°");
+	luaL_argcheck(L, lua_isstring(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РЅР°Р·РІР°РЅРёРµ РїРѕР»СЏ");
 	lua_pushvalue(L, 3);
 	lua_setfield(L, 1, lua_tostring(L, 2));
 	return 0;
@@ -1368,10 +1368,10 @@ int scriptApi::GetMousePos(lua_State* L)
 
 int scriptApi::EditorGetObjects(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается x1");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается y1");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается x2");
-	luaL_argcheck(L, lua_isnumber(L, 4), 4, "Ожидается y2");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ x1");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ y1");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ x2");
+	luaL_argcheck(L, lua_isnumber(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ y2");
 	
 	float x1 = (float)lua_tonumber(L, 1);
 	float y1 = (float)lua_tonumber(L, 2);
@@ -1391,7 +1391,7 @@ int scriptApi::EditorGetObjects(lua_State* L)
 
 int scriptApi::RegEditorGetObjectsProc(lua_State* L)
 {
-	luaL_argcheck(L, lua_isfunction(L, 1), 1, "Ожидается proc");
+	luaL_argcheck(L, lua_isfunction(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ proc");
 	EditorRegAreaSelectProc(L);
 	return 0;
 }
@@ -1403,7 +1403,7 @@ extern bool editor_ShowBorders;
 int scriptApi::EditorToggleBorders(lua_State* L)
 {
 #ifdef MAP_EDITOR
-	luaL_argcheck(L, lua_isboolean(L, 1), 1, "Ожидается значение");
+	luaL_argcheck(L, lua_isboolean(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ Р·РЅР°С‡РµРЅРёРµ");
 	editor_ShowBorders = lua_toboolean(L, 1);
 #else
 	UNUSED_ARG(L);
@@ -1415,7 +1415,7 @@ int scriptApi::EditorToggleBorders(lua_State* L)
 
 int scriptApi::ListDirContents(lua_State* L)
 {
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается путь");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РїСѓС‚СЊ");
 
 	const char* path = lua_tostring(L, 1);
 	char* root_path = new char[ strlen(path_app) + 1 + strlen(path) + 1 + 1 ];
@@ -1431,7 +1431,7 @@ int scriptApi::ListDirContents(lua_State* L)
 	if (dp == NULL)
 	{
 		lua_pushnil(L);
-		sLog(DEFAULT_SCRIPT_LOG_NAME, logLevelWarning, "Ошибка ListDirContents. Невозможно открыть папку.");
+		sLog(DEFAULT_SCRIPT_LOG_NAME, logLevelWarning, "РћС€РёР±РєР° ListDirContents. РќРµРІРѕР·РјРѕР¶РЅРѕ РѕС‚РєСЂС‹С‚СЊ РїР°РїРєСѓ.");
 		return 1;
 	}
 	

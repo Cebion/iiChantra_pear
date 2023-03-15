@@ -3,9 +3,9 @@
 
     The WinMain function -- calls your program's main() function
 */
-// Этот файл - хак для того, чтобы игру можно было собрать статически под win32.
-// Инструкция: http://lists.libsdl.org/pipermail/sdl-libsdl.org/2008-January/064116.html
-// Фактически, этот файл использовался для сборки SDLMain.lib.
+// Р­С‚РѕС‚ С„Р°Р№Р» - С…Р°Рє РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ РёРіСЂСѓ РјРѕР¶РЅРѕ Р±С‹Р»Рѕ СЃРѕР±СЂР°С‚СЊ СЃС‚Р°С‚РёС‡РµСЃРєРё РїРѕРґ win32.
+// РРЅСЃС‚СЂСѓРєС†РёСЏ: http://lists.libsdl.org/pipermail/sdl-libsdl.org/2008-January/064116.html
+// Р¤Р°РєС‚РёС‡РµСЃРєРё, СЌС‚РѕС‚ С„Р°Р№Р» РёСЃРїРѕР»СЊР·РѕРІР°Р»СЃСЏ РґР»СЏ СЃР±РѕСЂРєРё SDLMain.lib.
 #include "StdAfx.h"
 //#include <stdio.h>
 //#include <stdlib.h>

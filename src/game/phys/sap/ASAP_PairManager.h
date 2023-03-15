@@ -1,11 +1,11 @@
 #ifndef __ASAP_PAIR_MANAGER_H_
 #define __ASAP_PAIR_MANAGER_H_
 
-#define PAIR_USER_DATA				// Добавляет место для каких-то UserData
+#define PAIR_USER_DATA				// Р”РѕР±Р°РІР»СЏРµС‚ РјРµСЃС‚Рѕ РґР»СЏ РєР°РєРёС…-С‚Рѕ UserData
 
 #pragma pack(1)
 
-// Одна пара номеров объектов и указателей на них
+// РћРґРЅР° РїР°СЂР° РЅРѕРјРµСЂРѕРІ РѕР±СЉРµРєС‚РѕРІ Рё СѓРєР°Р·Р°С‚РµР»РµР№ РЅР° РЅРёС…
 struct OPCODE_API ASAP_Pair
 {
 	uword		id0;
@@ -32,7 +32,7 @@ private:
 };
 #pragma pack()
 
-// Менеджер, хранящий пары пересечений и ведущий по ним поиск
+// РњРµРЅРµРґР¶РµСЂ, С…СЂР°РЅСЏС‰РёР№ РїР°СЂС‹ РїРµСЂРµСЃРµС‡РµРЅРёР№ Рё РІРµРґСѓС‰РёР№ РїРѕ РЅРёРј РїРѕРёСЃРє
 class OPCODE_API ASAP_PairManager
 {
 public:

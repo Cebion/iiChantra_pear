@@ -34,7 +34,7 @@ public:
 		this->type = objEnemy;
 		this->aim = Vector2(0,0);
 		attached = false;
-		health = 1;						 //Просто чтобы не погибнуть сразу при создании.
+		health = 1;						 //РџСЂРѕСЃС‚Рѕ С‡С‚РѕР±С‹ РЅРµ РїРѕРіРёР±РЅСѓС‚СЊ СЃСЂР°Р·Сѓ РїСЂРё СЃРѕР·РґР°РЅРёРё.
 		target = NULL;
 	}
 

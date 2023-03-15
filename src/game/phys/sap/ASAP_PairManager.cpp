@@ -105,8 +105,8 @@ inline_ ASAP_Pair* ASAP_PairManager::FindPair(uword id0, uword id1, udword hash_
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Добавлене пары пересечений.
-// TODO: Ссылки на объекты реально никогда не передаются, всегда NULL, зачем тогда параметры функции?
+// Р”РѕР±Р°РІР»РµРЅРµ РїР°СЂС‹ РїРµСЂРµСЃРµС‡РµРЅРёР№.
+// TODO: РЎСЃС‹Р»РєРё РЅР° РѕР±СЉРµРєС‚С‹ СЂРµР°Р»СЊРЅРѕ РЅРёРєРѕРіРґР° РЅРµ РїРµСЂРµРґР°СЋС‚СЃСЏ, РІСЃРµРіРґР° NULL, Р·Р°С‡РµРј С‚РѕРіРґР° РїР°СЂР°РјРµС‚СЂС‹ С„СѓРЅРєС†РёРё?
 const ASAP_Pair* ASAP_PairManager::AddPair(uword id0, uword id1, const void* object0, const void* object1)
 {
 	// Order the ids
@@ -138,7 +138,7 @@ const ASAP_Pair* ASAP_PairManager::AddPair(uword id0, uword id1, const void* obj
 	p->id1		= id1;
 	p->object0	= object0;
 	p->object1	= object1;
-	TRACEMSG2("Добавляется пара:", id0, id1, p->object0, p->object1)
+	TRACEMSG2("Р”РѕР±Р°РІР»СЏРµС‚СЃСЏ РїР°СЂР°:", id0, id1, p->object0, p->object1)
 
 		mNext[mNbActivePairs] = mHashTable[HashValue];
 	mHashTable[HashValue] = mNbActivePairs++;
@@ -153,7 +153,7 @@ void ASAP_PairManager::RemovePair(uword id0, uword id1, udword hash_value, udwor
 	UNUSED_ARG(id0);
 	UNUSED_ARG(id1);
 #endif // _DEBUG
-	TRACEMSG("Удаляется пара:", id0, id1)
+	TRACEMSG("РЈРґР°Р»СЏРµС‚СЃСЏ РїР°СЂР°:", id0, id1)
 		// Walk the hash table to fix mNext
 		udword Offset = mHashTable[hash_value];
 	ASSERT(Offset!=INVALID_ID);
@@ -285,7 +285,7 @@ void ASAP_PairManager::ReallocPairs()
 {
 	ICE_FREE(mHashTable);
 	mHashTable = (udword*)ICE_ALLOC(mHashSize*sizeof(udword));
-	StoreDwords(mHashTable, mHashSize, INVALID_ID);					// А еще есть memset, здесь он сработал бы, забивая 0xff. Интересно, быстрее ли...
+	StoreDwords(mHashTable, mHashSize, INVALID_ID);					// Рђ РµС‰Рµ РµСЃС‚СЊ memset, Р·РґРµСЃСЊ РѕРЅ СЃСЂР°Р±РѕС‚Р°Р» Р±С‹, Р·Р°Р±РёРІР°СЏ 0xff. РРЅС‚РµСЂРµСЃРЅРѕ, Р±С‹СЃС‚СЂРµРµ Р»Рё...
 
 	// Get some bytes for new entries
 	ASAP_Pair* NewPairs	= (ASAP_Pair*)ICE_ALLOC(mHashSize * sizeof(ASAP_Pair));	ASSERT(NewPairs);

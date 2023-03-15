@@ -31,13 +31,13 @@ __INLINE void DELETEARRAY(T*& a)
 	delete [] a, a = NULL;
 }
 //////////////////////////////////////////////////////////////////////////
-// Умолчания
+// РЈРјРѕР»С‡Р°РЅРёСЏ
 
-//  Стандартный размер окна
+//  РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ СЂР°Р·РјРµСЂ РѕРєРЅР°
 #define DEFAULT_WINDOW_WIDTH		640
 #define DEFAULT_WINDOW_HEIGHT		480
 
-// Стандартные пути и файлы
+// РЎС‚Р°РЅРґР°СЂС‚РЅС‹Рµ РїСѓС‚Рё Рё С„Р°Р№Р»С‹
 #define DEFAULT_CONFIG_PATH				"/config/"
 #define DEFAULT_CONFIG_NAME				"/default.lua"
 
@@ -106,18 +106,18 @@ enum ProgrammStates {
 //////////////////////////////////////////////////////////////////////////
 
 
-#define COORD_LEFT_UP_CORNER	// При создании объектов координаты указывают
-								// на левый верхний угол спрайта, а не на центр
-								// физ. объекта. Сделано для совместимости с редактором.
+#define COORD_LEFT_UP_CORNER	// РџСЂРё СЃРѕР·РґР°РЅРёРё РѕР±СЉРµРєС‚РѕРІ РєРѕРѕСЂРґРёРЅР°С‚С‹ СѓРєР°Р·С‹РІР°СЋС‚
+								// РЅР° Р»РµРІС‹Р№ РІРµСЂС…РЅРёР№ СѓРіРѕР» СЃРїСЂР°Р№С‚Р°, Р° РЅРµ РЅР° С†РµРЅС‚СЂ
+								// С„РёР·. РѕР±СЉРµРєС‚Р°. РЎРґРµР»Р°РЅРѕ РґР»СЏ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё СЃ СЂРµРґР°РєС‚РѕСЂРѕРј.
 
 
-//#define STOP_RENDER_ON_INACTIVE_NETGAME		// Останавливать рендер при неактивном окне
-											// приложения при сетевой игре
-#define RENDER_PARTICLES_WITH_STD_RENDER	// Использовать для частиц стандартный рендер, использующийся для всего отсального в игре
+//#define STOP_RENDER_ON_INACTIVE_NETGAME		// РћСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ СЂРµРЅРґРµСЂ РїСЂРё РЅРµР°РєС‚РёРІРЅРѕРј РѕРєРЅРµ
+											// РїСЂРёР»РѕР¶РµРЅРёСЏ РїСЂРё СЃРµС‚РµРІРѕР№ РёРіСЂРµ
+#define RENDER_PARTICLES_WITH_STD_RENDER	// РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РґР»СЏ С‡Р°СЃС‚РёС† СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ СЂРµРЅРґРµСЂ, РёСЃРїРѕР»СЊР·СѓСЋС‰РёР№СЃСЏ РґР»СЏ РІСЃРµРіРѕ РѕС‚СЃР°Р»СЊРЅРѕРіРѕ РІ РёРіСЂРµ
 
 
-#define GAMETICK_FROM_CONFIG	// Загружать GAMETICK из файла CONFIG
-#define USE_TIME_DEPENDENT_PHYS	// Использовать физику, зависящуюю от времени
+#define GAMETICK_FROM_CONFIG	// Р—Р°РіСЂСѓР¶Р°С‚СЊ GAMETICK РёР· С„Р°Р№Р»Р° CONFIG
+#define USE_TIME_DEPENDENT_PHYS	// РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ С„РёР·РёРєСѓ, Р·Р°РІРёСЃСЏС‰СѓСЋСЋ РѕС‚ РІСЂРµРјРµРЅРё
 
 
 #define DEBUG_LOG_INFO
@@ -127,27 +127,27 @@ enum ProgrammStates {
 	//#define DEBUG_SAP_PAIRS_COORDS
 #endif // DEBUG_LOG_INFO
 
-//#define DEBUG_INSTANT_RENDERING		// Включает прямой рендеринг, не использующий массив отрисовок.
+//#define DEBUG_INSTANT_RENDERING		// Р’РєР»СЋС‡Р°РµС‚ РїСЂСЏРјРѕР№ СЂРµРЅРґРµСЂРёРЅРі, РЅРµ РёСЃРїРѕР»СЊР·СѓСЋС‰РёР№ РјР°СЃСЃРёРІ РѕС‚СЂРёСЃРѕРІРѕРє.
 
-#define DEBUG_INGAME_INFO		// Вывод разнообразной отладочной информации и графики
+#define DEBUG_INGAME_INFO		// Р’С‹РІРѕРґ СЂР°Р·РЅРѕРѕР±СЂР°Р·РЅРѕР№ РѕС‚Р»Р°РґРѕС‡РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё Рё РіСЂР°С„РёРєРё
 
 #ifdef DEBUG_INGAME_INFO
-	//#define DEBUG_PRINT				// Вывод отладочных письмен
-	#define DEBUG_RENDER			// Отладочная графика
+	//#define DEBUG_PRINT				// Р’С‹РІРѕРґ РѕС‚Р»Р°РґРѕС‡РЅС‹С… РїРёСЃСЊРјРµРЅ
+	#define DEBUG_RENDER			// РћС‚Р»Р°РґРѕС‡РЅР°СЏ РіСЂР°С„РёРєР°
 
 	#ifdef DEBUG_RENDER
-		//#define DEBUG_RENDER_UNLOADED_TEXTURES		// Отрисовка незагруженых текстур в виде цветных прямоугольников
-		#define DEBUG_UNLOADED_TEXTURES_COLOR 1.0f, 0.5f, 0.25f		// Цвет прямоугольника вместо незагруженной текстуры
+		//#define DEBUG_RENDER_UNLOADED_TEXTURES		// РћС‚СЂРёСЃРѕРІРєР° РЅРµР·Р°РіСЂСѓР¶РµРЅС‹С… С‚РµРєСЃС‚СѓСЂ РІ РІРёРґРµ С†РІРµС‚РЅС‹С… РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєРѕРІ
+		#define DEBUG_UNLOADED_TEXTURES_COLOR 1.0f, 0.5f, 0.25f		// Р¦РІРµС‚ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєР° РІРјРµСЃС‚Рѕ РЅРµР·Р°РіСЂСѓР¶РµРЅРЅРѕР№ С‚РµРєСЃС‚СѓСЂС‹
 
-		//#define DEBUG_DRAW_SPRITES_BORDERS		// Рисование границ спрайтов
+		//#define DEBUG_DRAW_SPRITES_BORDERS		// Р РёСЃРѕРІР°РЅРёРµ РіСЂР°РЅРёС† СЃРїСЂР°Р№С‚РѕРІ
 		#define DEBUG_SPRITES_BORDERS_COLOR	0.0f, 0.5f, 0.25f, 1.0f
-		//#define DEBUG_DRAW_OBJECTS_BORDERS		// Рисование границ объектов	(не работает)
+		//#define DEBUG_DRAW_OBJECTS_BORDERS		// Р РёСЃРѕРІР°РЅРёРµ РіСЂР°РЅРёС† РѕР±СЉРµРєС‚РѕРІ	(РЅРµ СЂР°Р±РѕС‚Р°РµС‚)
 		//#define DEBUG_OBJECTS_BORDERS_COLOR 0.0f, 0.5f, 0.5f, 1.0f
 
-		#define DEBUG_DRAW_WAYPOINTS							// Отрисовка вейпоинтов
+		#define DEBUG_DRAW_WAYPOINTS							// РћС‚СЂРёСЃРѕРІРєР° РІРµР№РїРѕРёРЅС‚РѕРІ
 		#define DEBUG_WAYPOINT_COLOR 0.25f, 0.25f, 1.0f, 1.0f	// 
 
-		#define DEBUG_DRAW_PHYSOBJ_BORDERS_ONLY	// Рисование гранифц только физических объектов
+		#define DEBUG_DRAW_PHYSOBJ_BORDERS_ONLY	// Р РёСЃРѕРІР°РЅРёРµ РіСЂР°РЅРёС„С† С‚РѕР»СЊРєРѕ С„РёР·РёС‡РµСЃРєРёС… РѕР±СЉРµРєС‚РѕРІ
 		#ifdef DEBUG_DRAW_PHYSOBJ_BORDERS_ONLY
 			#define DEBUG_PHYSOBJ_BORDER_COLOR 1.0f, 0.5f, 0.0f, 1.0f
 			#undef DEBUG_DRAW_OBJECTS_BORDERS
@@ -158,23 +158,23 @@ enum ProgrammStates {
 			#define DEBUG_MP0_POINT_COLOR 1.0f, 0.0f, 0.0f, 1.0f
 		#endif // DEBUG_DRAW_PHYSOBJ_BORDERS_ONLY
 
-		//#define DEBUG_DRAW_COLLISION_PAIRS					// Отрисовка пар пересечений
+		//#define DEBUG_DRAW_COLLISION_PAIRS					// РћС‚СЂРёСЃРѕРІРєР° РїР°СЂ РїРµСЂРµСЃРµС‡РµРЅРёР№
 		#ifdef DEBUG_DRAW_COLLISION_PAIRS
 			#define DEBUG_COLLISION_PAIRS_COLOR 1.0f, 1.0f, 0.0f, 1.0f
 		#endif // DEBUG_DRAW_PHYSOBJ_BORDERS_ONLY
 
-		#define DEBUG_DRAW_SUSPECTED_PLAIN					// Отрисовка связи с suspected_plane
+		#define DEBUG_DRAW_SUSPECTED_PLAIN					// РћС‚СЂРёСЃРѕРІРєР° СЃРІСЏР·Рё СЃ suspected_plane
 		#ifdef DEBUG_DRAW_SUSPECTED_PLAIN
 			#define DEBUG_DRAW_SUSPECTED_PLAIN_COLOR 0.7f, 0.7f, 0.7f, 1.0f
 		#endif // DEBUG_DRAW_PHYSOBJ_BORDERS_ONLY
 
-		#define DEBUG_DRAW_SPEED_VECTORS				// Отрисовка пар пересечений
+		#define DEBUG_DRAW_SPEED_VECTORS				// РћС‚СЂРёСЃРѕРІРєР° РїР°СЂ РїРµСЂРµСЃРµС‡РµРЅРёР№
 		#ifdef DEBUG_DRAW_SPEED_VECTORS
 			#define DEBUG_DRAW_SPEED_VEC_COLOR 1.0f, 1.0f, 1.0f, 1.0f
 			#define DEBUG_DRAW_GRAV_BONUS_COLOR 1.0f, 1.0f, 0.0f, 1.0f
 		#endif // DEBUG_DRAW_PHYSOBJ_BORDERS_ONLY
 
-		#define DEBUG_DRAW_PHYSOBJ_ID							// Рисует на физических объектах их id объекта
+		#define DEBUG_DRAW_PHYSOBJ_ID							// Р РёСЃСѓРµС‚ РЅР° С„РёР·РёС‡РµСЃРєРёС… РѕР±СЉРµРєС‚Р°С… РёС… id РѕР±СЉРµРєС‚Р°
 		#ifdef DEBUG_DRAW_PHYSOBJ_ID
 			#define DEBUG_PHYSOBJ_ID_FONT_COLOR 0.0f, 0.0f, 0.0f, 1.0f
 		#endif // DEBUG_DRAW_PHYSOBJ_BORDERS_ONLY
@@ -189,27 +189,27 @@ enum ProgrammStates {
 #define MIN_Y_BOUNCE_SPEED 4.0f
 
 
-#define GUI_SETFOCUS_ON_MOUSEMOVE		// Устанавливать фокус на виджете, когда над ним движется мышка
-//#define GUI_SETFOCUS_ON_MOUSECLICK		// Устанавливать фокус на виджете, когда по нем щелкают <- Но зачем? Мышь уже над ним...
-#define GUI_UNSETFOCUS_ON_MOUSELEAVE	// Убирать фокус с виджета, когда с него убирают курсор мышки
+#define GUI_SETFOCUS_ON_MOUSEMOVE		// РЈСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ С„РѕРєСѓСЃ РЅР° РІРёРґР¶РµС‚Рµ, РєРѕРіРґР° РЅР°Рґ РЅРёРј РґРІРёР¶РµС‚СЃСЏ РјС‹С€РєР°
+//#define GUI_SETFOCUS_ON_MOUSECLICK		// РЈСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ С„РѕРєСѓСЃ РЅР° РІРёРґР¶РµС‚Рµ, РєРѕРіРґР° РїРѕ РЅРµРј С‰РµР»РєР°СЋС‚ <- РќРѕ Р·Р°С‡РµРј? РњС‹С€СЊ СѓР¶Рµ РЅР°Рґ РЅРёРј...
+#define GUI_UNSETFOCUS_ON_MOUSELEAVE	// РЈР±РёСЂР°С‚СЊ С„РѕРєСѓСЃ СЃ РІРёРґР¶РµС‚Р°, РєРѕРіРґР° СЃ РЅРµРіРѕ СѓР±РёСЂР°СЋС‚ РєСѓСЂСЃРѕСЂ РјС‹С€РєРё
 
-#define  CLOSE_ON_ALT_F4				// Приложение будет закрыто по нажатию alt+F4
+#define  CLOSE_ON_ALT_F4				// РџСЂРёР»РѕР¶РµРЅРёРµ Р±СѓРґРµС‚ Р·Р°РєСЂС‹С‚Рѕ РїРѕ РЅР°Р¶Р°С‚РёСЋ alt+F4
 
 #define BOUNCE_Y(dyn) dyn->vel.y = (fabs(dyn->vel.y) <= MIN_Y_BOUNCE_SPEED) ? 0.0f : -(dyn->bounce+dyn->env->bounce_bonus)*dyn->vel.y; dyn->acc.y = (dyn->acc.y <= MIN_Y_BOUNCE_SPEED) ? 0.0f : -(dyn->bounce+dyn->env->bounce_bonus)*dyn->acc.y
 #define BOUNCE_X(dyn) dyn->vel.x = (fabs(dyn->vel.x) <= MIN_X_BOUNCE_SPEED) ? 0.0f : -(dyn->bounce+dyn->env->bounce_bonus)*dyn->vel.x; dyn->acc.x = (dyn->acc.x <= MIN_X_BOUNCE_SPEED) ? 0.0f : -(dyn->bounce+dyn->env->bounce_bonus)*dyn->acc.x
 
-// Для win32 SDL_win32_main.cpp
-#define NO_STDIO_REDIRECT		// Не перенаправляет стандартные потоки в файл
-#define USE_MESSAGEBOX			// Использует MessageBox для сообщения ошибок инициализации
+// Р”Р»СЏ win32 SDL_win32_main.cpp
+#define NO_STDIO_REDIRECT		// РќРµ РїРµСЂРµРЅР°РїСЂР°РІР»СЏРµС‚ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Рµ РїРѕС‚РѕРєРё РІ С„Р°Р№Р»
+#define USE_MESSAGEBOX			// РСЃРїРѕР»СЊР·СѓРµС‚ MessageBox РґР»СЏ СЃРѕРѕР±С‰РµРЅРёСЏ РѕС€РёР±РѕРє РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
 
 #define SHADOW_DISTANCE			480
 #define SHADOW_Z				-0.3f
 #define SHADOW_COLOR			0, 0, 0, 0.4f
 
-// Количество массивов кнопок в конфигурации
+// РљРѕР»РёС‡РµСЃС‚РІРѕ РјР°СЃСЃРёРІРѕРІ РєРЅРѕРїРѕРє РІ РєРѕРЅС„РёРіСѓСЂР°С†РёРё
 #define KEY_SETS_NUMBER 4
-// Максимальная длина названия кнопки. Используется для выделения строки-буфера, 
-// можно спокойно увеличить, когда будут более длинные зназвания.
+// РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° РЅР°Р·РІР°РЅРёСЏ РєРЅРѕРїРєРё. РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РІС‹РґРµР»РµРЅРёСЏ СЃС‚СЂРѕРєРё-Р±СѓС„РµСЂР°, 
+// РјРѕР¶РЅРѕ СЃРїРѕРєРѕР№РЅРѕ СѓРІРµР»РёС‡РёС‚СЊ, РєРѕРіРґР° Р±СѓРґСѓС‚ Р±РѕР»РµРµ РґР»РёРЅРЅС‹Рµ Р·РЅР°Р·РІР°РЅРёСЏ.
 #define MAX_VKEY_NAME_LEN 30
 
 

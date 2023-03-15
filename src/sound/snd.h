@@ -4,7 +4,7 @@
 #include "../resource.h"
 #include "../resource_mgr.h"
 #include "bass.h"
-#include "../game/phys/phys_misc.h" //Там Vector2. Или передвинуть или убрать отсюда.
+#include "../game/phys/phys_misc.h" //РўР°Рј Vector2. РР»Рё РїРµСЂРµРґРІРёРЅСѓС‚СЊ РёР»Рё СѓР±СЂР°С‚СЊ РѕС‚СЃСЋРґР°.
 
 typedef HMUSIC BASSHANDLE;
 
@@ -25,7 +25,7 @@ public:
 	bool Pause() const;
 	bool Stop() const;
 
-	// TODO: Используя BASS_ChannelSlideAttribute, можно плавно менять громкость.
+	// TODO: РСЃРїРѕР»СЊР·СѓСЏ BASS_ChannelSlideAttribute, РјРѕР¶РЅРѕ РїР»Р°РІРЅРѕ РјРµРЅСЏС‚СЊ РіСЂРѕРјРєРѕСЃС‚СЊ.
 
 	float GetVolume() const;
 	bool SetVolume(float value);

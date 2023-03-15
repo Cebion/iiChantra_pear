@@ -40,19 +40,19 @@ void PushRibbon(lua_State* L, ObjRibbon* o);
 
 
 
-// Помещает в стек таблицу, представлющую игровой объект
+// РџРѕРјРµС‰Р°РµС‚ РІ СЃС‚РµРє С‚Р°Р±Р»РёС†Сѓ, РїСЂРµРґСЃС‚Р°РІР»СЋС‰СѓСЋ РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚
 void PushObject(lua_State* L, GameObject* o)
 {
-	lua_newtable(L);	// Стек: obj
+	lua_newtable(L);	// РЎС‚РµРє: obj
 
 	lua_pushinteger(L, o->id);		lua_setfield(L, -2, "id");
 	lua_pushinteger(L, o->type);	lua_setfield(L, -2, "type");
 	SCRIPT::PushAABB(L, o->aabb);	lua_setfield(L, -2, "aabb");
 
-	lua_newtable(L);	// Стек: obj flags
+	lua_newtable(L);	// РЎС‚РµРє: obj flags
 	lua_pushboolean(L, o->IsPhysic());	lua_setfield(L, -2, "physic");
 	lua_pushboolean(L, o->IsDead());	lua_setfield(L, -2, "dead");
-	lua_setfield(L, -2, "flags");	// Стек: obj
+	lua_setfield(L, -2, "flags");	// РЎС‚РµРє: obj
 
 #ifdef MAP_EDITOR
 	lua_pushstring(L, o->proto_name);	lua_setfield(L, -2, "proto");
@@ -62,7 +62,7 @@ void PushObject(lua_State* L, GameObject* o)
 
 	if(o->sprite)
 	{
-		lua_newtable(L);	// Стек: obj sprite
+		lua_newtable(L);	// РЎС‚РµРє: obj sprite
 		lua_pushboolean(L, o->sprite->IsMirrored());	lua_setfield(L, -2, "mirrored");
 		lua_pushboolean(L, o->sprite->IsFixed());		lua_setfield(L, -2, "fixed");
 		lua_pushboolean(L, o->sprite->IsVisible());		lua_setfield(L, -2, "visible");
@@ -75,19 +75,19 @@ void PushObject(lua_State* L, GameObject* o)
 		lua_pushinteger(L, o->sprite->currentFrame);	lua_setfield(L, -2, "frame");
 		lua_pushinteger(L, o->sprite->frameWidth);		lua_setfield(L, -2, "frameWidth");
 		lua_pushinteger(L, o->sprite->frameHeight);		lua_setfield(L, -2, "frameHeight");
-		lua_newtable(L);	//Стек: obj sprite color
+		lua_newtable(L);	//РЎС‚РµРє: obj sprite color
 		lua_pushnumber(L, o->sprite->color.r);			lua_rawseti(L, -2, 1);
 		lua_pushnumber(L, o->sprite->color.g);			lua_rawseti(L, -2, 2);
 		lua_pushnumber(L, o->sprite->color.b);			lua_rawseti(L, -2, 3);
 		lua_pushnumber(L, o->sprite->color.a);			lua_rawseti(L, -2, 4);
-		lua_setfield(L, -2, "color");  // Стек: obj sprite
+		lua_setfield(L, -2, "color");  // РЎС‚РµРє: obj sprite
 #ifdef MAP_EDITOR
 		if (o->sprite->tex != NULL)
 		{
 			lua_pushinteger(L, o->sprite->tex->framesCount);	lua_setfield(L, -2, "frames");
 		}
 #endif //MAP_EDITOR
-		lua_setfield(L, -2, "sprite");	// Стек: obj
+		lua_setfield(L, -2, "sprite");	// РЎС‚РµРє: obj
 	}
 
 	if(o->IsPhysic())
@@ -102,12 +102,12 @@ void PushObject(lua_State* L, GameObject* o)
 	if (o->type == objRibbon)
 		PushRibbon(L, (ObjRibbon*)o);
 
-	// Стек: obj
+	// РЎС‚РµРє: obj
 }
 
 void PushSpawner(lua_State* L, ObjSpawner* o)
 {
-	// Стек: obj
+	// РЎС‚РµРє: obj
 	lua_pushinteger(L, o->maximumEnemies);	lua_setfield(L, -2, "maximumEnemies");
 	lua_pushinteger(L, o->enemySpawnDelay);	lua_setfield(L, -2, "enemySpawnDelay");
 	lua_pushinteger(L, o->size);			lua_setfield(L, -2, "enemySize");
@@ -118,7 +118,7 @@ void PushSpawner(lua_State* L, ObjSpawner* o)
 
 void PushRibbon(lua_State* L, ObjRibbon* o)
 {
-	// Стек: obj
+	// РЎС‚РµРє: obj
 	lua_pushnumber(L, o->bl);	lua_setfield(L, -2, "bl");
 	lua_pushnumber(L, o->br);	lua_setfield(L, -2, "br");
 	lua_pushnumber(L, o->bt);	lua_setfield(L, -2, "bt");
@@ -135,24 +135,24 @@ void PushRibbon(lua_State* L, ObjRibbon* o)
 #endif //MAP_EDITOR
 }
 
-// Добавляет в таблице на вершине стека поля физического игрового объекта
+// Р”РѕР±Р°РІР»СЏРµС‚ РІ С‚Р°Р±Р»РёС†Рµ РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР° РїРѕР»СЏ С„РёР·РёС‡РµСЃРєРѕРіРѕ РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р°
 void PushPhysic(lua_State* L, ObjPhysic* o)
 {
-	// Стек: obj
-	lua_newtable(L);	// Стек: obj phFlags
+	// РЎС‚РµРє: obj
+	lua_newtable(L);	// РЎС‚РµРє: obj phFlags
 	lua_pushboolean(L, o->IsSolid());	lua_setfield(L, -2, "solid");
 	lua_pushboolean(L, o->IsBulletCollidable());	lua_setfield(L, -2, "bulletCollideable");
 	lua_pushboolean(L, o->IsDynamic());	lua_setfield(L, -2, "dynamic");
-	lua_setfield(L, -2, "phFlags");	// Стек: obj
+	lua_setfield(L, -2, "phFlags");	// РЎС‚РµРє: obj
 
 	if (o->IsDynamic())
 		PushDynamic(L, (ObjDynamic*)o);
 }
 
-// Добавляет в таблице на вершине стека поля динамического физического игрового объекта
+// Р”РѕР±Р°РІР»СЏРµС‚ РІ С‚Р°Р±Р»РёС†Рµ РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР° РїРѕР»СЏ РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ С„РёР·РёС‡РµСЃРєРѕРіРѕ РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р°
 void PushDynamic(lua_State* L, ObjDynamic* o)
 {
-	// Стек: obj
+	// РЎС‚РµРє: obj
 	SCRIPT::PushVector(L, o->acc);				lua_setfield(L, -2, "acc");
 	SCRIPT::PushVector(L, o->vel);				lua_setfield(L, -2, "vel");
 	lua_pushnumber(L, o->walk_acc);				lua_setfield(L, -2, "walk_acc");
@@ -167,19 +167,19 @@ void PushDynamic(lua_State* L, ObjDynamic* o)
 	lua_pushinteger(L, o->activity);			lua_setfield(L, -2, "activity");
 }
 
-// Добавляет в таблице на вершине стека поля игрового объекта персонажа
+// Р”РѕР±Р°РІР»СЏРµС‚ РІ С‚Р°Р±Р»РёС†Рµ РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР° РїРѕР»СЏ РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р° РїРµСЂСЃРѕРЅР°Р¶Р°
 void PushCharacter(lua_State* L, ObjCharacter* o)
 {
-	// Стек: obj
+	// РЎС‚РµРє: obj
 	lua_pushinteger(L, o->health);			lua_setfield(L, -2, "health");
 	lua_pushinteger(L, o->gunDirection);	lua_setfield(L, -2, "gunDirection");
 	lua_pushboolean(L, o->is_invincible);	lua_setfield(L, -2, "isInvincible");
 }
 
-// Добавляет в таблице на вершине стека поля игрового объекта игрока
+// Р”РѕР±Р°РІР»СЏРµС‚ РІ С‚Р°Р±Р»РёС†Рµ РЅР° РІРµСЂС€РёРЅРµ СЃС‚РµРєР° РїРѕР»СЏ РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р° РёРіСЂРѕРєР°
 void PushPlayer(lua_State* L, ObjPlayer* o)
 {
-	// Стек: obj
+	// РЎС‚РµРє: obj
 	PushCharacter(L, o);
 	lua_pushboolean(L, o->controlEnabled);	lua_setfield(L, -2, "controlEnabled");
 	lua_pushinteger(L, o->ammo);
@@ -205,11 +205,11 @@ void PushPlayer(lua_State* L, ObjPlayer* o)
 
 //////////////////////////////////////////////////////////////////////////
 
-// Возвращает таблицу, предствавлющую собой объект игрока
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚Р°Р±Р»РёС†Сѓ, РїСЂРµРґСЃС‚РІР°РІР»СЋС‰СѓСЋ СЃРѕР±РѕР№ РѕР±СЉРµРєС‚ РёРіСЂРѕРєР°
 int scriptApi::GetPlayer(lua_State* L)
 {
-	// TODO: CHECKGAME здесь нужен. Просто переписывать нормально loader.lua долго.
-	// Костыли во все поля.
+	// TODO: CHECKGAME Р·РґРµСЃСЊ РЅСѓР¶РµРЅ. РџСЂРѕСЃС‚Рѕ РїРµСЂРµРїРёСЃС‹РІР°С‚СЊ РЅРѕСЂРјР°Р»СЊРЅРѕ loader.lua РґРѕР»РіРѕ.
+	// РљРѕСЃС‚С‹Р»Рё РІРѕ РІСЃРµ РїРѕР»СЏ.
 	//CHECKGAME;
 
 	luaL_argcheck(L, lua_isnumber(L, 1) || lua_isnone(L, 1), 1, "player num or none");
@@ -232,7 +232,7 @@ int scriptApi::GetPlayer(lua_State* L)
 	else
 	{
 		lua_pushnil(L);
-		//sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка. Игрока нет.");
+		//sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР°. РРіСЂРѕРєР° РЅРµС‚.");
 	}
 
 	return 1;
@@ -255,7 +255,7 @@ int scriptApi::GetPlayerNum(lua_State* L)
 	return 1;
 }
 
-// Возвращает таблицу, предствавлющую собой игровой объект
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚Р°Р±Р»РёС†Сѓ, РїСЂРµРґСЃС‚РІР°РІР»СЋС‰СѓСЋ СЃРѕР±РѕР№ РёРіСЂРѕРІРѕР№ РѕР±СЉРµРєС‚
 int scriptApi::GetObject(lua_State* L)
 {
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Object id expected");
@@ -270,7 +270,7 @@ int scriptApi::GetObject(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"GetObject: Ошибка. Объекта с id=%d нет.", id);
+			"GetObject: РћС€РёР±РєР°. РћР±СЉРµРєС‚Р° СЃ id=%d РЅРµС‚.", id);
 		return 0;
 	}
 
@@ -288,7 +288,7 @@ int scriptApi::GetCharHealth(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"GetCharHealth: объекта с id=%d нет.", lua_tointeger(L, 1));
+			"GetCharHealth: РѕР±СЉРµРєС‚Р° СЃ id=%d РЅРµС‚.", lua_tointeger(L, 1));
 		lua_pushnil(L);
 	}
 	return 1;
@@ -306,7 +306,7 @@ int scriptApi::SetCharHealth(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"GetCharHealth: объекта с id=%d нет.", lua_tointeger(L, 1));
+			"GetCharHealth: РѕР±СЉРµРєС‚Р° СЃ id=%d РЅРµС‚.", lua_tointeger(L, 1));
 	}
 	return 0;
 }
@@ -324,14 +324,14 @@ int scriptApi::SetObjDead(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка SetObjDead. Объекта с таким id нет.");
+			"РћС€РёР±РєР° SetObjDead. РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµС‚.");
 	}
 
 	return 0;
 }
 
 
-// Изменяет координаты игрового объекта
+// РР·РјРµРЅСЏРµС‚ РєРѕРѕСЂРґРёРЅР°С‚С‹ РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р°
 int scriptApi::SetObjPos(lua_State* L)
 {
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Object id expected");
@@ -360,7 +360,7 @@ int scriptApi::SetObjPos(lua_State* L)
 		if ( lua_isnumber(L, 4) && obj->sprite )
 			obj->sprite->z = (float)lua_tonumber(L, 4);
 
-		// TODO: как-то лучше оно должно быть. Не место здесь для обновления в сап.
+		// TODO: РєР°Рє-С‚Рѕ Р»СѓС‡С€Рµ РѕРЅРѕ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ. РќРµ РјРµСЃС‚Рѕ Р·РґРµСЃСЊ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ РІ СЃР°Рї.
 #ifndef MAP_EDITOR
 		if (obj->IsPhysic())
 		{
@@ -374,7 +374,7 @@ int scriptApi::SetObjPos(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка изменения координат объекта. Объекта с таким id нет.");
+			"РћС€РёР±РєР° РёР·РјРµРЅРµРЅРёСЏ РєРѕРѕСЂРґРёРЅР°С‚ РѕР±СЉРµРєС‚Р°. РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµС‚.");
 	}
 
 	return 0;
@@ -396,13 +396,13 @@ int scriptApi::SetDynObjGravity(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка изменения ускорения объекта. Объекта с таким id нет или он не динамический.");
+			"РћС€РёР±РєР° РёР·РјРµРЅРµРЅРёСЏ СѓСЃРєРѕСЂРµРЅРёСЏ РѕР±СЉРµРєС‚Р°. РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµС‚ РёР»Рё РѕРЅ РЅРµ РґРёРЅР°РјРёС‡РµСЃРєРёР№.");
 	}
 
 	return 0;
 }
 
-// Изменяет ускорение динамического игрового объекта
+// РР·РјРµРЅСЏРµС‚ СѓСЃРєРѕСЂРµРЅРёРµ РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р°
 int scriptApi::SetDynObjAcc(lua_State* L)
 {
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Object id expected");
@@ -419,13 +419,13 @@ int scriptApi::SetDynObjAcc(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка изменения ускорения объекта. Объекта с таким id нет или он не динамический.");
+			"РћС€РёР±РєР° РёР·РјРµРЅРµРЅРёСЏ СѓСЃРєРѕСЂРµРЅРёСЏ РѕР±СЉРµРєС‚Р°. РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµС‚ РёР»Рё РѕРЅ РЅРµ РґРёРЅР°РјРёС‡РµСЃРєРёР№.");
 	}
 
 	return 0;
 }
 
-// Изменяет скорость динамическго игрового объекта
+// РР·РјРµРЅСЏРµС‚ СЃРєРѕСЂРѕСЃС‚СЊ РґРёРЅР°РјРёС‡РµСЃРєРіРѕ РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р°
 int scriptApi::SetDynObjVel(lua_State* L)
 {
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Object id expected");
@@ -442,13 +442,13 @@ int scriptApi::SetDynObjVel(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка изменения скорости объекта. Объекта с таким id нет или он не динамический.");
+			"РћС€РёР±РєР° РёР·РјРµРЅРµРЅРёСЏ СЃРєРѕСЂРѕСЃС‚Рё РѕР±СЉРµРєС‚Р°. РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµС‚ РёР»Рё РѕРЅ РЅРµ РґРёРЅР°РјРёС‡РµСЃРєРёР№.");
 	}
 
 	return 0;
 }
 
-// Включает/отключает контроль игрока
+// Р’РєР»СЋС‡Р°РµС‚/РѕС‚РєР»СЋС‡Р°РµС‚ РєРѕРЅС‚СЂРѕР»СЊ РёРіСЂРѕРєР°
 int scriptApi::EnablePlayerControl(lua_State* L)
 {
 	CHECKGAME;
@@ -463,7 +463,7 @@ int scriptApi::EnablePlayerControl(lua_State* L)
 	return 0;
 }
 
-// Включает/отключает контроль игрока
+// Р’РєР»СЋС‡Р°РµС‚/РѕС‚РєР»СЋС‡Р°РµС‚ РєРѕРЅС‚СЂРѕР»СЊ РёРіСЂРѕРєР°
 int scriptApi::GetPlayerControlState(lua_State* L)
 {
 	CHECKGAME;
@@ -476,7 +476,7 @@ int scriptApi::GetPlayerControlState(lua_State* L)
 	return 1;
 }
 
-// Устанавливает тип движения динамического игрового объекта
+// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С‚РёРї РґРІРёР¶РµРЅРёСЏ РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р°
 int scriptApi::SetDynObjMovement(lua_State* L)
 {
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Object id expected");
@@ -492,13 +492,13 @@ int scriptApi::SetDynObjMovement(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка изменения типа движения объекта. Объекта с таким id нет или он не динамический.");
+			"РћС€РёР±РєР° РёР·РјРµРЅРµРЅРёСЏ С‚РёРїР° РґРІРёР¶РµРЅРёСЏ РѕР±СЉРµРєС‚Р°. РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµС‚ РёР»Рё РѕРЅ РЅРµ РґРёРЅР°РјРёС‡РµСЃРєРёР№.");
 	}
 
 	return 0;
 }
 
-// Устанавливает направление движения динамического игрового объекта
+// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ РёРіСЂРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р°
 int scriptApi::SetDynObjMoveDirX(lua_State* L)
 {
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Object id expected");
@@ -514,7 +514,7 @@ int scriptApi::SetDynObjMoveDirX(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка изменения направления движения объекта. Объекта с таким id нет или он не динамический.");
+			"РћС€РёР±РєР° РёР·РјРµРЅРµРЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ РґРІРёР¶РµРЅРёСЏ РѕР±СЉРµРєС‚Р°. РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµС‚ РёР»Рё РѕРЅ РЅРµ РґРёРЅР°РјРёС‡РµСЃРєРёР№.");
 	}
 
 	return 0;
@@ -538,7 +538,7 @@ int scriptApi::SetObjSpriteMirrored(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка SetObjSpriteMirrored. Объекта с таким id нет или он не динамический.");
+			"РћС€РёР±РєР° SetObjSpriteMirrored. РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµС‚ РёР»Рё РѕРЅ РЅРµ РґРёРЅР°РјРёС‡РµСЃРєРёР№.");
 	}
 
 	return 0;
@@ -560,7 +560,7 @@ int scriptApi::SetObjSpriteColor(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка SetObjSpriteColor. Объекта с таким id нет или у него нет спрайта.");
+			"РћС€РёР±РєР° SetObjSpriteColor. РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµС‚ РёР»Рё Сѓ РЅРµРіРѕ РЅРµС‚ СЃРїСЂР°Р№С‚Р°.");
 	}
 
 	return 0;
@@ -592,7 +592,7 @@ int scriptApi::SetObjAnim(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка SetObjAnim. Объекта с таким id нет или он не динамический.");
+			"РћС€РёР±РєР° SetObjAnim. РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµС‚ РёР»Рё РѕРЅ РЅРµ РґРёРЅР°РјРёС‡РµСЃРєРёР№.");
 	}
 
 
@@ -613,7 +613,7 @@ int scriptApi::SetObjProcessor(lua_State* L)
 	else
 	{
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV,
-			"Ошибка изменения обработчика объекта. Объекта с таким id нет или он не динамический.");
+			"РћС€РёР±РєР° РёР·РјРµРЅРµРЅРёСЏ РѕР±СЂР°Р±РѕС‚С‡РёРєР° РѕР±СЉРµРєС‚Р°. РћР±СЉРµРєС‚Р° СЃ С‚Р°РєРёРј id РЅРµС‚ РёР»Рё РѕРЅ РЅРµ РґРёРЅР°РјРёС‡РµСЃРєРёР№.");
 	}
 
 	return 0;
@@ -729,12 +729,12 @@ int scriptApi::SetRaySearchDistance(lua_State* L)
 int scriptApi::CreateColorBox(lua_State* L)
 {
 	CHECKGAME;
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается координата X1");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата Y1");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата X2");
-	luaL_argcheck(L, lua_isnumber(L, 4), 4, "Ожидается координата Y2");
-	luaL_argcheck(L, lua_isnumber(L, 5), 5, "Ожидается координата Z");
-	luaL_argcheck(L, lua_istable(L, 6), 6, "Ожидается таблица color");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X1");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y1");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X2");
+	luaL_argcheck(L, lua_isnumber(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y2");
+	luaL_argcheck(L, lua_isnumber(L, 5), 5, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Z");
+	luaL_argcheck(L, lua_istable(L, 6), 6, "РћР¶РёРґР°РµС‚СЃСЏ С‚Р°Р±Р»РёС†Р° color");
 	
 	float x1 = (float)lua_tonumber(L, 1);
 	float y1 = (float)lua_tonumber(L, 2);
@@ -743,7 +743,7 @@ int scriptApi::CreateColorBox(lua_State* L)
 	float z = (float)lua_tonumber(L, 5);
 	RGBAf col; SCRIPT::GetColorFromTable(L, 6, col);
 
-	lua_pop(L, lua_gettop(L));	// Стек:
+	lua_pop(L, lua_gettop(L));	// РЎС‚РµРє:
 
 	GameObject* obj = ::CreateColorBox(CAABB(x1, y1, x2, y2), z, col);
 
@@ -755,7 +755,7 @@ int scriptApi::CreateMap(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_istable(L,1), 1, "Ожидается таблица карты");
+	luaL_argcheck(L, lua_istable(L,1), 1, "РћР¶РёРґР°РµС‚СЃСЏ С‚Р°Р±Р»РёС†Р° РєР°СЂС‚С‹");
 
 	int type = -1;
 	float x1, y1, x2, y2, z;
@@ -766,7 +766,7 @@ int scriptApi::CreateMap(lua_State* L)
 	//UINT num = 1;
 	const char* proto_name;
 	
-	// Стек: table
+	// РЎС‚РµРє: table
 	const UINT size = lua_objlen(L, 1);
 
 	GameObject* obj1 = NULL;
@@ -775,26 +775,26 @@ int scriptApi::CreateMap(lua_State* L)
 
 	for (UINT i = 1; i <= size; i++) 
 	{
-		// Получаем в стеке i-тый элемент массива
-		lua_pushnumber(L, i);	// Стек: table i
-		lua_gettable(L, -2);	// Стек: table table[i]		
+		// РџРѕР»СѓС‡Р°РµРј РІ СЃС‚РµРєРµ i-С‚С‹Р№ СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР°
+		lua_pushnumber(L, i);	// РЎС‚РµРє: table i
+		lua_gettable(L, -2);	// РЎС‚РµРє: table table[i]		
 
-		luaL_argcheck(L, lua_istable(L,1), 1, "Что-то странное в таблицы карты!");
-		lua_rawgeti(L, -1, 1);		// Стек: table table[i]	type
+		luaL_argcheck(L, lua_istable(L,1), 1, "Р§С‚Рѕ-С‚Рѕ СЃС‚СЂР°РЅРЅРѕРµ РІ С‚Р°Р±Р»РёС†С‹ РєР°СЂС‚С‹!");
+		lua_rawgeti(L, -1, 1);		// РЎС‚РµРє: table table[i]	type
 		type = lua_tointeger(L, -1);
-		lua_pop(L, 1);				// Стек: table table[i]
+		lua_pop(L, 1);				// РЎС‚РµРє: table table[i]
 		switch ( type )
 		{
-			case otSprite: //Спрайт
-					lua_rawgeti(L, -1, 2);				// Стек: table table[i] proto_name
+			case otSprite: //РЎРїСЂР°Р№С‚
+					lua_rawgeti(L, -1, 2);				// РЎС‚РµРє: table table[i] proto_name
 					proto_name = lua_tostring(L, -1);
 					lua_pop(L, 1);
-					lua_rawgeti(L, -1, 3);				// Стек: table table[i] x1 
+					lua_rawgeti(L, -1, 3);				// РЎС‚РµРє: table table[i] x1 
 					x1 = (float)lua_tonumber(L, -1);
 					lua_pop(L, 1);
-					lua_rawgeti(L, -1, 4);				// Стек: table table[i] y1
+					lua_rawgeti(L, -1, 4);				// РЎС‚РµРє: table table[i] y1
 					y1 = (float)lua_tonumber(L, -1);
-					lua_pop(L, 1);						// Стек: table table[i]
+					lua_pop(L, 1);						// РЎС‚РµРє: table table[i]
 					obj1 = ::CreateSprite(proto_name, Vector2(x1, y1), false, NULL);
 					lua_rawgeti(L, -1, 5);
 					if ( lua_isnumber(L, -1) && obj1 && obj1->sprite )
@@ -804,17 +804,17 @@ int scriptApi::CreateMap(lua_State* L)
 					}
 					lua_pop(L, 1);
 					break;
-			case otTile: //Спрайт
-					lua_rawgeti(L, -1, 2);				// Стек: table table[i] proto_name
+			case otTile: //РЎРїСЂР°Р№С‚
+					lua_rawgeti(L, -1, 2);				// РЎС‚РµРє: table table[i] proto_name
 					proto_name = lua_tostring(L, -1);
 					lua_pop(L, 1);
-					lua_rawgeti(L, -1, 3);				// Стек: table table[i] x1 
+					lua_rawgeti(L, -1, 3);				// РЎС‚РµРє: table table[i] x1 
 					x1 = (float)lua_tonumber(L, -1);
 					lua_pop(L, 1);
-					lua_rawgeti(L, -1, 4);				// Стек: table table[i] y1
+					lua_rawgeti(L, -1, 4);				// РЎС‚РµРє: table table[i] y1
 					y1 = (float)lua_tonumber(L, -1);
 					lua_pop(L, 1);
-					lua_rawgeti(L, -1, 5);				// Стек: table table[i] tilenum
+					lua_rawgeti(L, -1, 5);				// РЎС‚РµРє: table table[i] tilenum
 					tilenum = lua_tointeger(L, -1);
 					obj1 = ::CreateSprite(proto_name, Vector2(x1, y1), false, NULL);
 					if (obj1 && obj1->sprite)
@@ -825,16 +825,16 @@ int scriptApi::CreateMap(lua_State* L)
 						obj1->aabb.H  = (scalar)obj1->sprite->frameHeight / 2.0f;
 					}
 					lua_pop(L, 1);
-					lua_rawgeti(L, -1, 6);				// Стек: table table[i] z
+					lua_rawgeti(L, -1, 6);				// РЎС‚РµРє: table table[i] z
 					if ( lua_isnumber(L, -1) && obj1 && obj1->sprite )
 					{
 						z = (float)lua_tonumber(L, -1);
 						obj1->sprite->z = z;
 					}
 					obj1->type = objTile;
-					lua_pop(L, 1);						// Стек: table table[i]
+					lua_pop(L, 1);						// РЎС‚РµРє: table table[i]
 					break;
-			case otPlayer: //Игрок
+			case otPlayer: //РРіСЂРѕРє
 					lua_rawgeti(L, -1, 2);
 					proto_name = lua_tostring(L, -1);
 					lua_pop(L, 1);
@@ -846,7 +846,7 @@ int scriptApi::CreateMap(lua_State* L)
 					lua_pop(L, 1);
 					playerControl->Create(proto_name, Vector2(x1, y1), NULL);
 					break;
-			case otEnemy: //Противник
+			case otEnemy: //РџСЂРѕС‚РёРІРЅРёРє
 					lua_rawgeti(L, -1, 2);
 					proto_name = lua_tostring(L, -1);
 					lua_pop(L, 1);
@@ -900,7 +900,7 @@ int scriptApi::CreateMap(lua_State* L)
 					lua_pop(L, 1);
 					::CreateSpawner( Vector2(x1, y1), proto_name, count, delay, (directionType)dir, ssize, sdist );
 					break;
-			case otBox: //Коробка
+			case otBox: //РљРѕСЂРѕР±РєР°
 					lua_rawgeti(L, -1, 2);
 					x1 = (float)lua_tonumber(L, -1);
 					lua_pop(L, 1);
@@ -921,7 +921,7 @@ int scriptApi::CreateMap(lua_State* L)
 					lua_pop(L, 1);
 					::CreateColorBox(CAABB(x1, y1, x2, y2), z, col);
 					break;
-			case otGroup: //Группа
+			case otGroup: //Р“СЂСѓРїРїР°
 				    lua_rawgeti(L, -1, 2);
 					proto_name = lua_tostring(L, -1);
 					lua_pop(L,1);
@@ -942,7 +942,7 @@ int scriptApi::CreateMap(lua_State* L)
 					if ( obj1 && obj2 )
 						::GroupObjects(obj1->id, obj2->id);
 					break;
-			case otItem: //Предмет
+			case otItem: //РџСЂРµРґРјРµС‚
 					lua_rawgeti(L, -1, 2);
 					proto_name = lua_tostring(L, -1);
 					lua_pop(L, 1);
@@ -954,16 +954,16 @@ int scriptApi::CreateMap(lua_State* L)
 					lua_pop(L, 1);
 					::CreateItem(proto_name, Vector2(x1, y1), "init");
 					break;
-			case otSecret: //Секретный тайл
-					lua_rawgeti(L, -1, 2);				// Стек: table table[i] proto_name
+			case otSecret: //РЎРµРєСЂРµС‚РЅС‹Р№ С‚Р°Р№Р»
+					lua_rawgeti(L, -1, 2);				// РЎС‚РµРє: table table[i] proto_name
 					proto_name = lua_tostring(L, -1);
 					lua_pop(L, 1);
-					lua_rawgeti(L, -1, 3);				// Стек: table table[i] x1 
+					lua_rawgeti(L, -1, 3);				// РЎС‚РµРє: table table[i] x1 
 					x1 = (float)lua_tonumber(L, -1);
 					lua_pop(L, 1);
-					lua_rawgeti(L, -1, 4);				// Стек: table table[i] y1
+					lua_rawgeti(L, -1, 4);				// РЎС‚РµРє: table table[i] y1
 					y1 = (float)lua_tonumber(L, -1);
-					lua_pop(L, 1);						// Стек: table table[i]
+					lua_pop(L, 1);						// РЎС‚РµРє: table table[i]
 					obj1 = ::CreateSprite(proto_name, Vector2(x1, y1), false, NULL);
 					if (obj1) secretIDs.push_back(obj1->id);
 					break;
@@ -1018,14 +1018,14 @@ int scriptApi::CreateMap(lua_State* L)
 					rib->setRepitition( b1, b2 );
 					break;
 				}
-			case otNone: //На этом уровне сложности - ничего
+			case otNone: //РќР° СЌС‚РѕРј СѓСЂРѕРІРЅРµ СЃР»РѕР¶РЅРѕСЃС‚Рё - РЅРёС‡РµРіРѕ
 					break;
 			default:
-					sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Что-то странное в таблице карты (неверный тип объекта)!");
+					sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Р§С‚Рѕ-С‚Рѕ СЃС‚СЂР°РЅРЅРѕРµ РІ С‚Р°Р±Р»РёС†Рµ РєР°СЂС‚С‹ (РЅРµРІРµСЂРЅС‹Р№ С‚РёРї РѕР±СЉРµРєС‚Р°)!");
 					return 0;
 		}
 
-		lua_pop(L,1);		// Стек: table
+		lua_pop(L,1);		// РЎС‚РµРє: table
 
 	}
 	if ( secretIDs.size() > 0 )
@@ -1046,10 +1046,10 @@ int scriptApi::CreateSprite(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя прототипа");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата X");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата Y");
-	luaL_argcheck(L, lua_isstring(L, 4) || lua_isnil(L, 4) || lua_isnone(L, 4), 4, "Ожидается start_anim");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ РїСЂРѕС‚РѕС‚РёРїР°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y");
+	luaL_argcheck(L, lua_isstring(L, 4) || lua_isnil(L, 4) || lua_isnone(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ start_anim");
 
 	int num = lua_gettop ( L );
 	bool isFixed = false;
@@ -1085,9 +1085,9 @@ int scriptApi::CreateSprite(lua_State* L)
 	float x = (float)lua_tonumber(L, 2);
 	float y = (float)lua_tonumber(L, 3);
 
-	//lua_pop(L, num);	// Стек: Why?!
+	//lua_pop(L, num);	// РЎС‚РµРє: Why?!
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Cоздаем спрайт: %s", proto_name);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "CРѕР·РґР°РµРј СЃРїСЂР°Р№С‚: %s", proto_name);
 
 	GameObject* obj = NULL;
 	obj = ::CreateSprite(proto_name, Vector2(x, y), isFixed, start_anim);
@@ -1099,12 +1099,12 @@ int scriptApi::CreateSprite(lua_State* L)
 				obj->sprite->z = z;
 		}
 
-		lua_pushnumber(L, obj->id);	// Стек: obj->id
+		lua_pushnumber(L, obj->id);	// РЎС‚РµРє: obj->id
 	}
 	else
 	{
-		lua_pushnil(L);				// Стек: nil
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка cоздания спрайта");
+		lua_pushnil(L);				// РЎС‚РµРє: nil
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° cРѕР·РґР°РЅРёСЏ СЃРїСЂР°Р№С‚Р°");
 	}
 
 	return 1;
@@ -1114,11 +1114,11 @@ int scriptApi::CreateEffect(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя прототипа");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата X");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата Y");
-	luaL_argcheck(L, lua_isnumber(L, 4), 4, "Ожидается объект-родитель");
-	luaL_argcheck(L, lua_isnumber(L, 5), 5, "Ожидается номер точки");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ РїСЂРѕС‚РѕС‚РёРїР°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y");
+	luaL_argcheck(L, lua_isnumber(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ РѕР±СЉРµРєС‚-СЂРѕРґРёС‚РµР»СЊ");
+	luaL_argcheck(L, lua_isnumber(L, 5), 5, "РћР¶РёРґР°РµС‚СЃСЏ РЅРѕРјРµСЂ С‚РѕС‡РєРё");
 
 	const char* proto_name = lua_tostring(L, 1);
 	//float x = (float)lua_tonumber(L, 2);
@@ -1130,12 +1130,12 @@ int scriptApi::CreateEffect(lua_State* L)
 	obj = ::CreateEffect(proto_name, false, (ObjDynamic*)parent, num, Vector2(0,0));
 	if (obj && obj->id)
 	{
-		lua_pushnumber(L, obj->id);	// Стек: obj->id
+		lua_pushnumber(L, obj->id);	// РЎС‚РµРє: obj->id
 	}
 	else
 	{
-		lua_pushnil(L);				// Стек: nil
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка cоздания спрайта");
+		lua_pushnil(L);				// РЎС‚РµРє: nil
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° cРѕР·РґР°РЅРёСЏ СЃРїСЂР°Р№С‚Р°");
 	}
 
 	return 1;
@@ -1145,13 +1145,13 @@ int scriptApi::CreateGroup(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя прототипа");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается x1");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается y1");
-	luaL_argcheck(L, lua_isnumber(L, 4), 4, "Ожидается x2");
-	luaL_argcheck(L, lua_isnumber(L, 5), 5, "Ожидается y2");
-	luaL_argcheck(L, lua_isnumber(L, 6), 6, "Ожидается z");
-	luaL_argcheck(L, lua_isboolean(L, 7), 7, "Ожидается параметр активности");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ РїСЂРѕС‚РѕС‚РёРїР°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ x1");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ y1");
+	luaL_argcheck(L, lua_isnumber(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ x2");
+	luaL_argcheck(L, lua_isnumber(L, 5), 5, "РћР¶РёРґР°РµС‚СЃСЏ y2");
+	luaL_argcheck(L, lua_isnumber(L, 6), 6, "РћР¶РёРґР°РµС‚СЃСЏ z");
+	luaL_argcheck(L, lua_isboolean(L, 7), 7, "РћР¶РёРґР°РµС‚СЃСЏ РїР°СЂР°РјРµС‚СЂ Р°РєС‚РёРІРЅРѕСЃС‚Рё");
 
 	GameObject* obj = NULL;
 	float x1 = (float)lua_tonumber(L, 2);
@@ -1170,13 +1170,13 @@ int scriptApi::CreateGroup(lua_State* L)
 		}
 
 		if (obj->id != 0)
-			lua_pushnumber(L, obj->id);	// Стек: obj->id
+			lua_pushnumber(L, obj->id);	// РЎС‚РµРє: obj->id
 		else
 			lua_pushnil(L);
 	}
 	else
 	{
-		lua_pushnil(L);				// Стек: nil
+		lua_pushnil(L);				// РЎС‚РµРє: nil
 	}
 
 	return 1;
@@ -1186,11 +1186,11 @@ int scriptApi::CreateWaypoint(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается координата X");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата Y");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается размер X");
-	luaL_argcheck(L, lua_isnumber(L, 4), 4, "Ожидается размер Y");
-	luaL_argcheck(L, lua_isfunction(L, 5)|lua_isnil(L,5)|lua_isnone(L,5), 5, "Ожидается событие");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ СЂР°Р·РјРµСЂ X");
+	luaL_argcheck(L, lua_isnumber(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ СЂР°Р·РјРµСЂ Y");
+	luaL_argcheck(L, lua_isfunction(L, 5)|lua_isnil(L,5)|lua_isnone(L,5), 5, "РћР¶РёРґР°РµС‚СЃСЏ СЃРѕР±С‹С‚РёРµ");
 	
 	Vector2 coord = Vector2( (float)lua_tonumber(L, 1), (float)lua_tonumber(L, 2) );
 	Vector2 size = Vector2( (float)lua_tonumber(L, 3), (float)lua_tonumber(L, 4) );
@@ -1205,7 +1205,7 @@ int scriptApi::CreateWaypoint(lua_State* L)
 	else
 	{
 		lua_pushnil(L);	
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка cоздания путевой точки");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° cРѕР·РґР°РЅРёСЏ РїСѓС‚РµРІРѕР№ С‚РѕС‡РєРё");
 	}
 
 	return 1;
@@ -1216,12 +1216,12 @@ int scriptApi::CreateSpecialWaypoint(lua_State* L)
 	CHECKGAME;
 
 
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается координата X");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата Y");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается размер X");
-	luaL_argcheck(L, lua_isnumber(L, 4), 4, "Ожидается размер Y");
-	luaL_argcheck(L, lua_isnumber(L, 5) || lua_isnil(L, 5) || lua_isnone(L, 5), 5, "Ожидается номер");
-	luaL_argcheck(L, lua_isfunction(L, 6) || lua_isnil(L, 6) || lua_isnone(L, 6), 6, "Ожидается событие");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ СЂР°Р·РјРµСЂ X");
+	luaL_argcheck(L, lua_isnumber(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ СЂР°Р·РјРµСЂ Y");
+	luaL_argcheck(L, lua_isnumber(L, 5) || lua_isnil(L, 5) || lua_isnone(L, 5), 5, "РћР¶РёРґР°РµС‚СЃСЏ РЅРѕРјРµСЂ");
+	luaL_argcheck(L, lua_isfunction(L, 6) || lua_isnil(L, 6) || lua_isnone(L, 6), 6, "РћР¶РёРґР°РµС‚СЃСЏ СЃРѕР±С‹С‚РёРµ");
 	
 	Vector2 coord = Vector2( (float)lua_tonumber(L, 1), (float)lua_tonumber(L, 2) );
 	Vector2 size = Vector2( (float)lua_tonumber(L, 3), (float)lua_tonumber(L, 4) );
@@ -1246,7 +1246,7 @@ int scriptApi::CreateSpecialWaypoint(lua_State* L)
 	{
 		lua_pushnil(L);
 		lua_pushnil(L);
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка cоздания путевой точки");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° cРѕР·РґР°РЅРёСЏ РїСѓС‚РµРІРѕР№ С‚РѕС‡РєРё");
 	}
 
 	return 2;
@@ -1257,17 +1257,17 @@ int scriptApi::CreateItem(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя прототипа");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата X");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата Y");
-	luaL_argcheck(L, lua_isnumber(L, 4) || lua_isnil(L, 4) || lua_isnone(L, 4)  , 4, "Ожидается start_anim");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ РїСЂРѕС‚РѕС‚РёРїР°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y");
+	luaL_argcheck(L, lua_isnumber(L, 4) || lua_isnil(L, 4) || lua_isnone(L, 4)  , 4, "РћР¶РёРґР°РµС‚СЃСЏ start_anim");
 
 	const char* proto_name = lua_tostring(L, 1);
 	float x = (float)lua_tonumber(L, 2);
 	float y = (float)lua_tonumber(L, 3);
 	const char* start_anim = lua_tostring(L, 4);
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Cоздаем предмет: %s", proto_name);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "CРѕР·РґР°РµРј РїСЂРµРґРјРµС‚: %s", proto_name);
 
 	int result = -1;
 	GameObject* obj = NULL;
@@ -1280,16 +1280,16 @@ int scriptApi::CreateItem(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка cоздания предмета");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° cРѕР·РґР°РЅРёСЏ РїСЂРµРґРјРµС‚Р°");
 	}
 
 	if (result == -1)
 	{
-		lua_pushnil(L);				// Стек: nil
+		lua_pushnil(L);				// РЎС‚РµРє: nil
 	}
 	else
 	{
-		lua_pushnumber(L, result);	// Стек: result
+		lua_pushnumber(L, result);	// РЎС‚РµРє: result
 	}
 	return 1;
 }
@@ -1298,15 +1298,15 @@ int scriptApi::CreateEnvironment(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя прототипа");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата X");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата Y");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ РїСЂРѕС‚РѕС‚РёРїР°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y");
 
 	const char* proto_name = lua_tostring(L, 1);
 	float x = (float)lua_tonumber(L, 2);
 	float y = (float)lua_tonumber(L, 3);
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Cоздаем окружение: %s", proto_name);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "CРѕР·РґР°РµРј РѕРєСЂСѓР¶РµРЅРёРµ: %s", proto_name);
 
 	int result = -1;
 	GameObject* obj = NULL;
@@ -1319,16 +1319,16 @@ int scriptApi::CreateEnvironment(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка cоздания окружения!");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° cРѕР·РґР°РЅРёСЏ РѕРєСЂСѓР¶РµРЅРёСЏ!");
 	}
 
 	if (result == -1)
 	{
-		lua_pushnil(L);				// Стек: nil
+		lua_pushnil(L);				// РЎС‚РµРє: nil
 	}
 	else
 	{
-		lua_pushnumber(L, result);	// Стек: result
+		lua_pushnumber(L, result);	// РЎС‚РµРє: result
 	}
 	return 1;
 }
@@ -1337,10 +1337,10 @@ int scriptApi::CreatePlayer(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя прототипа");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата X");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата Y");
-	luaL_argcheck(L, lua_isnumber(L, 4) || lua_isnil(L, 4) || lua_isnone(L, 4)  , 4, "Ожидается start_anim");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ РїСЂРѕС‚РѕС‚РёРїР°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y");
+	luaL_argcheck(L, lua_isnumber(L, 4) || lua_isnil(L, 4) || lua_isnone(L, 4)  , 4, "РћР¶РёРґР°РµС‚СЃСЏ start_anim");
 
 	const char* proto_name = lua_tostring(L, 1);
 	float x = (float)lua_tonumber(L, 2);
@@ -1353,7 +1353,7 @@ int scriptApi::CreatePlayer(lua_State* L)
 	int num = lua_gettop(L);
 	if (num == 5)
 	{
-		luaL_argcheck(L, lua_isnumber(L, 5), 5, "Ожидается координата Z");
+		luaL_argcheck(L, lua_isnumber(L, 5), 5, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Z");
 
 		z = (float)lua_tonumber(L, 5);
 		override_z = true;
@@ -1362,7 +1362,7 @@ int scriptApi::CreatePlayer(lua_State* L)
 
 	lua_pop(L, num);
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Cоздаем игрока: %s", proto_name);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "CРѕР·РґР°РµРј РёРіСЂРѕРєР°: %s", proto_name);
 
 	int result = -1;
 	GameObject* obj = NULL;
@@ -1381,16 +1381,16 @@ int scriptApi::CreatePlayer(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка cоздания игрока");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° cРѕР·РґР°РЅРёСЏ РёРіСЂРѕРєР°");
 	}
 
 	if (result == -1)
 	{
-		lua_pushnil(L);				// Стек: nil
+		lua_pushnil(L);				// РЎС‚РµРє: nil
 	}
 	else
 	{
-		lua_pushnumber(L, result);	// Стек: result
+		lua_pushnumber(L, result);	// РЎС‚РµРє: result
 	}
 	return 1;
 }
@@ -1399,15 +1399,15 @@ int scriptApi::RevivePlayer(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается номер игрока");
-	luaL_argcheck(L, lua_isstring(L, 2) || lua_isnil(L, 2) || lua_isnone(L, 2), 2, "Ожидается start_anim");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РЅРѕРјРµСЂ РёРіСЂРѕРєР°");
+	luaL_argcheck(L, lua_isstring(L, 2) || lua_isnil(L, 2) || lua_isnone(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ start_anim");
 	
 	int num = lua_tointeger(L, 1);
 	const char* start_anim = lua_tostring(L, 2);
 
 	lua_pop(L, lua_gettop(L));
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Оживляем игрока: %d", num);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "РћР¶РёРІР»СЏРµРј РёРіСЂРѕРєР°: %d", num);
 
 	int result = -1;
 	ObjPlayer* obj = playerControl->Revive(num, start_anim);
@@ -1417,16 +1417,16 @@ int scriptApi::RevivePlayer(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка оживления игрока");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° РѕР¶РёРІР»РµРЅРёСЏ РёРіСЂРѕРєР°");
 	}
 
 	if (result == -1)
 	{
-		lua_pushnil(L);				// Стек: nil
+		lua_pushnil(L);				// РЎС‚РµРє: nil
 	}
 	else
 	{
-		lua_pushnumber(L, result);	// Стек: result
+		lua_pushnumber(L, result);	// РЎС‚РµРє: result
 	}
 	return 1;
 }
@@ -1457,12 +1457,12 @@ int scriptApi::CreateEnemy(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя прототипа");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата X");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата Y");
-	luaL_argcheck(L, lua_isstring(L, 4) || lua_isnil(L, 4) || lua_isnone(L, 4)  , 4, "Ожидается start_anim");
-	luaL_argcheck(L, lua_isnumber(L, 5) || lua_isnil(L, 5) || lua_isnone(L, 5)  , 4, "Ожидается z");
-	luaL_argcheck(L, lua_isnumber(L, 6) || lua_isnil(L, 6) || lua_isnone(L, 6)  , 4, "Ожидается parent");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ РїСЂРѕС‚РѕС‚РёРїР°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y");
+	luaL_argcheck(L, lua_isstring(L, 4) || lua_isnil(L, 4) || lua_isnone(L, 4)  , 4, "РћР¶РёРґР°РµС‚СЃСЏ start_anim");
+	luaL_argcheck(L, lua_isnumber(L, 5) || lua_isnil(L, 5) || lua_isnone(L, 5)  , 4, "РћР¶РёРґР°РµС‚СЃСЏ z");
+	luaL_argcheck(L, lua_isnumber(L, 6) || lua_isnil(L, 6) || lua_isnone(L, 6)  , 4, "РћР¶РёРґР°РµС‚СЃСЏ parent");
 	
 	const char* proto_name = lua_tostring(L, 1);
 	float x = (float)lua_tonumber(L, 2);
@@ -1478,7 +1478,7 @@ int scriptApi::CreateEnemy(lua_State* L)
 		override_z = true;
 	}
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Cоздаем противника: %s", proto_name);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "CРѕР·РґР°РµРј РїСЂРѕС‚РёРІРЅРёРєР°: %s", proto_name);
 
 	int result = -1;
 	GameObject* obj = NULL;
@@ -1497,7 +1497,7 @@ int scriptApi::CreateEnemy(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка cоздания противника");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° cРѕР·РґР°РЅРёСЏ РїСЂРѕС‚РёРІРЅРёРєР°");
 	}
 
 	if (result != -1 && lua_isnumber(L, 6) )
@@ -1509,11 +1509,11 @@ int scriptApi::CreateEnemy(lua_State* L)
 
 	if (result == -1)
 	{
-		lua_pushnil(L);				// Стек: nil
+		lua_pushnil(L);				// РЎС‚РµРє: nil
 	}
 	else
 	{
-		lua_pushnumber(L, result);	// Стек: result
+		lua_pushnumber(L, result);	// РЎС‚РµРє: result
 	}
 	return 1;
 }
@@ -1522,14 +1522,14 @@ int scriptApi::CreateSpawner(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя прототипа противника");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата X");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата Y");
-	luaL_argcheck(L, lua_isnumber(L, 4), 4, "Ожидается количество противников");
-	luaL_argcheck(L, lua_isnumber(L, 5), 5, "Ожидается направление");
-	luaL_argcheck(L, lua_isnumber(L, 6), 6, "Ожидается задержка");
-	luaL_argcheck(L, lua_isnumber(L, 7) || lua_isnil(L, 7) || lua_isnone(L, 7), 7, "Ожидается размер");
-	luaL_argcheck(L, lua_isnumber(L, 8) || lua_isnil(L, 8) || lua_isnone(L, 8), 7, "Ожидается расстояние для сброса");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ РїСЂРѕС‚РѕС‚РёРїР° РїСЂРѕС‚РёРІРЅРёРєР°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y");
+	luaL_argcheck(L, lua_isnumber(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕС‚РёРІРЅРёРєРѕРІ");
+	luaL_argcheck(L, lua_isnumber(L, 5), 5, "РћР¶РёРґР°РµС‚СЃСЏ РЅР°РїСЂР°РІР»РµРЅРёРµ");
+	luaL_argcheck(L, lua_isnumber(L, 6), 6, "РћР¶РёРґР°РµС‚СЃСЏ Р·Р°РґРµСЂР¶РєР°");
+	luaL_argcheck(L, lua_isnumber(L, 7) || lua_isnil(L, 7) || lua_isnone(L, 7), 7, "РћР¶РёРґР°РµС‚СЃСЏ СЂР°Р·РјРµСЂ");
+	luaL_argcheck(L, lua_isnumber(L, 8) || lua_isnil(L, 8) || lua_isnone(L, 8), 7, "РћР¶РёРґР°РµС‚СЃСЏ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РґР»СЏ СЃР±СЂРѕСЃР°");
 
 	const char* proto_name = lua_tostring(L, 1);
 	float x = (float)lua_tonumber(L, 2);
@@ -1542,7 +1542,7 @@ int scriptApi::CreateSpawner(lua_State* L)
 	if ( lua_isnumber(L, 7) ) size = lua_tointeger(L, 7);
 	if ( lua_isnumber(L, 8) ) dist = lua_tointeger(L, 8);
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Cоздаем спаунер: %s", proto_name);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "CРѕР·РґР°РµРј СЃРїР°СѓРЅРµСЂ: %s", proto_name);
 
 	ObjSpawner* obj = NULL;
 
@@ -1554,7 +1554,7 @@ int scriptApi::CreateSpawner(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Ошибка cоздания спаунера");
+		sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° cРѕР·РґР°РЅРёСЏ СЃРїР°СѓРЅРµСЂР°");
 		lua_pushnil(L);
 	}
 
@@ -1566,9 +1566,9 @@ int scriptApi::CreateParticleSystem(lua_State *L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается имя прототипа");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата X");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата Y");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ РїСЂРѕС‚РѕС‚РёРїР°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y");
 
 	float x = (float)lua_tonumber(L, 2);
 	float y = (float)lua_tonumber(L, 3);
@@ -1613,7 +1613,7 @@ int scriptApi::SetParticleWind(lua_State* L)
 {
 	CHECKGAME;
 
-	luaL_argcheck(L, lua_istable(L, 1), 1, "Ожидается табица ветра");
+	luaL_argcheck(L, lua_istable(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ С‚Р°Р±РёС†Р° РІРµС‚СЂР°");
 	lua_rawgeti(L, 1, 1);
 	float x = (float)lua_tonumber(L, -1);
 	lua_rawgeti(L, 1, 2);
@@ -1638,17 +1638,17 @@ int scriptApi::GetParticleWind(lua_State* L)
 int scriptApi::CreateRay(lua_State* L)
 {
 	CHECKGAME;
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается координата X1");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается координата Y1");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается координата X2");
-	luaL_argcheck(L, lua_isnumber(L, 4), 4, "Ожидается координата Y2");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X1");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y1");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° X2");
+	luaL_argcheck(L, lua_isnumber(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ РєРѕРѕСЂРґРёРЅР°С‚Р° Y2");
 
 	float x1 = (float)lua_tonumber(L, 1);
 	float y1 = (float)lua_tonumber(L, 2);
 	float x2 = (float)lua_tonumber(L, 3);
 	float y2 = (float)lua_tonumber(L, 4);
 	
-	lua_pop(L, lua_gettop(L));	// Стек:
+	lua_pop(L, lua_gettop(L));	// РЎС‚РµРє:
 
 	ObjRay* obj = ::CreateRay(x1, y1, x2, y2);
 
@@ -1824,7 +1824,7 @@ int scriptApi::SetObjectInvincible(lua_State* L)
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "object num");
 	luaL_argcheck(L, lua_isboolean(L, 2), 2, "invincibility flag");
 	
-	// TODO: Номер не используется, однако скиптами передается. Надо точно разобраться и поправить.
+	// TODO: РќРѕРјРµСЂ РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ, РѕРґРЅР°РєРѕ СЃРєРёРїС‚Р°РјРё РїРµСЂРµРґР°РµС‚СЃСЏ. РќР°РґРѕ С‚РѕС‡РЅРѕ СЂР°Р·РѕР±СЂР°С‚СЊСЃСЏ Рё РїРѕРїСЂР°РІРёС‚СЊ.
 	//int num = lua_tointeger(L, 1);
 	bool inv = lua_toboolean(L, 2) != 0;
 
@@ -1843,7 +1843,7 @@ int scriptApi::SetObjectInvisible(lua_State* L)
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "object num");
 	luaL_argcheck(L, lua_isboolean(L, 2), 2, "invisbility flag");
 	
-	// TODO: Номер не используется, однако скиптами передается. Надо точно разобраться и поправить.
+	// TODO: РќРѕРјРµСЂ РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ, РѕРґРЅР°РєРѕ СЃРєРёРїС‚Р°РјРё РїРµСЂРµРґР°РµС‚СЃСЏ. РќР°РґРѕ С‚РѕС‡РЅРѕ СЂР°Р·РѕР±СЂР°С‚СЊСЃСЏ Рё РїРѕРїСЂР°РІРёС‚СЊ.
 	int num = lua_tointeger(L, 1);
 	bool inv = lua_toboolean(L, 2) != 0;
 	GameObject* obj = GetGameObject( num );
@@ -2114,8 +2114,8 @@ int scriptApi::SetPhysObjBorderColor(lua_State* L)
 {
 #ifdef MAP_EDITOR
 	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Object id expected");
-	luaL_argcheck(L, lua_istable(L, 2), 2, "Ожидается таблица color");
-	luaL_argcheck(L, lua_isboolean(L, 3), 3, "Ожидается bool show");
+	luaL_argcheck(L, lua_istable(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ С‚Р°Р±Р»РёС†Р° color");
+	luaL_argcheck(L, lua_isboolean(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ bool show");
 
 	GameObject* obj = GetGameObject((UINT)lua_tointeger(L, 1));
 	if (obj && obj->IsPhysic())
@@ -2124,7 +2124,7 @@ int scriptApi::SetPhysObjBorderColor(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка SetPhysObjBorderColor: объект id=%d не существует или не фищический", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° SetPhysObjBorderColor: РѕР±СЉРµРєС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ РёР»Рё РЅРµ С„РёС‰РёС‡РµСЃРєРёР№", (UINT)lua_tointeger(L, 1));
 	}
 
 	static_cast<ObjPhysic*>(obj)->show_border = lua_toboolean(L, 3);

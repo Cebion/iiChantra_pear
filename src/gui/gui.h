@@ -8,9 +8,9 @@
 #include "gui_label.h"
 #include "gui_textfield.h"
 
-// Типы виджетов
+// РўРёРїС‹ РІРёРґР¶РµС‚РѕРІ
 enum WidgetTypes { wt_Widget, wt_Button, wt_Picture, wt_Label, wt_Textfield };
-// Режимы переключения фокуса между виджетами
+// Р РµР¶РёРјС‹ РїРµСЂРµРєР»СЋС‡РµРЅРёСЏ С„РѕРєСѓСЃР° РјРµР¶РґСѓ РІРёРґР¶РµС‚Р°РјРё
 enum GuiNavigationMode { gnm_None, gnm_Normal };
 
 
@@ -34,14 +34,14 @@ public:
 
 	GuiWidget* GetWidget(UINT id);
 
-	GuiNavigationMode nav_mode;			// Режим переключения фокуса между виджетами
-	bool nav_cycled;					// Циклическое переключение между виджетами
+	GuiNavigationMode nav_mode;			// Р РµР¶РёРј РїРµСЂРµРєР»СЋС‡РµРЅРёСЏ С„РѕРєСѓСЃР° РјРµР¶РґСѓ РІРёРґР¶РµС‚Р°РјРё
+	bool nav_cycled;					// Р¦РёРєР»РёС‡РµСЃРєРѕРµ РїРµСЂРµРєР»СЋС‡РµРЅРёРµ РјРµР¶РґСѓ РІРёРґР¶РµС‚Р°РјРё
 
-	int onKeyDownGlobal;				// Скриптовый обработчик нажатий клавиш
-	int onKeyReleaseGlobal;				// Скриптовый обработчик отжатий клавиш
+	int onKeyDownGlobal;				// РЎРєСЂРёРїС‚РѕРІС‹Р№ РѕР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёР№ РєР»Р°РІРёС€
+	int onKeyReleaseGlobal;				// РЎРєСЂРёРїС‚РѕРІС‹Р№ РѕР±СЂР°Р±РѕС‚С‡РёРє РѕС‚Р¶Р°С‚РёР№ РєР»Р°РІРёС€
 
-	int onMouseKeyDownGlobal;				// Скриптовый обработчик нажатий клавиш мышки
-	int onMouseKeyReleaseGlobal;			// Скриптовый обработчик отжатий клавиш мышки
+	int onMouseKeyDownGlobal;				// РЎРєСЂРёРїС‚РѕРІС‹Р№ РѕР±СЂР°Р±РѕС‚С‡РёРє РЅР°Р¶Р°С‚РёР№ РєР»Р°РІРёС€ РјС‹С€РєРё
+	int onMouseKeyReleaseGlobal;			// РЎРєСЂРёРїС‚РѕРІС‹Р№ РѕР±СЂР°Р±РѕС‚С‡РёРє РѕС‚Р¶Р°С‚РёР№ РєР»Р°РІРёС€ РјС‹С€РєРё
 private:
 
 	void SetFocus(GuiWidget* wi);
@@ -56,8 +56,8 @@ private:
 	typedef map<UINT, GuiWidget*>::iterator WidgetIter;
 	typedef map<UINT, GuiWidget*>::const_reverse_iterator WidgetConstRevIter;
 
-	GuiWidget* focusedWidget;			// Виджет, на который в данный момент установлен фокус
-	UINT nextId;						// id, который будет присвоен следующему созданному виджету
+	GuiWidget* focusedWidget;			// Р’РёРґР¶РµС‚, РЅР° РєРѕС‚РѕСЂС‹Р№ РІ РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅ С„РѕРєСѓСЃ
+	UINT nextId;						// id, РєРѕС‚РѕСЂС‹Р№ Р±СѓРґРµС‚ РїСЂРёСЃРІРѕРµРЅ СЃР»РµРґСѓСЋС‰РµРјСѓ СЃРѕР·РґР°РЅРЅРѕРјСѓ РІРёРґР¶РµС‚Сѓ
 };
 
 

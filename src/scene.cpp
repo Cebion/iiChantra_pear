@@ -40,25 +40,25 @@
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-// Подсчет времени и FPS
-UINT fps = 0;			// Количество отрисованых в прошлую секунду кадров
-UINT frames = 0;		// Количество отрисованых с начала этой секунды кадров
-UINT startup_time = 0;	// Начальное время (прмерно время запуска приложения)
+// РџРѕРґСЃС‡РµС‚ РІСЂРµРјРµРЅРё Рё FPS
+UINT fps = 0;			// РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС‚СЂРёСЃРѕРІР°РЅС‹С… РІ РїСЂРѕС€Р»СѓСЋ СЃРµРєСѓРЅРґСѓ РєР°РґСЂРѕРІ
+UINT frames = 0;		// РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС‚СЂРёСЃРѕРІР°РЅС‹С… СЃ РЅР°С‡Р°Р»Р° СЌС‚РѕР№ СЃРµРєСѓРЅРґС‹ РєР°РґСЂРѕРІ
+UINT startup_time = 0;	// РќР°С‡Р°Р»СЊРЅРѕРµ РІСЂРµРјСЏ (РїСЂРјРµСЂРЅРѕ РІСЂРµРјСЏ Р·Р°РїСѓСЃРєР° РїСЂРёР»РѕР¶РµРЅРёСЏ)
 UINT last_time = 0;
-UINT current_time = 0;	// Текущее время
+UINT current_time = 0;	// РўРµРєСѓС‰РµРµ РІСЂРµРјСЏ
 
-UINT internal_time = 0;	// Внутреннее время движка. Считается только когда окно активно.
+UINT internal_time = 0;	// Р’РЅСѓС‚СЂРµРЅРЅРµРµ РІСЂРµРјСЏ РґРІРёР¶РєР°. РЎС‡РёС‚Р°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РєРѕРіРґР° РѕРєРЅРѕ Р°РєС‚РёРІРЅРѕ.
 
-UINT last_fps_tick = 0;		// Время предыдущего тика фпс
-UINT last_timerevent_tick = 0;	// Время предыдущего тика таймера событий
-UINT last_game_tick = 0;		// Время предыдущего тика игры
-//UINT last_keyb_tick = 0;		// Время предыдущей реакции на зажатую клавишу
-//UINT last_gui_tick = 0;		// Время предыдущего тика обработки gui
+UINT last_fps_tick = 0;		// Р’СЂРµРјСЏ РїСЂРµРґС‹РґСѓС‰РµРіРѕ С‚РёРєР° С„РїСЃ
+UINT last_timerevent_tick = 0;	// Р’СЂРµРјСЏ РїСЂРµРґС‹РґСѓС‰РµРіРѕ С‚РёРєР° С‚Р°Р№РјРµСЂР° СЃРѕР±С‹С‚РёР№
+UINT last_game_tick = 0;		// Р’СЂРµРјСЏ РїСЂРµРґС‹РґСѓС‰РµРіРѕ С‚РёРєР° РёРіСЂС‹
+//UINT last_keyb_tick = 0;		// Р’СЂРµРјСЏ РїСЂРµРґС‹РґСѓС‰РµР№ СЂРµР°РєС†РёРё РЅР° Р·Р°Р¶Р°С‚СѓСЋ РєР»Р°РІРёС€Сѓ
+//UINT last_gui_tick = 0;		// Р’СЂРµРјСЏ РїСЂРµРґС‹РґСѓС‰РµРіРѕ С‚РёРєР° РѕР±СЂР°Р±РѕС‚РєРё gui
 ///
 
 InputMgr inpmgr;
 
-ProgrammStates current_state = PROGRAMM_LOADING;				// Текущее состояние игры
+ProgrammStates current_state = PROGRAMM_LOADING;				// РўРµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹
 
 config cfg;
 
@@ -68,7 +68,7 @@ extern SoundMgr * soundMgr;
 
 extern game::GameStates game_state;
 
-bool netgame = false;	// Идет сетевая игра
+bool netgame = false;	// РРґРµС‚ СЃРµС‚РµРІР°СЏ РёРіСЂР°
 extern char path_screenshots[MAX_PATH];
 
 extern ResourceMgr<Texture> * textureMgr;
@@ -77,7 +77,7 @@ extern ResourceMgr<Texture> * textureMgr;
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-// Подсчет FPS
+// РџРѕРґСЃС‡РµС‚ FPS
 __INLINE void CountFPS()
 {
 	if(internal_time - last_fps_tick >= FPSTICK)
@@ -88,8 +88,8 @@ __INLINE void CountFPS()
 	}
 }
 
-// Вывод FPS на экран
-// TODO: Когда появится интерфейс, перевети вывод текста на него.
+// Р’С‹РІРѕРґ FPS РЅР° СЌРєСЂР°РЅ
+// TODO: РљРѕРіРґР° РїРѕСЏРІРёС‚СЃСЏ РёРЅС‚РµСЂС„РµР№СЃ, РїРµСЂРµРІРµС‚Рё РІС‹РІРѕРґ С‚РµРєСЃС‚Р° РЅР° РЅРµРіРѕ.
 __INLINE void PrintFPS()
 {
 	extern float CAMERA_OFF_X;
@@ -175,7 +175,7 @@ __INLINE void DbgPrint()
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-// Игровой цикл
+// РРіСЂРѕРІРѕР№ С†РёРєР»
 
 inline void UpdateInternalTimer()
 {
@@ -184,7 +184,7 @@ inline void UpdateInternalTimer()
 	last_time = current_time;
 }
 
-// Обработа событий
+// РћР±СЂР°Р±РѕС‚Р° СЃРѕР±С‹С‚РёР№
 bool ProcessEvents()
 {
 	SDL_Event event;
@@ -197,8 +197,8 @@ bool ProcessEvents()
 			{
 				SDL_keysym keysym = event.key.keysym;
 #ifdef CLOSE_ON_ALT_F4
-				// Реакция на alt+F4. Возможно стоит проверять, что другие клавиши-модификаторы
-				// не нажаты, но сама Windows вроде этого не деалет.
+				// Р РµР°РєС†РёСЏ РЅР° alt+F4. Р’РѕР·РјРѕР¶РЅРѕ СЃС‚РѕРёС‚ РїСЂРѕРІРµСЂСЏС‚СЊ, С‡С‚Рѕ РґСЂСѓРіРёРµ РєР»Р°РІРёС€Рё-РјРѕРґРёС„РёРєР°С‚РѕСЂС‹
+				// РЅРµ РЅР°Р¶Р°С‚С‹, РЅРѕ СЃР°РјР° Windows РІСЂРѕРґРµ СЌС‚РѕРіРѕ РЅРµ РґРµР°Р»РµС‚.
 				if (keysym.sym == SDLK_F4 && (keysym.mod & KMOD_ALT))
 				{
 					current_state = PROGRAMM_EXITING;
@@ -265,7 +265,7 @@ bool ProcessEvents()
 				}
 				break;
 			}
-		// SDL_VIDEORESIZE вознинет при задании флага SDL_RESIZABLE.
+		// SDL_VIDEORESIZE РІРѕР·РЅРёРЅРµС‚ РїСЂРё Р·Р°РґР°РЅРёРё С„Р»Р°РіР° SDL_RESIZABLE.
 		case SDL_VIDEORESIZE:
 			{
 #ifdef MAP_EDITOR
@@ -296,7 +296,7 @@ bool ProcessEvents()
 	return true;
 }
 
-// Главный цикл
+// Р“Р»Р°РІРЅС‹Р№ С†РёРєР»
 void scene::MainLoop()
 {
 	bool inactive = false;
@@ -312,7 +312,7 @@ void scene::MainLoop()
 
 		if (current_state == PROGRAMM_INACTIVE && !netgame)
 		{
-			// Приложение неактивно
+			// РџСЂРёР»РѕР¶РµРЅРёРµ РЅРµР°РєС‚РёРІРЅРѕ
 			inactive = true;
 			if (soundMgr)
 				soundMgr->PauseAll();
@@ -321,19 +321,19 @@ void scene::MainLoop()
 
 			SDL_WaitEvent(NULL);
 
-			// Определяем время, которое провели в неактивном состоянии
+			// РћРїСЂРµРґРµР»СЏРµРј РІСЂРµРјСЏ, РєРѕС‚РѕСЂРѕРµ РїСЂРѕРІРµР»Рё РІ РЅРµР°РєС‚РёРІРЅРѕРј СЃРѕСЃС‚РѕСЏРЅРёРё
 			t = SDL_GetTicks() - t;
-			// Так все таймеры это время неактивности не заметят.
+			// РўР°Рє РІСЃРµ С‚Р°Р№РјРµСЂС‹ СЌС‚Рѕ РІСЂРµРјСЏ РЅРµР°РєС‚РёРІРЅРѕСЃС‚Рё РЅРµ Р·Р°РјРµС‚СЏС‚.
 			last_time += t;
 		}
 		else
 		{
 			if (inactive)
 			{
-				// Восстановление после состояния неактивности
-				// К сожалению, нельзя просто оставить этот код после WaitMessage,
-				// т.к. даже неактивное приложение периодически получает собщения.
-				// Тогда звук, например, начинает "квакать" даже при неактивном приложении.
+				// Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РїРѕСЃР»Рµ СЃРѕСЃС‚РѕСЏРЅРёСЏ РЅРµР°РєС‚РёРІРЅРѕСЃС‚Рё
+				// Рљ СЃРѕР¶Р°Р»РµРЅРёСЋ, РЅРµР»СЊР·СЏ РїСЂРѕСЃС‚Рѕ РѕСЃС‚Р°РІРёС‚СЊ СЌС‚РѕС‚ РєРѕРґ РїРѕСЃР»Рµ WaitMessage,
+				// С‚.Рє. РґР°Р¶Рµ РЅРµР°РєС‚РёРІРЅРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ РїРµСЂРёРѕРґРёС‡РµСЃРєРё РїРѕР»СѓС‡Р°РµС‚ СЃРѕР±С‰РµРЅРёСЏ.
+				// РўРѕРіРґР° Р·РІСѓРє, РЅР°РїСЂРёРјРµСЂ, РЅР°С‡РёРЅР°РµС‚ "РєРІР°РєР°С‚СЊ" РґР°Р¶Рµ РїСЂРё РЅРµР°РєС‚РёРІРЅРѕРј РїСЂРёР»РѕР¶РµРЅРёРё.
 				inactive = false;
 				if (soundMgr)
 					soundMgr->ResumeAll();
@@ -366,7 +366,7 @@ void scene::MainLoop()
 	inactive = true;
 }
 
-// Обновление сцены, обработка все логики и т.п.
+// РћР±РЅРѕРІР»РµРЅРёРµ СЃС†РµРЅС‹, РѕР±СЂР°Р±РѕС‚РєР° РІСЃРµ Р»РѕРіРёРєРё Рё С‚.Рї.
 void scene::UpdateScene()
 {
 	UpdateInternalTimer();
@@ -400,7 +400,7 @@ void scene::UpdateScene()
 
 }
 
-// Очистка сцены
+// РћС‡РёСЃС‚РєР° СЃС†РµРЅС‹
 void scene::ClearScene()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -413,7 +413,7 @@ void scene::ClearScene()
 #endif
 }
 
-// Отрисовка всего
+// РћС‚СЂРёСЃРѕРІРєР° РІСЃРµРіРѕ
 void scene::DrawScene()
 {
 	/*glColor4ub(255 - GLOBAL_COLOR_RED,
@@ -446,7 +446,7 @@ void scene::DrawScene()
 	frames++;
 }
 
-// Флип :) (блин, мне нравится, как это слово звучит)
+// Р¤Р»РёРї :) (Р±Р»РёРЅ, РјРЅРµ РЅСЂР°РІРёС‚СЃСЏ, РєР°Рє СЌС‚Рѕ СЃР»РѕРІРѕ Р·РІСѓС‡РёС‚)
 void scene::Flip()
 {
 	glFlush();
@@ -454,7 +454,7 @@ void scene::Flip()
 }
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-// Инициализация
+// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ
 void scene::InitScene()
 {
 	//startup_time = GetTickCount();
@@ -477,7 +477,7 @@ void scene::InitScene()
 
 	InitResourceManagers();
 
-	// Создание скриптовой подсистемы и исполнение скрипта инициализаии.
+	// РЎРѕР·РґР°РЅРёРµ СЃРєСЂРёРїС‚РѕРІРѕР№ РїРѕРґСЃРёСЃС‚РµРјС‹ Рё РёСЃРїРѕР»РЅРµРЅРёРµ СЃРєСЂРёРїС‚Р° РёРЅРёС†РёР°Р»РёР·Р°РёРё.
 	if(SCRIPT::InitScript() || SCRIPT::ExecFile(DEFAULT_INIT_SCRIPT))
 	{
 		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "No init: aborting game");
@@ -500,13 +500,13 @@ void scene::InitScene()
 
 }
 
-// Применяет конфиг и вызывает изменение окна
+// РџСЂРёРјРµРЅСЏРµС‚ РєРѕРЅС„РёРі Рё РІС‹Р·С‹РІР°РµС‚ РёР·РјРµРЅРµРЅРёРµ РѕРєРЅР°
 void scene::ApplyConfig(bool video_mode_changed, bool backcolor_changed)
 {
 	if (video_mode_changed || current_state == PROGRAMM_LOADING)
 	{
-		// Изменился видеорежим или это первая загрузка настроек.
-		// Заодно там будет выставлен backcolor, дополнительно выставлять не надо.
+		// РР·РјРµРЅРёР»СЃСЏ РІРёРґРµРѕСЂРµР¶РёРј РёР»Рё СЌС‚Рѕ РїРµСЂРІР°СЏ Р·Р°РіСЂСѓР·РєР° РЅР°СЃС‚СЂРѕРµРє.
+		// Р—Р°РѕРґРЅРѕ С‚Р°Рј Р±СѓРґРµС‚ РІС‹СЃС‚Р°РІР»РµРЅ backcolor, РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕ РІС‹СЃС‚Р°РІР»СЏС‚СЊ РЅРµ РЅР°РґРѕ.
 		scene::ResizeScene();
 		inpmgr.SetScreenToWindowCoeff((float)cfg.scr_width / (float)cfg.window_width,
 			(float)cfg.scr_height / (float)cfg.window_height);
@@ -528,9 +528,9 @@ void scene::ApplyConfig(bool video_mode_changed, bool backcolor_changed)
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-// Деинициализации
+// Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёРё
 
-// Освобождает все подсистемы и сцену
+// РћСЃРІРѕР±РѕР¶РґР°РµС‚ РІСЃРµ РїРѕРґСЃРёСЃС‚РµРјС‹ Рё СЃС†РµРЅСѓ
 void scene::FreeScene()
 {
 	DeleteAllEvents();
@@ -552,17 +552,17 @@ void scene::FreeScene()
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-// Окно игры
+// РћРєРЅРѕ РёРіСЂС‹
 
-// Настройки OpenGL
+// РќР°СЃС‚СЂРѕР№РєРё OpenGL
 static void InitOGLSettings()
 {
 	glEnable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glClearDepth( 1.0f );              // Разрешить очистку буфера глубины
-	glEnable( GL_DEPTH_TEST );            // Разрешить тест глубины
-	glDepthFunc( GL_LEQUAL );            // Тип теста глубины
+	glClearDepth( 1.0f );              // Р Р°Р·СЂРµС€РёС‚СЊ РѕС‡РёСЃС‚РєСѓ Р±СѓС„РµСЂР° РіР»СѓР±РёРЅС‹
+	glEnable( GL_DEPTH_TEST );            // Р Р°Р·СЂРµС€РёС‚СЊ С‚РµСЃС‚ РіР»СѓР±РёРЅС‹
+	glDepthFunc( GL_LEQUAL );            // РўРёРї С‚РµСЃС‚Р° РіР»СѓР±РёРЅС‹
 
 	glEnable(GL_ALPHA_TEST);
 	glAlphaFunc(GL_GREATER, 0.1f);
@@ -571,7 +571,7 @@ static void InitOGLSettings()
 	glEnable(GL_BLEND);
 }
 
-// Инициализация SDL
+// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ SDL
 bool scene::InitSDL()
 {
 	if( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_JOYSTICK) < 0 )
@@ -597,7 +597,7 @@ bool scene::InitSDL()
 
 SDL_Surface* screen;
 
-// Создание окна
+// РЎРѕР·РґР°РЅРёРµ РѕРєРЅР°
 bool scene::InitWindow(bool fullscreen)
 {
 	SDL_WM_SetCaption(GAMENAME, NULL);
@@ -631,7 +631,7 @@ bool scene::InitWindow(bool fullscreen)
 	int width = cfg.window_width > 0 ? cfg.window_width : DEFAULT_WINDOW_WIDTH;
 	int height = cfg.window_height > 0 ? cfg.window_height : DEFAULT_WINDOW_HEIGHT;
 
-	// Возможно, здесь стоит уничтожать страый сурфейс руками. Хотя вроде и так не плохо.
+	// Р’РѕР·РјРѕР¶РЅРѕ, Р·РґРµСЃСЊ СЃС‚РѕРёС‚ СѓРЅРёС‡С‚РѕР¶Р°С‚СЊ СЃС‚СЂР°С‹Р№ СЃСѓСЂС„РµР№СЃ СЂСѓРєР°РјРё. РҐРѕС‚СЏ РІСЂРѕРґРµ Рё С‚Р°Рє РЅРµ РїР»РѕС…Рѕ.
 	screen = SDL_SetVideoMode(width, height, cfg.scr_bpp, flags);
 	if (screen == NULL)
 	{
@@ -651,7 +651,7 @@ bool scene::InitWindow(bool fullscreen)
 	return true;
 }
 
-// Уничтожает окно
+// РЈРЅРёС‡С‚РѕР¶Р°РµС‚ РѕРєРЅРѕ
 void scene::KillWindow()
 {
 // 	if(fullscreenflag)
@@ -700,7 +700,7 @@ void scene::KillWindow()
 
 
 
-// Изменяет размер окна. Вызывает настройку OpenGL.
+// РР·РјРµРЅСЏРµС‚ СЂР°Р·РјРµСЂ РѕРєРЅР°. Р’С‹Р·С‹РІР°РµС‚ РЅР°СЃС‚СЂРѕР№РєСѓ OpenGL.
 void scene::ResizeScene()
 {
 	if (!scene::InitWindow(cfg.fullscreen != 0))
@@ -708,7 +708,7 @@ void scene::ResizeScene()
 		current_state = PROGRAMM_EXITING;
 		return;
 	}
-	//InitOGLSettings();		// уже вызвано в InitWindow
+	//InitOGLSettings();		// СѓР¶Рµ РІС‹Р·РІР°РЅРѕ РІ InitWindow
 	glViewport(0, 0, cfg.window_width, cfg.window_height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -763,7 +763,7 @@ bool scene::SaveScreenshot()
 	char file_name[MAX_PATH];
 	static UINT counter = 0;
 
-	// Долго же оно будет в первый раз искать номер следующего скриншота, если их уже много
+	// Р”РѕР»РіРѕ Р¶Рµ РѕРЅРѕ Р±СѓРґРµС‚ РІ РїРµСЂРІС‹Р№ СЂР°Р· РёСЃРєР°С‚СЊ РЅРѕРјРµСЂ СЃР»РµРґСѓСЋС‰РµРіРѕ СЃРєСЂРёРЅС€РѕС‚Р°, РµСЃР»Рё РёС… СѓР¶Рµ РјРЅРѕРіРѕ
 	do
 	{
 	counter++;

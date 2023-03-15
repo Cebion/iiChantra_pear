@@ -10,14 +10,14 @@
 
 struct render_data
 {
-	GLuint			texture_id;			// Идентификатор текстуры OGL
-	vertex3f_t*		vertices;			// Массив вершин
-	coord2f_t*		coords;				// Массив координат текстур
-	RGBAf*			colors;				// Массив цветов
-	size_t			vert_allocated_size;		// Выделенная память под массив вершин
-	size_t			coord_allocated_size;		// Выделенная память под массив кординат тектур
-	size_t			colors_allocated_size;		// Выделенная память под массив цветов
-	size_t			count;				// Количесвто элементов
+	GLuint			texture_id;			// РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С‚РµРєСЃС‚СѓСЂС‹ OGL
+	vertex3f_t*		vertices;			// РњР°СЃСЃРёРІ РІРµСЂС€РёРЅ
+	coord2f_t*		coords;				// РњР°СЃСЃРёРІ РєРѕРѕСЂРґРёРЅР°С‚ С‚РµРєСЃС‚СѓСЂ
+	RGBAf*			colors;				// РњР°СЃСЃРёРІ С†РІРµС‚РѕРІ
+	size_t			vert_allocated_size;		// Р’С‹РґРµР»РµРЅРЅР°СЏ РїР°РјСЏС‚СЊ РїРѕРґ РјР°СЃСЃРёРІ РІРµСЂС€РёРЅ
+	size_t			coord_allocated_size;		// Р’С‹РґРµР»РµРЅРЅР°СЏ РїР°РјСЏС‚СЊ РїРѕРґ РјР°СЃСЃРёРІ РєРѕСЂРґРёРЅР°С‚ С‚РµРєС‚СѓСЂ
+	size_t			colors_allocated_size;		// Р’С‹РґРµР»РµРЅРЅР°СЏ РїР°РјСЏС‚СЊ РїРѕРґ РјР°СЃСЃРёРІ С†РІРµС‚РѕРІ
+	size_t			count;				// РљРѕР»РёС‡РµСЃРІС‚Рѕ СЌР»РµРјРµРЅС‚РѕРІ
 
 	//render_data()
 	//{
@@ -33,10 +33,10 @@ struct render_data
 };
 
 
-void r_ZeroRenderData(void);				// Обнулить отрисовку
-void r_ClearRenderData(void);				// Очистить отрисовку (освободить память)
-//void r_RenderData(render_data* p_data);		// Отрисовать список отрисовки
-void r_RenderAll(void);						// Отрисовать все
+void r_ZeroRenderData(void);				// РћР±РЅСѓР»РёС‚СЊ РѕС‚СЂРёСЃРѕРІРєСѓ
+void r_ClearRenderData(void);				// РћС‡РёСЃС‚РёС‚СЊ РѕС‚СЂРёСЃРѕРІРєСѓ (РѕСЃРІРѕР±РѕРґРёС‚СЊ РїР°РјСЏС‚СЊ)
+//void r_RenderData(render_data* p_data);		// РћС‚СЂРёСЃРѕРІР°С‚СЊ СЃРїРёСЃРѕРє РѕС‚СЂРёСЃРѕРІРєРё
+void r_RenderAll(void);						// РћС‚СЂРёСЃРѕРІР°С‚СЊ РІСЃРµ
 
 
 void RenderSprite(float x, float y, float z, float x1, float y1, float x2, float y2, const Texture* tex, BOOL mirrorX, const RGBAf& color);

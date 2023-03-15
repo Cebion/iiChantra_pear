@@ -26,7 +26,7 @@ public:
 	~CGLImageData();
 	bool			MakeTexture();
 	bool			LoadTexture(const char *filename);
-	bool			SaveScreenshot(const char *filename); // ŸŸ»
+	bool			SaveScreenshot(const char *filename); // –©–©–ò
 	virtual GLuint	GetTexID();
 protected:
 	GLuint			TexID;

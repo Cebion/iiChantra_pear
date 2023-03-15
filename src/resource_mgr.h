@@ -5,30 +5,30 @@
 #include "misc.h"
 
 
-// Шаблонный класс менеджера ресурсов определенного типа.
-// Ресурс должен сответствовать интерфейсу, описанному в class Resource.
+// РЁР°Р±Р»РѕРЅРЅС‹Р№ РєР»Р°СЃСЃ РјРµРЅРµРґР¶РµСЂР° СЂРµСЃСѓСЂСЃРѕРІ РѕРїСЂРµРґРµР»РµРЅРЅРѕРіРѕ С‚РёРїР°.
+// Р РµСЃСѓСЂСЃ РґРѕР»Р¶РµРЅ СЃРѕС‚РІРµС‚СЃС‚РІРѕРІР°С‚СЊ РёРЅС‚РµСЂС„РµР№СЃСѓ, РѕРїРёСЃР°РЅРЅРѕРјСѓ РІ class Resource.
 template < typename T >
 class ResourceMgr
 {
 public:
 // 
 
-	// Автоматический поис файла. Если отключен, то тогда имя ресурса должно 
-	// содержать относительный путь к файлу.
+	// РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРёР№ РїРѕРёСЃ С„Р°Р№Р»Р°. Р•СЃР»Рё РѕС‚РєР»СЋС‡РµРЅ, С‚Рѕ С‚РѕРіРґР° РёРјСЏ СЂРµСЃСѓСЂСЃР° РґРѕР»Р¶РЅРѕ 
+	// СЃРѕРґРµСЂР¶Р°С‚СЊ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅС‹Р№ РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ.
 	bool autoSearchFile;
 
-	// Автозагрузка ресурсов. Если включнеа, то ресурс будет загружен по первому требованию.
+	// РђРІС‚РѕР·Р°РіСЂСѓР·РєР° СЂРµСЃСѓСЂСЃРѕРІ. Р•СЃР»Рё РІРєР»СЋС‡РЅРµР°, С‚Рѕ СЂРµСЃСѓСЂСЃ Р±СѓРґРµС‚ Р·Р°РіСЂСѓР¶РµРЅ РїРѕ РїРµСЂРІРѕРјСѓ С‚СЂРµР±РѕРІР°РЅРёСЋ.
 	bool autoLoadResource;
 
-	// Название типа ресурса, берется автоматически c помощью typeid(T).name() и 
-	// используется в сообщениях об ошибках.
-	// Из-за использования typeid(T).name(), глупая студия видит по две утечки на 
-	// каждый экзепляр класса. Это еще древний баг, тянущийся со времен VC4.
+	// РќР°Р·РІР°РЅРёРµ С‚РёРїР° СЂРµСЃСѓСЂСЃР°, Р±РµСЂРµС‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё c РїРѕРјРѕС‰СЊСЋ typeid(T).name() Рё 
+	// РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІ СЃРѕРѕР±С‰РµРЅРёСЏС… РѕР± РѕС€РёР±РєР°С….
+	// РР·-Р·Р° РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ typeid(T).name(), РіР»СѓРїР°СЏ СЃС‚СѓРґРёСЏ РІРёРґРёС‚ РїРѕ РґРІРµ СѓС‚РµС‡РєРё РЅР° 
+	// РєР°Р¶РґС‹Р№ СЌРєР·РµРїР»СЏСЂ РєР»Р°СЃСЃР°. Р­С‚Рѕ РµС‰Рµ РґСЂРµРІРЅРёР№ Р±Р°Рі, С‚СЏРЅСѓС‰РёР№СЃСЏ СЃРѕ РІСЂРµРјРµРЅ VC4.
 	const char* typeName;
 
-	// path - путь к папке, являющейся корнем для всех ресурсов данного типа.
-	// extension - расширение файлов всех ресурсов даного типа. Автоматически 
-	// присоединяется к имени, для образования имени файла.
+	// path - РїСѓС‚СЊ Рє РїР°РїРєРµ, СЏРІР»СЏСЋС‰РµР№СЃСЏ РєРѕСЂРЅРµРј РґР»СЏ РІСЃРµС… СЂРµСЃСѓСЂСЃРѕРІ РґР°РЅРЅРѕРіРѕ С‚РёРїР°.
+	// extension - СЂР°СЃС€РёСЂРµРЅРёРµ С„Р°Р№Р»РѕРІ РІСЃРµС… СЂРµСЃСѓСЂСЃРѕРІ РґР°РЅРѕРіРѕ С‚РёРїР°. РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРё 
+	// РїСЂРёСЃРѕРµРґРёРЅСЏРµС‚СЃСЏ Рє РёРјРµРЅРё, РґР»СЏ РѕР±СЂР°Р·РѕРІР°РЅРёСЏ РёРјРµРЅРё С„Р°Р№Р»Р°.
 	ResourceMgr(const char *path, const char *extension)
 	{
 		assert(path);
@@ -49,13 +49,13 @@ public:
 		DELETEARRAY(file_extension);
 	}
 
-	// Функция выгружает все ресурсы данного типа.
+	// Р¤СѓРЅРєС†РёСЏ РІС‹РіСЂСѓР¶Р°РµС‚ РІСЃРµ СЂРµСЃСѓСЂСЃС‹ РґР°РЅРЅРѕРіРѕ С‚РёРїР°.
 	void UnloadAll()
 	{
 		if (resMap.size() == 0)
 			return;
 
-		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Выгружаем все %s", typeName);
+		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Р’С‹РіСЂСѓР¶Р°РµРј РІСЃРµ %s", typeName);
 		for (ResMapIter it = resMap.begin(); it != resMap.end(); it++)
 		{
 			DELETESINGLE(it->second);
@@ -68,8 +68,8 @@ public:
 		if (resMap.size() == 0)
 			return;
 
-		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Выгружаем все неиспользуемые %s", typeName);
-		// TODO: оттестирвать
+		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Р’С‹РіСЂСѓР¶Р°РµРј РІСЃРµ РЅРµРёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ %s", typeName);
+		// TODO: РѕС‚С‚РµСЃС‚РёСЂРІР°С‚СЊ
 		ResMapIter it = resMap.begin();
 		while(it != resMap.end())
 		{
@@ -80,7 +80,7 @@ public:
 			}
 			else
 			{
-				sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Нельзя выгрузить %s по имени %s, он все еще используется", typeName, it->second->name.c_str());
+				sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "РќРµР»СЊР·СЏ РІС‹РіСЂСѓР·РёС‚СЊ %s РїРѕ РёРјРµРЅРё %s, РѕРЅ РІСЃРµ РµС‰Рµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ", typeName, it->second->name.c_str());
 				++it;
 			}
 		}
@@ -91,7 +91,7 @@ public:
 		if (!name.empty())
 		{
 			const string full_name = possible_prefix + name;
-			// Поиск в map
+			// РџРѕРёСЃРє РІ map
 			ResMapConstIter it = resMap.find(name);
 			if (it != resMap.end())
 			{
@@ -99,27 +99,27 @@ public:
 			}
 			else if (autoLoadResource)
 			{
-				// Попытка загрузить
+				// РџРѕРїС‹С‚РєР° Р·Р°РіСЂСѓР·РёС‚СЊ
 				T* res = Load(name, possible_prefix);
 				if (!res) res = Load(name);
 				if (res)
 				{
-					// Загрузили, теперь вносим в map
+					// Р—Р°РіСЂСѓР·РёР»Рё, С‚РµРїРµСЂСЊ РІРЅРѕСЃРёРј РІ map
 					resMap[name] = res;
 					return res;
 				}
 			}
 		}
-		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Попытка получить %s по имени %s не увенчалась успехом", typeName, name.c_str());
+		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "РџРѕРїС‹С‚РєР° РїРѕР»СѓС‡РёС‚СЊ %s РїРѕ РёРјРµРЅРё %s РЅРµ СѓРІРµРЅС‡Р°Р»Р°СЃСЊ СѓСЃРїРµС…РѕРј", typeName, name.c_str());
 		return NULL;
 	}
 
-	// Возвращает указатель на загруженный ресурс.
+	// Р’РѕР·РІСЂР°С‰Р°РµС‚ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° Р·Р°РіСЂСѓР¶РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ.
 	T* GetByName(const string& name)
 	{
 		if (!name.empty())
 		{
-			// Поиск в map
+			// РџРѕРёСЃРє РІ map
 			ResMapConstIter it = resMap.find(name);
 			if (it != resMap.end())
 			{
@@ -127,17 +127,17 @@ public:
 			}
 			else if (autoLoadResource)
 			{
-				// Попытка загрузить
+				// РџРѕРїС‹С‚РєР° Р·Р°РіСЂСѓР·РёС‚СЊ
 				T* const res = Load(name);
 				if (res)
 				{
-					// Загрузили, теперь вносим в map
+					// Р—Р°РіСЂСѓР·РёР»Рё, С‚РµРїРµСЂСЊ РІРЅРѕСЃРёРј РІ map
 					resMap[name] = res;
 					return res;
 				}
 			}
 		}
-		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Попытка получить %s по имени %s не увенчалась успехом", typeName, name.c_str());
+		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "РџРѕРїС‹С‚РєР° РїРѕР»СѓС‡РёС‚СЊ %s РїРѕ РёРјРµРЅРё %s РЅРµ СѓРІРµРЅС‡Р°Р»Р°СЃСЊ СѓСЃРїРµС…РѕРј", typeName, name.c_str());
 		return NULL;
 	}
 
@@ -153,7 +153,7 @@ public:
 		return name ? GetByName((string)name) : NULL;
 	}
 
-	// Выгружает ресурс с заданным именем.
+	// Р’С‹РіСЂСѓР¶Р°РµС‚ СЂРµСЃСѓСЂСЃ СЃ Р·Р°РґР°РЅРЅС‹Рј РёРјРµРЅРµРј.
 	void Unload(const string& name)
 	{
 		if (!name.empty() && resMap.size())
@@ -170,7 +170,7 @@ public:
 		}
 	}
 
-	// Вызывает для всех ресуров функцию Recover() - восстановление/перезагрузка ресурса.
+	// Р’С‹Р·С‹РІР°РµС‚ РґР»СЏ РІСЃРµС… СЂРµСЃСѓСЂРѕРІ С„СѓРЅРєС†РёСЋ Recover() - РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ/РїРµСЂРµР·Р°РіСЂСѓР·РєР° СЂРµСЃСѓСЂСЃР°.
 	void RecoverAll()
 	{
 		if (resMap.size() == 0)
@@ -183,7 +183,7 @@ public:
 	}
 	
 private:
-	// Строит имя и путь к файлу и выполняет загрузку.
+	// РЎС‚СЂРѕРёС‚ РёРјСЏ Рё РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ Рё РІС‹РїРѕР»РЅСЏРµС‚ Р·Р°РіСЂСѓР·РєСѓ.
 	T* Load(const string& name)
 	{
 		string file_name = name;
@@ -196,7 +196,7 @@ private:
 		{
 			if( !FindFile(file_name.c_str(), this->path, full_file_name) )
 			{
-				sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Файл %s не найден", file_name.c_str());
+				sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Р¤Р°Р№Р» %s РЅРµ РЅР°Р№РґРµРЅ", file_name.c_str());
 				return NULL;
 			}
 		}
@@ -209,7 +209,7 @@ private:
 			strcat(full_file_name, file_name.c_str());
 		}
 
-		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Загружаем %s", file_name.c_str());
+		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Р—Р°РіСЂСѓР¶Р°РµРј %s", file_name.c_str());
 		T* t = new T(full_file_name, name);
 		if (!t->Load())
 		{
@@ -220,7 +220,7 @@ private:
 		return t;
 	}
 
-	// Строит имя и путь к файлу и выполняет загрузку c именем, которое может отличаться от пути.
+	// РЎС‚СЂРѕРёС‚ РёРјСЏ Рё РїСѓС‚СЊ Рє С„Р°Р№Р»Сѓ Рё РІС‹РїРѕР»РЅСЏРµС‚ Р·Р°РіСЂСѓР·РєСѓ c РёРјРµРЅРµРј, РєРѕС‚РѕСЂРѕРµ РјРѕР¶РµС‚ РѕС‚Р»РёС‡Р°С‚СЊСЃСЏ РѕС‚ РїСѓС‚Рё.
 	T* Load(const string& name, const string& path)
 	{
 		string file_name = name;
@@ -233,7 +233,7 @@ private:
 		{
 			if( !FindFile(file_name.c_str(), this->path, full_file_name) )
 			{
-				sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Файл %s не найден", file_name.c_str());
+				sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Р¤Р°Р№Р» %s РЅРµ РЅР°Р№РґРµРЅ", file_name.c_str());
 				return NULL;
 			}
 		}
@@ -245,7 +245,7 @@ private:
 			strcat(full_file_name, file_name.c_str());
 		}
 
-		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Загружаем %s", file_name.c_str());
+		sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Р—Р°РіСЂСѓР¶Р°РµРј %s", file_name.c_str());
 		T* t = new T(full_file_name, name);
 		if (!t->Load())
 		{

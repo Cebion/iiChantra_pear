@@ -34,7 +34,7 @@ extern config cfg;
 
 void ObjRibbon::Draw()
 {
-	//Такого быть не должно, но если вдруг...
+	//РўР°РєРѕРіРѕ Р±С‹С‚СЊ РЅРµ РґРѕР»Р¶РЅРѕ, РЅРѕ РµСЃР»Рё РІРґСЂСѓРі...
 	if ( this->sprite == NULL )
 		return;
 
@@ -54,7 +54,7 @@ void ObjRibbon::Draw()
 	this->sprite->frameWidth = (USHORT)f->size.x;
 	this->sprite->frameHeight = (USHORT)f->size.y;
 
-	//Проверяем, попали ли границы на экран в принипе.
+	//РџСЂРѕРІРµСЂСЏРµРј, РїРѕРїР°Р»Рё Р»Рё РіСЂР°РЅРёС†С‹ РЅР° СЌРєСЂР°РЅ РІ РїСЂРёРЅРёРїРµ.
 	if ( ubr && getBound(orBoundRight) < CAMERA_LEFT )
 		return;
 	if ( ubl && getBound(orBoundLeft) > CAMERA_RIGHT )
@@ -70,13 +70,13 @@ void ObjRibbon::Draw()
 		return;
 	if ( !repeat_y && (coord.y + sprite->frameHeight < getBound(orBoundTop) || coord.y > getBound(orBoundBottom)) )
 		return;
-	//Даже если попали по границе - могли оказаться за кадром.
+	//Р”Р°Р¶Рµ РµСЃР»Рё РїРѕРїР°Р»Рё РїРѕ РіСЂР°РЅРёС†Рµ - РјРѕРіР»Рё РѕРєР°Р·Р°С‚СЊСЃСЏ Р·Р° РєР°РґСЂРѕРј.
 	if ( !repeat_x && (coord.x + this->sprite->frameWidth < CAMERA_LEFT || coord.x - this->sprite->frameWidth > CAMERA_RIGHT) )
 		return;
 	if ( !repeat_y && (coord.y + this->sprite->frameHeight < CAMERA_TOP || coord.y - this->sprite->frameHeight > CAMERA_BOTTOM) )
 		return;
 
-	//"Отматываем" на ближайшее повторение по координатам, по которым повторяем.
+	//"РћС‚РјР°С‚С‹РІР°РµРј" РЅР° Р±Р»РёР¶Р°Р№С€РµРµ РїРѕРІС‚РѕСЂРµРЅРёРµ РїРѕ РєРѕРѕСЂРґРёРЅР°С‚Р°Рј, РїРѕ РєРѕС‚РѕСЂС‹Рј РїРѕРІС‚РѕСЂСЏРµРј.
 	if ( repeat_x )
 	{
 		while ( coord.x + this->sprite->frameWidth < getBound(orBoundRight) )

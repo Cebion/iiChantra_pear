@@ -24,7 +24,7 @@ public:
 	scalar max_x_vel;
 	scalar max_y_vel;
 	ObjPhysic* suspected_plane;
-	ObjPhysic* drop_from;			// Ипользуется для того, чтобы понять, что спрыгиваем с платформы.
+	ObjPhysic* drop_from;			// РРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ РїРѕРЅСЏС‚СЊ, С‡С‚Рѕ СЃРїСЂС‹РіРёРІР°РµРј СЃ РїР»Р°С‚С„РѕСЂРјС‹.
 	ObjEnvironment* env;
 	//ObjEnvironment* old_env;
 	float shadow_width;
@@ -36,21 +36,21 @@ public:
 	scalar walk_acc;
 	scalar jump_vel;
 
-	bool ghostlike;			// Объект "призрачный", для него не решаются
-							// столкновения и он проходит сквозь solid-объекты
+	bool ghostlike;			// РћР±СЉРµРєС‚ "РїСЂРёР·СЂР°С‡РЅС‹Р№", РґР»СЏ РЅРµРіРѕ РЅРµ СЂРµС€Р°СЋС‚СЃСЏ
+							// СЃС‚РѕР»РєРЅРѕРІРµРЅРёСЏ Рё РѕРЅ РїСЂРѕС…РѕРґРёС‚ СЃРєРІРѕР·СЊ solid-РѕР±СЉРµРєС‚С‹
 
-	bool movementDirectionX;		// Напавление движения объекта
+	bool movementDirectionX;		// РќР°РїР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ РѕР±СЉРµРєС‚Р°
 
 
-	ObjectMovementType movement;		// Тип движения объекта
+	ObjectMovementType movement;		// РўРёРї РґРІРёР¶РµРЅРёСЏ РѕР±СЉРµРєС‚Р°
 	ObjectFacingType facing;
 	
 
 
-	// Флаги
-	// on_plane		16		Объект находится на поверхности
-	// bullet		32		Объект - пуля
-	// dropping		128		Объект спрыгивает с платформы
+	// Р¤Р»Р°РіРё
+	// on_plane		16		РћР±СЉРµРєС‚ РЅР°С…РѕРґРёС‚СЃСЏ РЅР° РїРѕРІРµСЂС…РЅРѕСЃС‚Рё
+	// bullet		32		РћР±СЉРµРєС‚ - РїСѓР»СЏ
+	// dropping		128		РћР±СЉРµРєС‚ СЃРїСЂС‹РіРёРІР°РµС‚ СЃ РїР»Р°С‚С„РѕСЂРјС‹
 	__INLINE BYTE IsOnPlane()		{ return physFlags & 16; }
 	__INLINE BYTE IsBullet()		{ return physFlags & 32; }
 	__INLINE BYTE IsDropping()		{ return physFlags & 128; }

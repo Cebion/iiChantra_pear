@@ -217,11 +217,11 @@ void ObjRay::Process()
 	}
 }
 
-// Ñëóæèò äëÿ îòñåèâàíèÿ îáúåêòîâ, ñ êîòîðûìè ëó÷ ãåîìåòðè÷åñêè ïåðåñåêàåòñÿ, 
-// íî ñîãëàñíî èãðîâîé ëîãèêå îíè íå ïåðåñåêàþòñÿ
+// Ð¡Ð»ÑƒÐ¶Ð¸Ñ‚ Ð´Ð»Ñ Ð¾Ñ‚ÑÐµÐ¸Ð²Ð°Ð½Ð¸Ñ Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð², Ñ ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¼Ð¸ Ð»ÑƒÑ‡ Ð³ÐµÐ¾Ð¼ÐµÑ‚Ñ€Ð¸Ñ‡ÐµÑÐºÐ¸ Ð¿ÐµÑ€ÐµÑÐµÐºÐ°ÐµÑ‚ÑÑ, 
+// Ð½Ð¾ ÑÐ¾Ð³Ð»Ð°ÑÐ½Ð¾ Ð¸Ð³Ñ€Ð¾Ð²Ð¾Ð¹ Ð»Ð¾Ð³Ð¸ÐºÐµ Ð¾Ð½Ð¸ Ð½Ðµ Ð¿ÐµÑ€ÐµÑÐµÐºÐ°ÑŽÑ‚ÑÑ
 bool ObjRay::CheckIntersection(ObjPhysic* obj)
 {
-	//Ïóëè íèêîãäà íå ïåðåñåêàþòñÿ ñ ÊÎÍÒÐÀËÀÉÊ-ïëàòôîðìàìè. Ãðàíàòû è ïðî÷åå - îòñêàêèâàþò, íî ýòî â ðåøåíèè ñòîëêíîâåíèé.
+	//ÐŸÑƒÐ»Ð¸ Ð½Ð¸ÐºÐ¾Ð³Ð´Ð° Ð½Ðµ Ð¿ÐµÑ€ÐµÑÐµÐºÐ°ÑŽÑ‚ÑÑ Ñ ÐšÐžÐÐ¢Ð ÐÐ›ÐÐ™Ðš-Ð¿Ð»Ð°Ñ‚Ñ„Ð¾Ñ€Ð¼Ð°Ð¼Ð¸. Ð“Ñ€Ð°Ð½Ð°Ñ‚Ñ‹ Ð¸ Ð¿Ñ€Ð¾Ñ‡ÐµÐµ - Ð¾Ñ‚ÑÐºÐ°ÐºÐ¸Ð²Ð°ÑŽÑ‚, Ð½Ð¾ ÑÑ‚Ð¾ Ð² Ñ€ÐµÑˆÐµÐ½Ð¸Ð¸ ÑÑ‚Ð¾Ð»ÐºÐ½Ð¾Ð²ÐµÐ½Ð¸Ð¹.
 	if (obj->IsOneSide())
 		return false;
 
@@ -244,7 +244,7 @@ bool ObjRay::Hit(ObjPhysic* obj)
 	if (this->IsDead() || (activity == oatDying/* && !this->IsUseCollisionCounter()*/) )
 		return false;
 
-	// Ýòà ïðîâåðêà êàê áû è íå íóæíà, âñå ðàâíî îíà óæå âûçûâàëàñü
+	// Ð­Ñ‚Ð° Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° ÐºÐ°Ðº Ð±Ñ‹ Ð¸ Ð½Ðµ Ð½ÑƒÐ¶Ð½Ð°, Ð²ÑÐµ Ñ€Ð°Ð²Ð½Ð¾ Ð¾Ð½Ð° ÑƒÐ¶Ðµ Ð²Ñ‹Ð·Ñ‹Ð²Ð°Ð»Ð°ÑÑŒ
 	//if (!this->CheckIntersection(obj))
 	//	return false;
 	assert(this->CheckIntersection(obj));
@@ -253,7 +253,7 @@ bool ObjRay::Hit(ObjPhysic* obj)
 	{
 		if (  obj->sprite->GetAnimation("pain") )
 		{
-			// TODO: ïðèëîæèòü ñèëó
+			// TODO: Ð¿Ñ€Ð¸Ð»Ð¾Ð¶Ð¸Ñ‚ÑŒ ÑÐ¸Ð»Ñƒ
 			//long double ang = atan( fabs(this->aabb.p.y - obj->aabb.p.y)/fabs(this->aabb.p.x - obj->aabb.p.x) );
 			//Vector2 push = Vector2( push_force*cos(ang), push_force*sin(ang) );
 			//if ( (push.x < 0 && this->aabb.p.x < obj->aabb.p.x) || (push.x > 0 && this->aabb.p.x > obj->aabb.p.x) ) push.x *= -1;
@@ -264,7 +264,7 @@ bool ObjRay::Hit(ObjPhysic* obj)
 		{
 		case objItem:
 			{
-				//Ñòîèò äîáàâèòü çäîðîâüå, íî ïîêà - ñðàçó óíè÷òîæàåì
+				//Ð¡Ñ‚Ð¾Ð¸Ñ‚ Ð´Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð·Ð´Ð¾Ñ€Ð¾Ð²ÑŒÐµ, Ð½Ð¾ Ð¿Ð¾ÐºÐ° - ÑÑ€Ð°Ð·Ñƒ ÑƒÐ½Ð¸Ñ‡Ñ‚Ð¾Ð¶Ð°ÐµÐ¼
 				if ( obj->sprite->cur_anim != "die" )
 					obj->SetAnimation("die", true);
 			}
@@ -304,9 +304,9 @@ bool ObjRay::Hit(ObjPhysic* obj)
 
 		GameObject* spr = CreateSprite(this->end_effect, c, false, "idle");
 #ifdef COORD_LEFT_UP_CORNER
-		// Êîñòûëü, èñïðàâëÿþùèé ýôôåêò äðóãîãî êîñòûëÿ
-		// Íóæíî, ÷òîáû âñïûøêà îò ïîïàäàíèÿ ëàçåðà áûëà öåíòðîì
-		// èìåííî â òî÷êå ïåðåñå÷åíèÿ.
+		// ÐšÐ¾ÑÑ‚Ñ‹Ð»ÑŒ, Ð¸ÑÐ¿Ñ€Ð°Ð²Ð»ÑÑŽÑ‰Ð¸Ð¹ ÑÑ„Ñ„ÐµÐºÑ‚ Ð´Ñ€ÑƒÐ³Ð¾Ð³Ð¾ ÐºÐ¾ÑÑ‚Ñ‹Ð»Ñ
+		// ÐÑƒÐ¶Ð½Ð¾, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð²ÑÐ¿Ñ‹ÑˆÐºÐ° Ð¾Ñ‚ Ð¿Ð¾Ð¿Ð°Ð´Ð°Ð½Ð¸Ñ Ð»Ð°Ð·ÐµÑ€Ð° Ð±Ñ‹Ð»Ð° Ñ†ÐµÐ½Ñ‚Ñ€Ð¾Ð¼
+		// Ð¸Ð¼ÐµÐ½Ð½Ð¾ Ð² Ñ‚Ð¾Ñ‡ÐºÐµ Ð¿ÐµÑ€ÐµÑÐµÑ‡ÐµÐ½Ð¸Ñ.
 		if (spr->sprite->tex)
 		{
 			spr->aabb.p.x -= spr->sprite->tex->frame->size.x * 0.5f;
@@ -384,7 +384,7 @@ void ObjRay::Draw()
 		}
 		else
 		{
-			// TODO: Âû÷èñëÿòü x1/y1, åñëè íà÷àëî ëó÷à â êàäð íå ïîïàäàåò.
+			// TODO: Ð’Ñ‹Ñ‡Ð¸ÑÐ»ÑÑ‚ÑŒ x1/y1, ÐµÑÐ»Ð¸ Ð½Ð°Ñ‡Ð°Ð»Ð¾ Ð»ÑƒÑ‡Ð° Ð² ÐºÐ°Ð´Ñ€ Ð½Ðµ Ð¿Ð¾Ð¿Ð°Ð´Ð°ÐµÑ‚.
 			if (r.IsVertical())
 			{
 				x2 = r.p.x;
@@ -447,7 +447,7 @@ void ObjRay::Draw()
 				frame_coord = f->coord;
 			}
 
-			// Óñëîâèå (ray.k > 0) == (bool)s->IsMirrored() ñðàáîòàåò äëÿ UpRight è UpLeft
+			// Ð£ÑÐ»Ð¾Ð²Ð¸Ðµ (ray.k > 0) == (bool)s->IsMirrored() ÑÑ€Ð°Ð±Ð¾Ñ‚Ð°ÐµÑ‚ Ð´Ð»Ñ UpRight Ð¸ UpLeft
 			if (!ray.IsHorizontal() &&  (ray.k > 0) == s->IsMirrored())
 			{
 				y1 -= f->size.y;
@@ -493,7 +493,7 @@ void ObjRay::Draw()
 
 				i++;
 
-				// TODO: Ýòè ray.dir è k > 0 â óñëîâèè - êîñòûëü. Ïðâèëüíî ñäåëàòü - âû÷èñëèòü x1/y1, åñëè íà÷àëî ëó÷à íå âèäíî.
+				// TODO: Ð­Ñ‚Ð¸ ray.dir Ð¸ k > 0 Ð² ÑƒÑÐ»Ð¾Ð²Ð¸Ð¸ - ÐºÐ¾ÑÑ‚Ñ‹Ð»ÑŒ. ÐŸÑ€Ð²Ð¸Ð»ÑŒÐ½Ð¾ ÑÐ´ÐµÐ»Ð°Ñ‚ÑŒ - Ð²Ñ‹Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÑŒ x1/y1, ÐµÑÐ»Ð¸ Ð½Ð°Ñ‡Ð°Ð»Ð¾ Ð»ÑƒÑ‡Ð° Ð½Ðµ Ð²Ð¸Ð´Ð½Ð¾.
 			} while((x1 + s->frameWidth > CAMERA_LEFT || ray.dir) && (x1 < CAMERA_RIGHT || !ray.dir) && 
 					(y1 + s->frameHeight > CAMERA_TOP || ray.k>0) && (y1 < CAMERA_BOTTOM || ray.k<0) );
 

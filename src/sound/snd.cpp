@@ -65,7 +65,7 @@ __INLINE void LogBassError(const char* const funcName)
 
 Sound::~Sound()
 {
-	// TOOD: Выгружать звук из bass или чего там еще использоваться будет.
+	// TOOD: Р’С‹РіСЂСѓР¶Р°С‚СЊ Р·РІСѓРє РёР· bass РёР»Рё С‡РµРіРѕ С‚Р°Рј РµС‰Рµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ Р±СѓРґРµС‚.
 }
 
 bool Sound::Play(bool restart) const

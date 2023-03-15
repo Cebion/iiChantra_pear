@@ -12,7 +12,7 @@ public:
 	BYTE physFlags;
 	float bounce;
 	BYTE solid_to;
-	BYTE slopeType; // 0 - нет, 1 - "/", 2 - "\"
+	BYTE slopeType; // 0 - РЅРµС‚, 1 - "/", 2 - "\"
 
 #ifdef MAP_EDITOR
 	RGBAf border_color;
@@ -21,13 +21,13 @@ public:
 	bool show_border;
 #endif // MAP_EDITOR
 
-	// Флаги
-	// solid					1		Объект находится на поверхности
-	// bullet_collidable		2		Объект является препятсвием для пуль
-	// dynamic					4		Динамический, движущийся
-	// touchable				8		Реагирующий на касание
-	// forced					16		Не позволяет спрыгивать
-	// one-side					64		Блокирует движение сверху вниз. 64 - чтобы не пересекалось с OnPlane, нужно для пуль.
+	// Р¤Р»Р°РіРё
+	// solid					1		РћР±СЉРµРєС‚ РЅР°С…РѕРґРёС‚СЃСЏ РЅР° РїРѕРІРµСЂС…РЅРѕСЃС‚Рё
+	// bullet_collidable		2		РћР±СЉРµРєС‚ СЏРІР»СЏРµС‚СЃСЏ РїСЂРµРїСЏС‚СЃРІРёРµРј РґР»СЏ РїСѓР»СЊ
+	// dynamic					4		Р”РёРЅР°РјРёС‡РµСЃРєРёР№, РґРІРёР¶СѓС‰РёР№СЃСЏ
+	// touchable				8		Р РµР°РіРёСЂСѓСЋС‰РёР№ РЅР° РєР°СЃР°РЅРёРµ
+	// forced					16		РќРµ РїРѕР·РІРѕР»СЏРµС‚ СЃРїСЂС‹РіРёРІР°С‚СЊ
+	// one-side					64		Р‘Р»РѕРєРёСЂСѓРµС‚ РґРІРёР¶РµРЅРёРµ СЃРІРµСЂС…Сѓ РІРЅРёР·. 64 - С‡С‚РѕР±С‹ РЅРµ РїРµСЂРµСЃРµРєР°Р»РѕСЃСЊ СЃ OnPlane, РЅСѓР¶РЅРѕ РґР»СЏ РїСѓР»СЊ.
 
 	__INLINE BYTE IsSolid()				const	{ return physFlags & 1; }
 	__INLINE BYTE IsBulletCollidable()	const	{ return physFlags & 2; }

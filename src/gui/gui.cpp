@@ -34,12 +34,12 @@ Gui::~Gui()
 	SCRIPT::RemoveFromRegistry(this->onMouseKeyReleaseGlobal);
 }
 
-// Обработчик Gui, вызов обработчиков виджетов, обработка событий ввода
+// РћР±СЂР°Р±РѕС‚С‡РёРє Gui, РІС‹Р·РѕРІ РѕР±СЂР°Р±РѕС‚С‡РёРєРѕРІ РІРёРґР¶РµС‚РѕРІ, РѕР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёР№ РІРІРѕРґР°
 void Gui::Process()
 {
 	BatchCreate();
 
-	// Передача ввода глобальным скриптовым обработчикам
+	// РџРµСЂРµРґР°С‡Р° РІРІРѕРґР° РіР»РѕР±Р°Р»СЊРЅС‹Рј СЃРєСЂРёРїС‚РѕРІС‹Рј РѕР±СЂР°Р±РѕС‚С‡РёРєР°Рј
 	if (this->onKeyDownGlobal >= 0 || this->onKeyReleaseGlobal >= 0)
 	{
 		int proc = LUA_NOREF;
@@ -83,8 +83,8 @@ void Gui::Process()
 
 			if (SCRIPT::ExecChunkFromReg(proc, 1))
 			{
-				// В скрипте произошла какая-то ошибка.
-				sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "В глобальном обработчике клавиш произошла ошибка");
+				// Р’ СЃРєСЂРёРїС‚Рµ РїСЂРѕРёР·РѕС€Р»Р° РєР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР°.
+				sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Р’ РіР»РѕР±Р°Р»СЊРЅРѕРј РѕР±СЂР°Р±РѕС‚С‡РёРєРµ РєР»Р°РІРёС€ РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°");
 			}
 
 			if ( lua_isboolean(lua, -1) && lua_toboolean(lua, -1)) 
@@ -103,15 +103,15 @@ void Gui::Process()
 		fit->second->Process();
 	}
 
-	// Переключение фокуса между виджетами с клавиатуры
+	// РџРµСЂРµРєР»СЋС‡РµРЅРёРµ С„РѕРєСѓСЃР° РјРµР¶РґСѓ РІРёРґР¶РµС‚Р°РјРё СЃ РєР»Р°РІРёР°С‚СѓСЂС‹
 	if (nav_mode != gnm_None && widgets.size() > 1)
 	{
-		int direct = 0;		// Направление переключения
+		int direct = 0;		// РќР°РїСЂР°РІР»РµРЅРёРµ РїРµСЂРµРєР»СЋС‡РµРЅРёСЏ
 
 		if (inpmgr.IsPressed(cakGuiNavPrev) || inpmgr.IsRepeated(cakGuiNavPrev))
-			direct = -1;	// Назад
+			direct = -1;	// РќР°Р·Р°Рґ
 		else if (inpmgr.IsPressed(cakGuiNavNext) || inpmgr.IsRepeated(cakGuiNavNext))
-			direct = 1;		// Вперед
+			direct = 1;		// Р’РїРµСЂРµРґ
 
 		if (direct != 0)
 		{
@@ -126,28 +126,28 @@ void Gui::Process()
 				fit = widgets.end();
 			}
 
-			WidgetIter last = widgets.end();	// Последний в списке виджет
+			WidgetIter last = widgets.end();	// РџРѕСЃР»РµРґРЅРёР№ РІ СЃРїРёСЃРєРµ РІРёРґР¶РµС‚
 			last--;
 
 			size_t i = 0;
 
-			// Поиск следующего виджета, которого можно сделать активным
+			// РџРѕРёСЃРє СЃР»РµРґСѓСЋС‰РµРіРѕ РІРёРґР¶РµС‚Р°, РєРѕС‚РѕСЂРѕРіРѕ РјРѕР¶РЅРѕ СЃРґРµР»Р°С‚СЊ Р°РєС‚РёРІРЅС‹Рј
 			do {
-				if (fit == widgets.begin())		// В начале
+				if (fit == widgets.begin())		// Р’ РЅР°С‡Р°Р»Рµ
 				{
 					if (direct == 1) fit++;
 					else if (direct == -1 && nav_cycled) fit = last;
 				}
-				else if (fit == widgets.end())	// Нет сфокусированных
+				else if (fit == widgets.end())	// РќРµС‚ СЃС„РѕРєСѓСЃРёСЂРѕРІР°РЅРЅС‹С…
 				{
 					fit = widgets.begin();
 				}
-				else if (fit == last)			// В конце
+				else if (fit == last)			// Р’ РєРѕРЅС†Рµ
 				{
 					if (direct == -1) fit--;
 					else if (direct == 1 && nav_cycled) fit = widgets.begin();
 				}
-				else							// Посередине
+				else							// РџРѕСЃРµСЂРµРґРёРЅРµ
 				{
 					if (direct == 1) fit++;
 					else fit--;
@@ -167,7 +167,7 @@ void Gui::Process()
 		}
 	}
 
-	// Передача ввода клавиатуры виджету, на котром фокус
+	// РџРµСЂРµРґР°С‡Р° РІРІРѕРґР° РєР»Р°РІРёР°С‚СѓСЂС‹ РІРёРґР¶РµС‚Сѓ, РЅР° РєРѕС‚СЂРѕРј С„РѕРєСѓСЃ
 	if (focusedWidget && focusedWidget->fully_added  && focusedWidget->visible)
 	{
 		for(InputMgr::EventsIterator it = inpmgr.events.begin();
@@ -180,7 +180,7 @@ void Gui::Process()
 				if (ie->state == InputStatePressed)
 				{
 					focusedWidget->OnKeyDown((USHORT)ie->kb.key);
-					//Вызываем только для печатаемых в cp1251 символов (всё равно шрифт других не знает)
+					//Р’С‹Р·С‹РІР°РµРј С‚РѕР»СЊРєРѕ РґР»СЏ РїРµС‡Р°С‚Р°РµРјС‹С… РІ cp1251 СЃРёРјРІРѕР»РѕРІ (РІСЃС‘ СЂР°РІРЅРѕ С€СЂРёС„С‚ РґСЂСѓРіРёС… РЅРµ Р·РЅР°РµС‚)
 					if ( ie->kb.symbol >= 21/* && ie->kb.symbol <= 255 */) 
 						focusedWidget->OnKeyInput(ie->kb.symbol);
 				}
@@ -199,7 +199,7 @@ void Gui::Process()
 			focusedWidget->OnMouseClick(InputMgr::MOUSE_BTN_RIGHT);
 	}
 
-	// Обработка движений мышки
+	// РћР±СЂР°Р±РѕС‚РєР° РґРІРёР¶РµРЅРёР№ РјС‹С€РєРё
 	if (inpmgr.mouse_moved)
 	{
 		for(fit = widgets.begin(); fit != widgets.end(); fit++)
@@ -214,7 +214,7 @@ void Gui::Process()
 			{
 				if (w->lastMousePos == MouseIsOut)
 				{
-					// Только что попала
+					// РўРѕР»СЊРєРѕ С‡С‚Рѕ РїРѕРїР°Р»Р°
 					w->OnMouseEnter();
 				}
 #ifdef GUI_SETFOCUS_ON_MOUSEMOVE
@@ -226,7 +226,7 @@ void Gui::Process()
 			{
 				if (w->lastMousePos == MouseIsIn)
 				{
-					// А до этого была
+					// Рђ РґРѕ СЌС‚РѕРіРѕ Р±С‹Р»Р°
 					w->OnMouseLeave();
 
 #ifdef GUI_UNSETFOCUS_ON_MOUSELEAVE
@@ -242,7 +242,7 @@ void Gui::Process()
 		}
 	}
 
-	// Обработка нажатий кнопок мышки
+	// РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёР№ РєРЅРѕРїРѕРє РјС‹С€РєРё
 #ifdef GUI_SETFOCUS_ON_MOUSECLICK
 	for(rit = widgets.rbegin(); rit != widgets.rend(); rit++)
 	{
@@ -316,7 +316,7 @@ UINT Gui::CreateWidget(WidgetTypes wt, const char* name, float x, float y, float
 	case wt_Picture: wi = new GuiPicture(); break;
 	case wt_Textfield: wi = new GuiTextfield(); break;
 	default:
-		sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Попытка создать виджет неправильного типа. Ничего не создано");
+		sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "РџРѕРїС‹С‚РєР° СЃРѕР·РґР°С‚СЊ РІРёРґР¶РµС‚ РЅРµРїСЂР°РІРёР»СЊРЅРѕРіРѕ С‚РёРїР°. РќРёС‡РµРіРѕ РЅРµ СЃРѕР·РґР°РЅРѕ");
 		return NULL;
 	}
 
@@ -325,7 +325,7 @@ UINT Gui::CreateWidget(WidgetTypes wt, const char* name, float x, float y, float
 
 	createdWidgets[wi->id = nextId] = wi;
 
-	sLog(DEFAULT_GUI_LOG_NAME, LOG_INFO_EV, "Создан виджет %s, id = %d  по адресу %p", wi->name, wi->id, wi);
+	sLog(DEFAULT_GUI_LOG_NAME, LOG_INFO_EV, "РЎРѕР·РґР°РЅ РІРёРґР¶РµС‚ %s, id = %d  РїРѕ Р°РґСЂРµСЃСѓ %p", wi->name, wi->id, wi);
 	return nextId++;
 }
 
@@ -352,7 +352,7 @@ void Gui::DestroyAllWidgets()
 
 	for(it = createdWidgets.begin(); it != createdWidgets.end(); it++)
 	{
-		// Новосозданный вджет может быть мертвым, если его из скриптов убили еще до того, как он прошел через BatchCreate
+		// РќРѕРІРѕСЃРѕР·РґР°РЅРЅС‹Р№ РІРґР¶РµС‚ РјРѕР¶РµС‚ Р±С‹С‚СЊ РјРµСЂС‚РІС‹Рј, РµСЃР»Рё РµРіРѕ РёР· СЃРєСЂРёРїС‚РѕРІ СѓР±РёР»Рё РµС‰Рµ РґРѕ С‚РѕРіРѕ, РєР°Рє РѕРЅ РїСЂРѕС€РµР» С‡РµСЂРµР· BatchCreate
 		if (!it->second->dead)
 			DELETESINGLE(it->second);
 	}
@@ -402,7 +402,7 @@ void Gui::BatchDestroy()
 	}
 }
 
-// Делает активным виджет
+// Р”РµР»Р°РµС‚ Р°РєС‚РёРІРЅС‹Рј РІРёРґР¶РµС‚
 void Gui::SetFocus( GuiWidget* wi )
 {
 	if (wi == focusedWidget)

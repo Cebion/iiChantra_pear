@@ -3,17 +3,17 @@
 
 #include "objects/object.h"
 
-// Точки объекта, на которых может фокусироваться камера
+// РўРѕС‡РєРё РѕР±СЉРµРєС‚Р°, РЅР° РєРѕС‚РѕСЂС‹С… РјРѕР¶РµС‚ С„РѕРєСѓСЃРёСЂРѕРІР°С‚СЊСЃСЏ РєР°РјРµСЂР°
 enum CameraFocusObjectPoint { 
-	CamFocusCenter,					// Центр
-	CamFocusBottomCenter,			// Середина нижнего края
-	CamFocusTopCenter,				// Середина верхнего края
-	CamFocusLeftCenter,				// Середина левого края
-	CamFocusRightCenter,			// Середина правого края
-	CamFocusLeftTopCorner,			// Левый верхний угол
-	CamFocusLeftBottomCorner,		// Левый нижний угол
-	CamFocusRightTopCorner,			// Правый верхний угол
-	CamFocusRightBottomCorner		// Правый нижний угол
+	CamFocusCenter,					// Р¦РµРЅС‚СЂ
+	CamFocusBottomCenter,			// РЎРµСЂРµРґРёРЅР° РЅРёР¶РЅРµРіРѕ РєСЂР°СЏ
+	CamFocusTopCenter,				// РЎРµСЂРµРґРёРЅР° РІРµСЂС…РЅРµРіРѕ РєСЂР°СЏ
+	CamFocusLeftCenter,				// РЎРµСЂРµРґРёРЅР° Р»РµРІРѕРіРѕ РєСЂР°СЏ
+	CamFocusRightCenter,			// РЎРµСЂРµРґРёРЅР° РїСЂР°РІРѕРіРѕ РєСЂР°СЏ
+	CamFocusLeftTopCorner,			// Р›РµРІС‹Р№ РІРµСЂС…РЅРёР№ СѓРіРѕР»
+	CamFocusLeftBottomCorner,		// Р›РµРІС‹Р№ РЅРёР¶РЅРёР№ СѓРіРѕР»
+	CamFocusRightTopCorner,			// РџСЂР°РІС‹Р№ РІРµСЂС…РЅРёР№ СѓРіРѕР»
+	CamFocusRightBottomCorner		// РџСЂР°РІС‹Р№ РЅРёР¶РЅРёР№ СѓРіРѕР»
 };
 
 void CameraMoveToPos(float x, float y);

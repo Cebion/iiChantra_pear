@@ -9,7 +9,7 @@ void TextTyper::Start()
 {
 	if (!buffer)
 	{
-		sLog(DEFAULT_LOG_NAME, logLevelWarning, "Попытка запустить TextTyper без текста");
+		sLog(DEFAULT_LOG_NAME, logLevelWarning, "РџРѕРїС‹С‚РєР° Р·Р°РїСѓСЃС‚РёС‚СЊ TextTyper Р±РµР· С‚РµРєСЃС‚Р°");
 		return;
 	}
 
@@ -30,7 +30,7 @@ void TextTyper::Stop()
 	}
 	else
 	{
-		sLog(DEFAULT_LOG_NAME, logLevelWarning, "Попытка остановить не запущенный TextTyper");
+		sLog(DEFAULT_LOG_NAME, logLevelWarning, "РџРѕРїС‹С‚РєР° РѕСЃС‚Р°РЅРѕРІРёС‚СЊ РЅРµ Р·Р°РїСѓС‰РµРЅРЅС‹Р№ TextTyper");
 	}
 }
 
@@ -40,7 +40,7 @@ void TextTyper::OnTimer(InternalTimerEvent& ev)
 	size_t new_pos = cur_pos+1;
 	size_t shift = 0;
 	
-	// Пропускаем все идущие подряд контрольные последовательности (иначе проскакивают символы '/')
+	// РџСЂРѕРїСѓСЃРєР°РµРј РІСЃРµ РёРґСѓС‰РёРµ РїРѕРґСЂСЏРґ РєРѕРЅС‚СЂРѕР»СЊРЅС‹Рµ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё (РёРЅР°С‡Рµ РїСЂРѕСЃРєР°РєРёРІР°СЋС‚ СЃРёРјРІРѕР»С‹ '/')
 	while(ControlSeqParser::CheckControlSeq(&buffer[new_pos], shift) != ControlSeqParser::ENone)
 		new_pos += shift;
 	
@@ -69,8 +69,8 @@ void TextTyper::OnTimer(InternalTimerEvent& ev)
 		{
 			if (SCRIPT::ExecChunkFromReg(this->onTyperEnded, 0))
 			{
-				// В скрипте произошла какая-то ошибка.
-				sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "В обработчике onTyperEnded()");
+				// Р’ СЃРєСЂРёРїС‚Рµ РїСЂРѕРёР·РѕС€Р»Р° РєР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР°.
+				sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Р’ РѕР±СЂР°Р±РѕС‚С‡РёРєРµ onTyperEnded()");
 			}
 		}
 	}

@@ -49,9 +49,9 @@ ObjPlayer* CreatePlayer(const Proto* proto, Vector2 coord, const char* start_ani
 	player->LoadFactionInfo( proto );
 	player->aabb.p = coord;
 
-	// TODO: Êðèâîé õàê. Õîÿ âåðîÿòíî è ïåðåðàñòåò â ïîñòîÿíûé. Íî ëó÷øå íè÷åãî íå ïðèäóìàë.
-	// Â ýòîò ìîìåíò îáúåêòâ â SAP åùå íå äîáàâëåí, ïîýòîìó â SetAnimation íåëüçÿ åùå îáíîâëÿòü
-	// åãî ñîñòîÿíèå â SAP.
+	// TODO: ÐšÑ€Ð¸Ð²Ð¾Ð¹ Ñ…Ð°Ðº. Ð¥Ð¾Ñ Ð²ÐµÑ€Ð¾ÑÑ‚Ð½Ð¾ Ð¸ Ð¿ÐµÑ€ÐµÑ€Ð°ÑÑ‚ÐµÑ‚ Ð² Ð¿Ð¾ÑÑ‚Ð¾ÑÐ½Ñ‹Ð¹. ÐÐ¾ Ð»ÑƒÑ‡ÑˆÐµ Ð½Ð¸Ñ‡ÐµÐ³Ð¾ Ð½Ðµ Ð¿Ñ€Ð¸Ð´ÑƒÐ¼Ð°Ð».
+	// Ð’ ÑÑ‚Ð¾Ñ‚ Ð¼Ð¾Ð¼ÐµÐ½Ñ‚ Ð¾Ð±ÑŠÐµÐºÑ‚Ð² Ð² SAP ÐµÑ‰Ðµ Ð½Ðµ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½, Ð¿Ð¾ÑÑ‚Ð¾Ð¼Ñƒ Ð² SetAnimation Ð½ÐµÐ»ÑŒÐ·Ñ ÐµÑ‰Ðµ Ð¾Ð±Ð½Ð¾Ð²Ð»ÑÑ‚ÑŒ
+	// ÐµÐ³Ð¾ ÑÐ¾ÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Ð² SAP.
 	player->ClearPhysic();
 	player->SetAnimation(start_anim ? start_anim : "idle", true);
 	player->SetPhysic();
@@ -78,7 +78,7 @@ ObjPlayer* CreatePlayer(const Proto* proto, Vector2 coord, const char* start_ani
 			player->sprite->mp[i] = Vector2(0, 0);
 	}
 
-	player->health_max = player->health * 2; //TODO: Çàìåíèòü íà ÷òî-òî ðàçóìíîå.
+	player->health_max = player->health * 2; //TODO: Ð—Ð°Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ð½Ð° Ñ‡Ñ‚Ð¾-Ñ‚Ð¾ Ñ€Ð°Ð·ÑƒÐ¼Ð½Ð¾Ðµ.
 	player->InitFaction();
 
 	return player;
@@ -112,7 +112,7 @@ void ObjPlayer::ReceiveDamage( UINT damage, UINT damage_type )
 #ifdef GOD_MODE
 	return;
 #endif //GOD_MODE
-	if ( !playerControl->current->controlEnabled ) return; //Íå÷åãî ïîëó÷àòü óðîí, êîãäà ìû íå ìîæåì îòâåòèòü. Äëÿ ýòîãî åñòü ReduceHealth.
+	if ( !playerControl->current->controlEnabled ) return; //ÐÐµÑ‡ÐµÐ³Ð¾ Ð¿Ð¾Ð»ÑƒÑ‡Ð°Ñ‚ÑŒ ÑƒÑ€Ð¾Ð½, ÐºÐ¾Ð³Ð´Ð° Ð¼Ñ‹ Ð½Ðµ Ð¼Ð¾Ð¶ÐµÐ¼ Ð¾Ñ‚Ð²ÐµÑ‚Ð¸Ñ‚ÑŒ. Ð”Ð»Ñ ÑÑ‚Ð¾Ð³Ð¾ ÐµÑÑ‚ÑŒ ReduceHealth.
 	((ObjCharacter*)this)->ReceiveDamage( damage, damage_type );
 	if ( !this->is_invincible )
 	{
@@ -171,8 +171,8 @@ void ObjPlayer::Process()
 	if (IsSleep())
 		return;
 
-	//Åñëè óïðàâëåíèÿ íåò - êàìåðó íå äâèãàåì è ñàìè äâèæåíèÿ íå íà÷èíàåì
-	//Ìèãàòü ïðè íåóÿçâèìîñòè òîæå íå ñòîèò.
+	//Ð•ÑÐ»Ð¸ ÑƒÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ Ð½ÐµÑ‚ - ÐºÐ°Ð¼ÐµÑ€Ñƒ Ð½Ðµ Ð´Ð²Ð¸Ð³Ð°ÐµÐ¼ Ð¸ ÑÐ°Ð¼Ð¸ Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ñ Ð½Ðµ Ð½Ð°Ñ‡Ð¸Ð½Ð°ÐµÐ¼
+	//ÐœÐ¸Ð³Ð°Ñ‚ÑŒ Ð¿Ñ€Ð¸ Ð½ÐµÑƒÑÐ·Ð²Ð¸Ð¼Ð¾ÑÑ‚Ð¸ Ñ‚Ð¾Ð¶Ðµ Ð½Ðµ ÑÑ‚Ð¾Ð¸Ñ‚.
 	if ( playerControl->current->controlEnabled )
 	{
 	
@@ -205,7 +205,7 @@ void ObjPlayer::Process()
 		this->sprite->color = RGBAf(1.0f, 1.0f, 1.0f, 1.0f);
 		if ( !IsNear(vel.x, 0.0f, 0.01f) )
 			movementDirectionX = this->vel.x > 0;
-		if ( this->IsOnPlane() ) //TODO: íîðìàëüíàÿ îáðàáîòêà íåóïðàâëÿåìîãî äâèæåíèÿ.
+		if ( this->IsOnPlane() ) //TODO: Ð½Ð¾Ñ€Ð¼Ð°Ð»ÑŒÐ½Ð°Ñ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ° Ð½ÐµÑƒÐ¿Ñ€Ð°Ð²Ð»ÑÐµÐ¼Ð¾Ð³Ð¾ Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ñ.
 		{
 			if ( abs(vel.x) > 0.01 )
 				this->movement = omtWalking;
@@ -253,9 +253,9 @@ void ObjPlayer::Process()
 		return;
 	}
 
-	// Îáðàáîòêà íàæàòèé íà êëàâèøè
-	// TODO: Îáåðíóòü ïîòîì â ïðîâåðêó íà âêëþ÷åíîñòü êëàâèàòóðû/ââîäà èãðîêà
-	float dvx = 0.0f;	// Èçìåíåíèå ñêîðîñòè, ïðèìåíèòñÿ â êîíöå â çàâèñèìîñòè îò òèïà äâèæåíèÿ
+	// ÐžÐ±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ° Ð½Ð°Ð¶Ð°Ñ‚Ð¸Ð¹ Ð½Ð° ÐºÐ»Ð°Ð²Ð¸ÑˆÐ¸
+	// TODO: ÐžÐ±ÐµÑ€Ð½ÑƒÑ‚ÑŒ Ð¿Ð¾Ñ‚Ð¾Ð¼ Ð² Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÑƒ Ð½Ð° Ð²ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¾ÑÑ‚ÑŒ ÐºÐ»Ð°Ð²Ð¸Ð°Ñ‚ÑƒÑ€Ñ‹/Ð²Ð²Ð¾Ð´Ð° Ð¸Ð³Ñ€Ð¾ÐºÐ°
+	float dvx = 0.0f;	// Ð˜Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ðµ ÑÐºÐ¾Ñ€Ð¾ÑÑ‚Ð¸, Ð¿Ñ€Ð¸Ð¼ÐµÐ½Ð¸Ñ‚ÑÑ Ð² ÐºÐ¾Ð½Ñ†Ðµ Ð² Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚Ð¸ Ð¾Ñ‚ Ñ‚Ð¸Ð¿Ð° Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ñ
 
 	if (movement == omtJumping && IsOnPlane())
 	{
@@ -301,7 +301,7 @@ void ObjPlayer::Process()
 			jump_complete = false;
 		}
 
-		//[Ðåçåðâ ïðûæêà, ïëîõî, íàäî ïðèäóìàòü ïîëó÷øå ýòî âñ¸]
+		//[Ð ÐµÐ·ÐµÑ€Ð² Ð¿Ñ€Ñ‹Ð¶ÐºÐ°, Ð¿Ð»Ð¾Ñ…Ð¾, Ð½Ð°Ð´Ð¾ Ð¿Ñ€Ð¸Ð´ÑƒÐ¼Ð°Ñ‚ÑŒ Ð¿Ð¾Ð»ÑƒÑ‡ÑˆÐµ ÑÑ‚Ð¾ Ð²ÑÑ‘]
 		/*if ( !IsOnPlane() )
 		{
 			if ( HOLDED_JUMP && this->jump_reserve > 0 )
@@ -312,8 +312,8 @@ void ObjPlayer::Process()
 			if ( !HOLDED_JUMP ) jump_reserve = 0;
 		}
 		else jump_reserve = 10;*/
-		//[/Ðåçåðâ ïðûæêà]
-		//Óâåëè÷åííàÿ ãðàâèòàöèÿ, åñëè ëåòèì ââåðõ, íî ïðûæîê îòïóùåí. Ìîãóò áûòü ïðîáëåìû.
+		//[/Ð ÐµÐ·ÐµÑ€Ð² Ð¿Ñ€Ñ‹Ð¶ÐºÐ°]
+		//Ð£Ð²ÐµÐ»Ð¸Ñ‡ÐµÐ½Ð½Ð°Ñ Ð³Ñ€Ð°Ð²Ð¸Ñ‚Ð°Ñ†Ð¸Ñ, ÐµÑÐ»Ð¸ Ð»ÐµÑ‚Ð¸Ð¼ Ð²Ð²ÐµÑ€Ñ…, Ð½Ð¾ Ð¿Ñ€Ñ‹Ð¶Ð¾Ðº Ð¾Ñ‚Ð¿ÑƒÑ‰ÐµÐ½. ÐœÐ¾Ð³ÑƒÑ‚ Ð±Ñ‹Ñ‚ÑŒ Ð¿Ñ€Ð¾Ð±Ð»ÐµÐ¼Ñ‹.
 		if ( !IsOnPlane() && this->vel.y < 0 && !HOLDED_JUMP ) this->vel.y += this->gravity.y * 0.5f /** time*/;
 
 		if (!HOLDED_SIT && (movement == omtSitting || movement == omtDropSitting))
@@ -322,7 +322,7 @@ void ObjPlayer::Process()
 
 		if (HOLDED_RIGHT && !HOLDED_LEFT)
 		{
-			dvx += walk_acc * (IsOnPlane() ? 0.5f : 0.1f); //Äâèæåíèå â ïðûæêå äîëæíî áûòü ÌÅÍÅÅ óïðàâëÿåìî, íå áîëåå.
+			dvx += walk_acc * (IsOnPlane() ? 0.5f : 0.1f); //Ð”Ð²Ð¸Ð¶ÐµÐ½Ð¸Ðµ Ð² Ð¿Ñ€Ñ‹Ð¶ÐºÐµ Ð´Ð¾Ð»Ð¶Ð½Ð¾ Ð±Ñ‹Ñ‚ÑŒ ÐœÐ•ÐÐ•Ð• ÑƒÐ¿Ñ€Ð°Ð²Ð»ÑÐµÐ¼Ð¾, Ð½Ðµ Ð±Ð¾Ð»ÐµÐµ.
 			movementDirectionX = true;
 		}
 		if (HOLDED_LEFT && !HOLDED_RIGHT)
@@ -348,7 +348,7 @@ void ObjPlayer::Process()
 	}
 
 
-	// Ðàçëè÷íûå ïðîâåðêè äëÿ îïðåäåëåíèÿ òèïà ïåðåäâèæåíèÿ
+	// Ð Ð°Ð·Ð»Ð¸Ñ‡Ð½Ñ‹Ðµ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ¸ Ð´Ð»Ñ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð¸Ñ Ñ‚Ð¸Ð¿Ð° Ð¿ÐµÑ€ÐµÐ´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ñ
 	if (movement != omtSitting && movement != omtJumping &&
 		movement != omtLanding && movement != omtDropSitting &&
 		!IsNear(vel.x, 0, 0.1f))
@@ -368,7 +368,7 @@ void ObjPlayer::Process()
 	if (!IsOnPlane() && movement != omtJumping)
 		movement = omtJumping;
 
-	// Çàïóñê àíèìàöèé
+	// Ð—Ð°Ð¿ÑƒÑÐº Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸Ð¹
 	if (this->movement == omtWalking)
 	{
 		if (gunDirection == cgdUp)
@@ -419,7 +419,7 @@ void ObjPlayer::Process()
 		this->SetAnimation("land", false);
 		if (s->IsAnimDone())
 		{
-			// Àíèìàöèÿ çàêîí÷èëàñü - ìû ïðèçåìëèëèñü
+			// ÐÐ½Ð¸Ð¼Ð°Ñ†Ð¸Ñ Ð·Ð°ÐºÐ¾Ð½Ñ‡Ð¸Ð»Ð°ÑÑŒ - Ð¼Ñ‹ Ð¿Ñ€Ð¸Ð·ÐµÐ¼Ð»Ð¸Ð»Ð¸ÑÑŒ
 			movement = omtIdling;
 		}
 
@@ -465,7 +465,7 @@ void ObjPlayer::Process()
 		}
 	}
 
-	//Ïåðåõîäíûå àíèìàöèè
+	//ÐŸÐµÑ€ÐµÑ…Ð¾Ð´Ð½Ñ‹Ðµ Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸Ð¸
 	if ( last_movement == omtJumping && this->movement != omtJumping && this->IsOnPlane() )
 	{
 		this->SetAnimation("land", false);
@@ -539,8 +539,8 @@ void ObjPlayer::Process()
 	}
 
 
-	// Ðàçâîðà÷èâàåì ñïðàéò ïî íàïðàâëåíèþ
-	if ( (abs(vel.x) > 0.01f) || this->movement == omtSitting ) //Ïëîõî, íî æèçíü òàêàÿ
+	// Ð Ð°Ð·Ð²Ð¾Ñ€Ð°Ñ‡Ð¸Ð²Ð°ÐµÐ¼ ÑÐ¿Ñ€Ð°Ð¹Ñ‚ Ð¿Ð¾ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸ÑŽ
+	if ( (abs(vel.x) > 0.01f) || this->movement == omtSitting ) //ÐŸÐ»Ð¾Ñ…Ð¾, Ð½Ð¾ Ð¶Ð¸Ð·Ð½ÑŒ Ñ‚Ð°ÐºÐ°Ñ
 	{
 		if (movementDirectionX )
 			SetFacing( false );
@@ -549,14 +549,14 @@ void ObjPlayer::Process()
 	}
 }
 
-//Ïðîâåðÿåì, ìîæåì ëè âûñòðåëèòü
+//ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼, Ð¼Ð¾Ð¶ÐµÐ¼ Ð»Ð¸ Ð²Ñ‹ÑÑ‚Ñ€ÐµÐ»Ð¸Ñ‚ÑŒ
 bool ObjPlayer::HasAmmo()
 {
 	//if ( this != _PLAYER ) return false;
 	return (cur_weapon && ( this->cur_weapon->is_infinite || (this->ammo >= this->cur_weapon->bullets_count) ) );
 }
 
-//Òðàòèì ïàòðîíû íà âûñòðåë.
+//Ð¢Ñ€Ð°Ñ‚Ð¸Ð¼ Ð¿Ð°Ñ‚Ñ€Ð¾Ð½Ñ‹ Ð½Ð° Ð²Ñ‹ÑÑ‚Ñ€ÐµÐ».
 void ObjPlayer::SpendAmmo()
 {
 	if ( /*this != _PLAYER ||*/ !this->cur_weapon->IsReady() ) return;
@@ -568,7 +568,7 @@ void ObjPlayer::SpendAmmo()
 		this->ammo = 0;
 }
 
-// Ïåðåêëþ÷àåò îñíîâíîå è àëüòåðíàòèâíîå îðóæèå
+// ÐŸÐµÑ€ÐµÐºÐ»ÑŽÑ‡Ð°ÐµÑ‚ Ð¾ÑÐ½Ð¾Ð²Ð½Ð¾Ðµ Ð¸ Ð°Ð»ÑŒÑ‚ÐµÑ€Ð½Ð°Ñ‚Ð¸Ð²Ð½Ð¾Ðµ Ð¾Ñ€ÑƒÐ¶Ð¸Ðµ
 void ObjPlayer::ChangeWeapon()
 {
 	if (alt_weapon && cur_weapon == this->weapon)

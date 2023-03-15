@@ -1,9 +1,9 @@
 #ifndef __CRC32_H_
 #define __CRC32_H_
 
-// Считает crc32 от файла
+// РЎС‡РёС‚Р°РµС‚ crc32 РѕС‚ С„Р°Р№Р»Р°
 uint32_t crc32f(const char* filename);
-// Считает crc32 от строки
+// РЎС‡РёС‚Р°РµС‚ crc32 РѕС‚ СЃС‚СЂРѕРєРё
 uint32_t crc32(const char* string);
 
 #endif

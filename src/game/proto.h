@@ -46,14 +46,14 @@ public:
 	Vector2 gravity_bonus;
 	UINT ghost_to;
 
-	//Поведение за границами экрана для ObjCharacter
+	//РџРѕРІРµРґРµРЅРёРµ Р·Р° РіСЂР°РЅРёС†Р°РјРё СЌРєСЂР°РЅР° РґР»СЏ ObjCharacter
 	float offscreen_distance;
 	int offscreen_behavior;
 
-	//Обработка отражения спрайта противников и персонажей
+	//РћР±СЂР°Р±РѕС‚РєР° РѕС‚СЂР°Р¶РµРЅРёСЏ СЃРїСЂР°Р№С‚Р° РїСЂРѕС‚РёРІРЅРёРєРѕРІ Рё РїРµСЂСЃРѕРЅР°Р¶РµР№
 	int facing;
 
-	//Количество "точек крепления" спрайта
+	//РљРѕР»РёС‡РµСЃС‚РІРѕ "С‚РѕС‡РµРє РєСЂРµРїР»РµРЅРёСЏ" СЃРїСЂР°Р№С‚Р°
 	USHORT mpCount;
 	
 	//vector<AnimProto*> animations;
@@ -128,7 +128,7 @@ public:
 	float trajectory_param1;
 	float trajectory_param2;
 	int affected_by_wind;
-	float gravity_x;	//Пока только для частиц.
+	float gravity_x;	//РџРѕРєР° С‚РѕР»СЊРєРѕ РґР»СЏ С‡Р°СЃС‚РёС†.
 	float gravity_y;
 
 	UINT env_material;

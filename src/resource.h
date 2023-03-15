@@ -24,7 +24,7 @@ public:
 	//virtual bool Unload() = 0;
 	virtual bool Recover() { return false; }
 
-	void ReserveUsage()	const	{ usageCounter++; }			// Òóò const - ıòî ëîæü. Íà ñàìîì äåëå ıòî ìåòîä-ìóòàòîğ. Ïğîñòî òàê ïğîùå.
+	void ReserveUsage()	const	{ usageCounter++; }			// Ğ¢ÑƒÑ‚ const - ÑÑ‚Ğ¾ Ğ»Ğ¾Ğ¶ÑŒ. ĞĞ° ÑĞ°Ğ¼Ğ¾Ğ¼ Ğ´ĞµĞ»Ğµ ÑÑ‚Ğ¾ Ğ¼ĞµÑ‚Ğ¾Ğ´-Ğ¼ÑƒÑ‚Ğ°Ñ‚Ğ¾Ñ€. ĞŸÑ€Ğ¾ÑÑ‚Ğ¾ Ñ‚Ğ°Ğº Ğ¿Ñ€Ğ¾Ñ‰Ğµ.
 	void ReleseUsage()	const	{ assert(usageCounter > 0); usageCounter--; }
 	bool IsUnUsed()		const	{ return usageCounter == 0; }
 };

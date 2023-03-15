@@ -17,7 +17,7 @@ public:
 
 	int refKey;
 
-	bool pausable;				// Когда тред ждет (Wait), время не считается, пока game_state == GAME_PAUSED
+	bool pausable;				// РљРѕРіРґР° С‚СЂРµРґ Р¶РґРµС‚ (Wait), РІСЂРµРјСЏ РЅРµ СЃС‡РёС‚Р°РµС‚СЃСЏ, РїРѕРєР° game_state == GAME_PAUSED
 };
 
 void ProcessThread(int r);

@@ -16,18 +16,18 @@ extern float DBG_PRINT_VAL1;
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-render_data* sprites_render_data = NULL;	// Массив списков отрисовки спрайтов
-size_t sprites_render_data_size = 0;			// Количество списков отрисовки спрайтов в массиве
+render_data* sprites_render_data = NULL;	// РњР°СЃСЃРёРІ СЃРїРёСЃРєРѕРІ РѕС‚СЂРёСЃРѕРІРєРё СЃРїСЂР°Р№С‚РѕРІ
+size_t sprites_render_data_size = 0;			// РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРїРёСЃРєРѕРІ РѕС‚СЂРёСЃРѕРІРєРё СЃРїСЂР°Р№С‚РѕРІ РІ РјР°СЃСЃРёРІРµ
 
-render_data* lines_render_data = NULL;		// Массив списков отрисовки линий
-size_t lines_render_data_size = 0;			// Количество списков отрисовки линий в массиве
+render_data* lines_render_data = NULL;		// РњР°СЃСЃРёРІ СЃРїРёСЃРєРѕРІ РѕС‚СЂРёСЃРѕРІРєРё Р»РёРЅРёР№
+size_t lines_render_data_size = 0;			// РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРїРёСЃРєРѕРІ РѕС‚СЂРёСЃРѕРІРєРё Р»РёРЅРёР№ РІ РјР°СЃСЃРёРІРµ
 
-render_data* filed_shapes_render_data = NULL;		// Массив списков отрисовки линий
-size_t filed_shapes_render_data_size = 0;			// Количество списков отрисовки линий в массиве
+render_data* filed_shapes_render_data = NULL;		// РњР°СЃСЃРёРІ СЃРїРёСЃРєРѕРІ РѕС‚СЂРёСЃРѕРІРєРё Р»РёРЅРёР№
+size_t filed_shapes_render_data_size = 0;			// РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРїРёСЃРєРѕРІ РѕС‚СЂРёСЃРѕРІРєРё Р»РёРЅРёР№ РІ РјР°СЃСЃРёРІРµ
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-// Такой id текстуры уже есть в списке отрисовки?
+// РўР°РєРѕР№ id С‚РµРєСЃС‚СѓСЂС‹ СѓР¶Рµ РµСЃС‚СЊ РІ СЃРїРёСЃРєРµ РѕС‚СЂРёСЃРѕРІРєРё?
 render_data* _id_exists(render_data* p_data, size_t data_size, GLuint id)
 {
 	if(data_size == 0)
@@ -46,7 +46,7 @@ render_data* _id_exists(render_data* p_data, size_t data_size, GLuint id)
 }
 
 
-// Освободить память из-под массивов в render_data
+// РћСЃРІРѕР±РѕРґРёС‚СЊ РїР°РјСЏС‚СЊ РёР·-РїРѕРґ РјР°СЃСЃРёРІРѕРІ РІ render_data
 void _free_render_data(render_data* p_data)
 {
 	assert(p_data != NULL);
@@ -69,47 +69,47 @@ void _free_render_data(render_data* p_data)
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-// Производит выделение памяти или расширение массива для r_GetMem
+// РџСЂРѕРёР·РІРѕРґРёС‚ РІС‹РґРµР»РµРЅРёРµ РїР°РјСЏС‚Рё РёР»Рё СЂР°СЃС€РёСЂРµРЅРёРµ РјР°СЃСЃРёРІР° РґР»СЏ r_GetMem
 template<typename T>
 void r_ReallocArray(size_t add_size, size_t count, size_t& allocated_size, T*& arr)
 {
 	size_t new_size = count*sizeof(T) + add_size;
-	// Если нам не хватает выделенной памяти для добавления
+	// Р•СЃР»Рё РЅР°Рј РЅРµ С…РІР°С‚Р°РµС‚ РІС‹РґРµР»РµРЅРЅРѕР№ РїР°РјСЏС‚Рё РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ
 	if(new_size > allocated_size)
 	{
-		// Разница между необходимым и выделенным объемом
+		// Р Р°Р·РЅРёС†Р° РјРµР¶РґСѓ РЅРµРѕР±С…РѕРґРёРјС‹Рј Рё РІС‹РґРµР»РµРЅРЅС‹Рј РѕР±СЉРµРјРѕРј
 		size_t d_size = new_size - allocated_size;
 
-		// Выделение производится блоками по BLOCK_SIZE байт
-		// Расчитываем необходимое количество блоков (как минимум 1)
+		// Р’С‹РґРµР»РµРЅРёРµ РїСЂРѕРёР·РІРѕРґРёС‚СЃСЏ Р±Р»РѕРєР°РјРё РїРѕ BLOCK_SIZE Р±Р°Р№С‚
+		// Р Р°СЃС‡РёС‚С‹РІР°РµРј РЅРµРѕР±С…РѕРґРёРјРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р±Р»РѕРєРѕРІ (РєР°Рє РјРёРЅРёРјСѓРј 1)
 		size_t blocks_to_add = (d_size / BLOCK_SIZE) + 1;
 
-		// Новый объем выделеной памяти
+		// РќРѕРІС‹Р№ РѕР±СЉРµРј РІС‹РґРµР»РµРЅРѕР№ РїР°РјСЏС‚Рё
 		allocated_size += (blocks_to_add * BLOCK_SIZE);
 
 		arr = (T*)realloc(arr, allocated_size);
 	}
-	// TODO: А что если realloc не сработает?!
+	// TODO: Рђ С‡С‚Рѕ РµСЃР»Рё realloc РЅРµ СЃСЂР°Р±РѕС‚Р°РµС‚?!
 
 }
 
 
 
-// Выделить память под новый список отрисовки или его элементы
-// Возвращает укзатаель на список, в котором можно заполнять память начиная с 
-// позиции count. 
+// Р’С‹РґРµР»РёС‚СЊ РїР°РјСЏС‚СЊ РїРѕРґ РЅРѕРІС‹Р№ СЃРїРёСЃРѕРє РѕС‚СЂРёСЃРѕРІРєРё РёР»Рё РµРіРѕ СЌР»РµРјРµРЅС‚С‹
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СѓРєР·Р°С‚Р°РµР»СЊ РЅР° СЃРїРёСЃРѕРє, РІ РєРѕС‚РѕСЂРѕРј РјРѕР¶РЅРѕ Р·Р°РїРѕР»РЅСЏС‚СЊ РїР°РјСЏС‚СЊ РЅР°С‡РёРЅР°СЏ СЃ 
+// РїРѕР·РёС†РёРё count. 
 render_data* r_GetMem(render_data** render_mas, size_t* mas_size, GLuint id, size_t vert_size, size_t coord_size, size_t color_size)
 {
-	// Существующий список
+	// РЎСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ СЃРїРёСЃРѕРє
 	render_data* x_data = _id_exists(*render_mas, *mas_size, id);
 
 	if(x_data == NULL)
 	{
-		// Новый список
+		// РќРѕРІС‹Р№ СЃРїРёСЃРѕРє
 		*render_mas = (render_data*)realloc(*render_mas, (*mas_size + 1)*sizeof(render_data));
-		// TODO: А что если realloc не сработает?!
-		// Списки отрисовки, возможн лучше хранить свзанным списком. Тогда отдельные списки легче будет изменять.
-		// И новый список добавится с большей вероятностью. А может я и чушь порю.
+		// TODO: Рђ С‡С‚Рѕ РµСЃР»Рё realloc РЅРµ СЃСЂР°Р±РѕС‚Р°РµС‚?!
+		// РЎРїРёСЃРєРё РѕС‚СЂРёСЃРѕРІРєРё, РІРѕР·РјРѕР¶РЅ Р»СѓС‡С€Рµ С…СЂР°РЅРёС‚СЊ СЃРІР·Р°РЅРЅС‹Рј СЃРїРёСЃРєРѕРј. РўРѕРіРґР° РѕС‚РґРµР»СЊРЅС‹Рµ СЃРїРёСЃРєРё Р»РµРіС‡Рµ Р±СѓРґРµС‚ РёР·РјРµРЅСЏС‚СЊ.
+		// Р РЅРѕРІС‹Р№ СЃРїРёСЃРѕРє РґРѕР±Р°РІРёС‚СЃСЏ СЃ Р±РѕР»СЊС€РµР№ РІРµСЂРѕСЏС‚РЅРѕСЃС‚СЊСЋ. Рђ РјРѕР¶РµС‚ СЏ Рё С‡СѓС€СЊ РїРѕСЂСЋ.
 		memset(&((*render_mas)[*mas_size]), 0, sizeof(render_data));
 		x_data = &((*render_mas)[*mas_size]);
 		x_data->texture_id = id;
@@ -117,7 +117,7 @@ render_data* r_GetMem(render_data** render_mas, size_t* mas_size, GLuint id, siz
 	}
 
 	{
-		// Расширяем имеющийся список
+		// Р Р°СЃС€РёСЂСЏРµРј РёРјРµСЋС‰РёР№СЃСЏ СЃРїРёСЃРѕРє
 		r_ReallocArray(vert_size, x_data->count, x_data->vert_allocated_size, x_data->vertices);
 		r_ReallocArray(color_size, x_data->count, x_data->colors_allocated_size, x_data->colors);
 		if (id)
@@ -128,7 +128,7 @@ render_data* r_GetMem(render_data** render_mas, size_t* mas_size, GLuint id, siz
 }
 
 
-// Обнулить отрисовку, не освобождая память
+// РћР±РЅСѓР»РёС‚СЊ РѕС‚СЂРёСЃРѕРІРєСѓ, РЅРµ РѕСЃРІРѕР±РѕР¶РґР°СЏ РїР°РјСЏС‚СЊ
 void r_ZeroRenderData(void)
 {
 	for(size_t i = 0; i < sprites_render_data_size; i++)
@@ -152,7 +152,7 @@ void r_ZeroRenderData(void)
 #endif // _DEBUG_RENDER
 }
 
-// Очистить отрисовку (освободить память)
+// РћС‡РёСЃС‚РёС‚СЊ РѕС‚СЂРёСЃРѕРІРєСѓ (РѕСЃРІРѕР±РѕРґРёС‚СЊ РїР°РјСЏС‚СЊ)
 void r_ClearRenderData(void)
 {
 	for(size_t i = 0; i < sprites_render_data_size; i++)
@@ -210,10 +210,10 @@ void RenderSprites()
 		}
 	}
 
-	// TODO: Это костыль, чтобы прозрачный фейд рисовался позже всего остального и правильно работал
+	// TODO: Р­С‚Рѕ РєРѕСЃС‚С‹Р»СЊ, С‡С‚РѕР±С‹ РїСЂРѕР·СЂР°С‡РЅС‹Р№ С„РµР№Рґ СЂРёСЃРѕРІР°Р»СЃСЏ РїРѕР·Р¶Рµ РІСЃРµРіРѕ РѕСЃС‚Р°Р»СЊРЅРѕРіРѕ Рё РїСЂР°РІРёР»СЊРЅРѕ СЂР°Р±РѕС‚Р°Р»
 	if (null_tex)
 	{
-		// Если текстуры нет, то будет нарисован просто закрашенный прямоугольник
+		// Р•СЃР»Рё С‚РµРєСЃС‚СѓСЂС‹ РЅРµС‚, С‚Рѕ Р±СѓРґРµС‚ РЅР°СЂРёСЃРѕРІР°РЅ РїСЂРѕСЃС‚Рѕ Р·Р°РєСЂР°С€РµРЅРЅС‹Р№ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisable(GL_TEXTURE_2D);
 
@@ -281,7 +281,7 @@ void RenderFilledShapes()
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-// Отрисовать все
+// РћС‚СЂРёСЃРѕРІР°С‚СЊ РІСЃРµ
 void r_RenderAll(void)
 {
 	RenderSprites();
@@ -299,7 +299,7 @@ void RenderSprite(float x, float y, float z, float x1, float y1, float x2, float
 	DBG_PRINT_VAL1++;
 #endif // DEBUG_PRINT
 
-	// Прямоугольники - по 4 координаты.
+	// РџСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєРё - РїРѕ 4 РєРѕРѕСЂРґРёРЅР°С‚С‹.
 	size_t count = 4;
 
 	render_data* rd = r_GetMem(&sprites_render_data, &sprites_render_data_size, tex ? tex->tex : 0,
@@ -370,7 +370,7 @@ void RenderSprite(float x, float y, float z, float x1, float y1, float x2, float
 	}
 	else
 	{
-		// Случай, если текстура не загружена.
+		// РЎР»СѓС‡Р°Р№, РµСЃР»Рё С‚РµРєСЃС‚СѓСЂР° РЅРµ Р·Р°РіСЂСѓР¶РµРЅР°.
 		ASSERT(!rd->coords && !rd->coord_allocated_size);
 	}
 
@@ -386,7 +386,7 @@ void RenderSprite(float x, float y, float z, const coord2f_t* frame_size, const 
 	DBG_PRINT_VAL1++;
 #endif // DEBUG_PRINT
 
-	// Прямоугольники - по 4 координаты.
+	// РџСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєРё - РїРѕ 4 РєРѕРѕСЂРґРёРЅР°С‚С‹.
 	size_t count = 4;
 
 	render_data* rd = r_GetMem(&sprites_render_data, &sprites_render_data_size, tex ? tex->tex : 0,
@@ -420,7 +420,7 @@ void RenderSprite(float x, float y, float z, const coord2f_t* frame_size, const 
 	}
 	else
 	{
-		// Случай, если текстура не загружена.
+		// РЎР»СѓС‡Р°Р№, РµСЃР»Рё С‚РµРєСЃС‚СѓСЂР° РЅРµ Р·Р°РіСЂСѓР¶РµРЅР°.
 		ASSERT(!rd->coords && !rd->coord_allocated_size);
 	}
 
@@ -433,7 +433,7 @@ void RenderSpritePart(float x, float y, float z, const coord2f_t* full_frame_siz
 #ifdef DEBUG_PRINT
 	DBG_PRINT_VAL1++;
 #endif // DEBUG_PRINT
-	// Прямоугольники - по 4 координаты.
+	// РџСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєРё - РїРѕ 4 РєРѕРѕСЂРґРёРЅР°С‚С‹.
 	size_t count = 4;
 
 	render_data* rd = r_GetMem(&sprites_render_data, &sprites_render_data_size, tex ? tex->tex : 0,
@@ -514,7 +514,7 @@ void RenderSpritePart(float x, float y, float z, const coord2f_t* full_frame_siz
 	}
 	else
 	{
-		// Случай, если текстура не загружена.
+		// РЎР»СѓС‡Р°Р№, РµСЃР»Рё С‚РµРєСЃС‚СѓСЂР° РЅРµ Р·Р°РіСЂСѓР¶РµРЅР°.
 		ASSERT(!rd->coords && !rd->coord_allocated_size);
 	}
 
@@ -546,7 +546,7 @@ void RenderSpriteCyclic(const Vector2& coord, float z, const Vector2& edge, cons
 	if (!tex)
 		return;
 
-	// Прямоугольники - по 4 координаты.
+	// РџСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєРё - РїРѕ 4 РєРѕРѕСЂРґРёРЅР°С‚С‹.
 	size_t count = 4, old_count, new_max_count;
 
 
@@ -660,14 +660,14 @@ void RenderSpriteCyclic(const Vector2& coord, float z, const Vector2& edge, cons
 
 			if ( first_x )
 			{
-				rx -= bs.x; // На одно начальное смещение меньше.
+				rx -= bs.x; // РќР° РѕРґРЅРѕ РЅР°С‡Р°Р»СЊРЅРѕРµ СЃРјРµС‰РµРЅРёРµ РјРµРЅСЊС€Рµ.
 				first_x = false;
 			}
 			if ( !repeat_x ) break;
 		}
 		if ( first_y )
 		{
-			ry -= bs.y; // На одно начальное смещение меньше.
+			ry -= bs.y; // РќР° РѕРґРЅРѕ РЅР°С‡Р°Р»СЊРЅРѕРµ СЃРјРµС‰РµРЅРёРµ РјРµРЅСЊС€Рµ.
 			first_y = false;
 		}
 		if ( !repeat_y ) break;
@@ -678,10 +678,10 @@ void RenderSpriteCyclic(const Vector2& coord, float z, const Vector2& edge, cons
 }
 
 
-// method = rsmStandart: area не используется
-// method = rsmStretch: area - область, на которую растягиваем
-// method = rsmCrop: area - область, по которой вырезаем
-// method = rsmRepeat*: area - область, по которой размножаем
+// method = rsmStandart: area РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ
+// method = rsmStretch: area - РѕР±Р»Р°СЃС‚СЊ, РЅР° РєРѕС‚РѕСЂСѓСЋ СЂР°СЃС‚СЏРіРёРІР°РµРј
+// method = rsmCrop: area - РѕР±Р»Р°СЃС‚СЊ, РїРѕ РєРѕС‚РѕСЂРѕР№ РІС‹СЂРµР·Р°РµРј
+// method = rsmRepeat*: area - РѕР±Р»Р°СЃС‚СЊ, РїРѕ РєРѕС‚РѕСЂРѕР№ СЂР°Р·РјРЅРѕР¶Р°РµРј
 void RenderSprite(float x, float y, float z, const CAABB& area, 
 	const FrameInfo* frame, const Texture* tex, const RGBAf& color, bool mirrorX,
 	RenderSpriteMethod method)
@@ -754,7 +754,7 @@ void RenderBox(float x, float y, float z, float w, float h, const RGBAf& color)
 	DBG_PRINT_VAL1++;
 #endif // DEBUG_PRINT
 
-	// Прямоугольники - по 8 координаты.
+	// РџСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєРё - РїРѕ 8 РєРѕРѕСЂРґРёРЅР°С‚С‹.
 	size_t count = 8;
 
 	render_data* rd = r_GetMem(&lines_render_data, &lines_render_data_size, 0,
@@ -813,7 +813,7 @@ void RenderLine(float x1, float y1, float x2, float y2, float z, const RGBAf& co
 	DBG_PRINT_VAL1++;
 #endif // DEBUG_PRINT
 
-	// Линия - 2 координаты.
+	// Р›РёРЅРёСЏ - 2 РєРѕРѕСЂРґРёРЅР°С‚С‹.
 	size_t count = 2;
 
 	render_data* rd = r_GetMem(&lines_render_data, &lines_render_data_size, 0,
@@ -850,7 +850,7 @@ void RenderEllipse(float x, float y, float w, float h, float z, const RGBAf& col
 		segments*sizeof(vertex3f_t), 0, segments*sizeof(RGBAf));
 	ASSERT(rd && rd->colors && rd->vertices && rd->vert_allocated_size && rd->colors_allocated_size);
 
-	// Тут id не для текстуры, а чтобы у разных объектов тени не смыкались.
+	// РўСѓС‚ id РЅРµ РґР»СЏ С‚РµРєСЃС‚СѓСЂС‹, Р° С‡С‚РѕР±С‹ Сѓ СЂР°Р·РЅС‹С… РѕР±СЉРµРєС‚РѕРІ С‚РµРЅРё РЅРµ СЃРјС‹РєР°Р»РёСЃСЊ.
 	rd->texture_id = id;
 
 

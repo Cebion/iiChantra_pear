@@ -75,7 +75,7 @@ public:
 
 	ObjectType type;
 
-	Sprite* sprite;			// Спрайт
+	Sprite* sprite;			// РЎРїСЂР°Р№С‚
 	CParticleSystem *ParticleSystem; // facepalm.jpg
 #ifdef MAP_EDITOR
 	char* proto_name;
@@ -83,15 +83,15 @@ public:
 	Vector2 creation_shift;
 #endif //MAP_EDITOR
 
-	CAABB aabb;				// Прямоугольник, описывающий физический объект; координаты тела
+	CAABB aabb;				// РџСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє, РѕРїРёСЃС‹РІР°СЋС‰РёР№ С„РёР·РёС‡РµСЃРєРёР№ РѕР±СЉРµРєС‚; РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РµР»Р°
 
 	int scriptProcess;
 
-	ObjectActivityType activity;		// Тип действий объекта
+	ObjectActivityType activity;		// РўРёРї РґРµР№СЃС‚РІРёР№ РѕР±СЉРµРєС‚Р°
 
-	// Флаги
-	// dead		1		Объект подлежит удолени.
-	// physic	2		Физический, добавлен в ASAP.
+	// Р¤Р»Р°РіРё
+	// dead		1		РћР±СЉРµРєС‚ РїРѕРґР»РµР¶РёС‚ СѓРґРѕР»РµРЅРё.
+	// physic	2		Р¤РёР·РёС‡РµСЃРєРёР№, РґРѕР±Р°РІР»РµРЅ РІ ASAP.
 	// sleep	4
 	BYTE objFlags;
 	__INLINE BYTE IsDead()		{ return objFlags & 1; }

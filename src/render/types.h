@@ -3,7 +3,7 @@
 
 typedef float scalar;
 
-// Îòêëþ÷àåò C4201: nameless struct/union, âîçíèêàþùèé â Vector4
+// ÐžÑ‚ÐºÐ»ÑŽÑ‡Ð°ÐµÑ‚ C4201: nameless struct/union, Ð²Ð¾Ð·Ð½Ð¸ÐºÐ°ÑŽÑ‰Ð¸Ð¹ Ð² Vector4
 #if _MSC_VER > 1000
 #pragma warning (disable : 4201)
 #endif

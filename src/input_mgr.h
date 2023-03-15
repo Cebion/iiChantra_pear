@@ -17,7 +17,7 @@ struct InputMouseEvent
 	int key;
 };
 
-// Сохраненное событие ввода
+// РЎРѕС…СЂР°РЅРµРЅРЅРѕРµ СЃРѕР±С‹С‚РёРµ РІРІРѕРґР°
 struct InputEvent
 {
 	InputEventType type;
@@ -48,22 +48,22 @@ public:
 	typedef list<InputEvent*> EventsContainer;
 	typedef EventsContainer::iterator EventsIterator;
 
-	EventsContainer events;			// Список сохранненых событий ввода
+	EventsContainer events;			// РЎРїРёСЃРѕРє СЃРѕС…СЂР°РЅРЅРµРЅС‹С… СЃРѕР±С‹С‚РёР№ РІРІРѕРґР°
 
-	// Координаты курсора
+	// РљРѕРѕСЂРґРёРЅР°С‚С‹ РєСѓСЂСЃРѕСЂР°
 	UINT mouseX;
 	UINT mouseY;
 	UINT mouseX_last;
 	UINT mouseY_last;
-	bool mouse_moved;					// Координаты крусора изменились
-	bool mouse[mousebtns_count];		// Состояние кнопок мыши
+	bool mouse_moved;					// РљРѕРѕСЂРґРёРЅР°С‚С‹ РєСЂСѓСЃРѕСЂР° РёР·РјРµРЅРёР»РёСЃСЊ
+	bool mouse[mousebtns_count];		// РЎРѕСЃС‚РѕСЏРЅРёРµ РєРЅРѕРїРѕРє РјС‹С€Рё
 	
-	// Соотношения размеров экрана и окна (реального разоешения) для пересчета положения крусора мышки
+	// РЎРѕРѕС‚РЅРѕС€РµРЅРёСЏ СЂР°Р·РјРµСЂРѕРІ СЌРєСЂР°РЅР° Рё РѕРєРЅР° (СЂРµР°Р»СЊРЅРѕРіРѕ СЂР°Р·РѕРµС€РµРЅРёСЏ) РґР»СЏ РїРµСЂРµСЃС‡РµС‚Р° РїРѕР»РѕР¶РµРЅРёСЏ РєСЂСѓСЃРѕСЂР° РјС‹С€РєРё
 	float scrwinX;
 	float scrwinY;
 
-	UINT repeatWaitingTime;				// Время ожидания, прежде чем начнется повторение
-	UINT repeatTime;					// Время между повторениями
+	UINT repeatWaitingTime;				// Р’СЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ, РїСЂРµР¶РґРµ С‡РµРј РЅР°С‡РЅРµС‚СЃСЏ РїРѕРІС‚РѕСЂРµРЅРёРµ
+	UINT repeatTime;					// Р’СЂРµРјСЏ РјРµР¶РґСѓ РїРѕРІС‚РѕСЂРµРЅРёСЏРјРё
 
 
 	InputMgr();
@@ -100,7 +100,7 @@ private:
 	bool released[keys_count];
 	bool repeated[keys_count];
 
-	// Эти массивы очищаются реже, в конце работы UpdateGame
+	// Р­С‚Рё РјР°СЃСЃРёРІС‹ РѕС‡РёС‰Р°СЋС‚СЃСЏ СЂРµР¶Рµ, РІ РєРѕРЅС†Рµ СЂР°Р±РѕС‚С‹ UpdateGame
 	//bool prolonged_pressed[keys_count];
 	//bool long_holded[keys_count];
 	bool prolonged_released[keys_count];
@@ -108,9 +108,9 @@ private:
 	bool CheckKeyInArray(const bool* arr, ConfigActionKeys key) const;
 
 	enum ERepeatingState { rs_none, rs_waiting, rs_repeating };
-	ERepeatingState repeatingState;			// Состояние повторения
-	UINT repeat_timer;						// Таймер для повторения нажатий
-	InputEvent* event_to_repeat;			// Событие нажатия для повторения
+	ERepeatingState repeatingState;			// РЎРѕСЃС‚РѕСЏРЅРёРµ РїРѕРІС‚РѕСЂРµРЅРёСЏ
+	UINT repeat_timer;						// РўР°Р№РјРµСЂ РґР»СЏ РїРѕРІС‚РѕСЂРµРЅРёСЏ РЅР°Р¶Р°С‚РёР№
+	InputEvent* event_to_repeat;			// РЎРѕР±С‹С‚РёРµ РЅР°Р¶Р°С‚РёСЏ РґР»СЏ РїРѕРІС‚РѕСЂРµРЅРёСЏ
 };
 
 #endif // __KEYB_MGR_H_

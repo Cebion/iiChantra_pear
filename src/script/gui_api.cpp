@@ -17,13 +17,13 @@ extern lua_State* lua;
 
 int scriptApi::CreateWidget(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается тип виджета");
-	luaL_argcheck(L, lua_isstring(L, 2), 2, "Ожидается имя виджета");
-	luaL_argcheck(L, lua_islightuserdata(L, 3) || lua_isnil(L, 3), 3, "Ожидается предок");
-	luaL_argcheck(L, lua_isnumber(L, 4), 4, "Ожидается x");
-	luaL_argcheck(L, lua_isnumber(L, 5), 5, "Ожидается y");
-	luaL_argcheck(L, lua_isnumber(L, 6), 6, "Ожидается w");
-	luaL_argcheck(L, lua_isnumber(L, 7), 7, "Ожидается h");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ С‚РёРї РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isstring(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ РёРјСЏ РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_islightuserdata(L, 3) || lua_isnil(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РїСЂРµРґРѕРє");
+	luaL_argcheck(L, lua_isnumber(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ x");
+	luaL_argcheck(L, lua_isnumber(L, 5), 5, "РћР¶РёРґР°РµС‚СЃСЏ y");
+	luaL_argcheck(L, lua_isnumber(L, 6), 6, "РћР¶РёРґР°РµС‚СЃСЏ w");
+	luaL_argcheck(L, lua_isnumber(L, 7), 7, "РћР¶РёРґР°РµС‚СЃСЏ h");
 
 	WidgetTypes wt = (WidgetTypes)lua_tointeger(L, 1);
 	const char* name = lua_tostring(L, 2);
@@ -41,7 +41,7 @@ int scriptApi::CreateWidget(lua_State* L)
 
 int scriptApi::DestroyWidget(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 	gui->DestroyWidget((UINT)lua_tointeger(L, 1));
 	return 0;
 }
@@ -49,15 +49,15 @@ int scriptApi::DestroyWidget(lua_State* L)
 
 int scriptApi::WidgetSetBorder(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isboolean(L, 2), 2, "Ожидается bool");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isboolean(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ bool");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
 		wi->border = lua_toboolean(L, 2) != 0;
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetBorder: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetBorder: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -65,8 +65,8 @@ int scriptApi::WidgetSetBorder(lua_State* L)
 
 int scriptApi::WidgetSetMaxTextfieldSize(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isnumber(L, 2), 1, "Ожидается размер");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 1, "РћР¶РёРґР°РµС‚СЃСЏ СЂР°Р·РјРµСЂ");
 
 	size_t size = (size_t)lua_tointeger(L, 2);
 	GuiTextfield* wt = dynamic_cast<GuiTextfield*>(gui->GetWidget((UINT)lua_tointeger(L, 1)));
@@ -76,16 +76,16 @@ int scriptApi::WidgetSetMaxTextfieldSize(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetMaxTextfieldSize: Виджет id=%d не существует или не Textfield", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetMaxTextfieldSize: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ РёР»Рё РЅРµ Textfield", (UINT)lua_tointeger(L, 1));
 	}
 	return 0;
 }
 
 int scriptApi::WidgetSetCaption(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isstring(L, 2), 2, "Ожидается caption");
-	luaL_argcheck(L, lua_isboolean(L, 3)||lua_isnil(L, 3)||lua_isnone(L, 3), 2, "Ожидается bool multiline");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isstring(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ caption");
+	luaL_argcheck(L, lua_isboolean(L, 3)||lua_isnil(L, 3)||lua_isnone(L, 3), 2, "РћР¶РёРґР°РµС‚СЃСЏ bool multiline");
 
 	bool multiline = false;
 	if ( lua_isboolean(L, 3) ) multiline = lua_toboolean(L, 3) != 0;
@@ -95,21 +95,21 @@ int scriptApi::WidgetSetCaption(lua_State* L)
 		wi->SetCaption(lua_tostring(L, 2), multiline);
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetCaption: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetCaption: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 	return 0;
 }
 
 int scriptApi::WidgetGetCaption(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
 		lua_pushstring(L, wi->caption);
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetGetCaption: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetGetCaption: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 		lua_pushnil(L);
 	}
 	return 1;
@@ -117,14 +117,14 @@ int scriptApi::WidgetGetCaption(lua_State* L)
 
 int scriptApi::WidgetGetName(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
 		lua_pushstring(L, wi->name);
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetGetName: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetGetName: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 		lua_pushnil(L);
 	}
 	return 1;
@@ -132,9 +132,9 @@ int scriptApi::WidgetGetName(lua_State* L)
 
 int scriptApi::WidgetSetCaptionColor(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_istable(L, 2), 2, "Ожидается таблица color");
-	luaL_argcheck(L, lua_isboolean(L, 3), 3, "Ожидается bool");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_istable(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ С‚Р°Р±Р»РёС†Р° color");
+	luaL_argcheck(L, lua_isboolean(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ bool");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -146,16 +146,16 @@ int scriptApi::WidgetSetCaptionColor(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetCaptionColor: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetCaptionColor: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 	return 0;
 }
 
 int scriptApi::WidgetSetBorderColor(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_istable(L, 2), 2, "Ожидается таблица color");
-	luaL_argcheck(L, lua_isboolean(L, 3), 3, "Ожидается bool");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_istable(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ С‚Р°Р±Р»РёС†Р° color");
+	luaL_argcheck(L, lua_isboolean(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ bool");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -167,7 +167,7 @@ int scriptApi::WidgetSetBorderColor(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetBorderColor: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetBorderColor: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -175,8 +175,8 @@ int scriptApi::WidgetSetBorderColor(lua_State* L)
 
 int scriptApi::WidgetSetCaptionFont(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isstring(L, 2), 2, "Ожидается fontname");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isstring(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ fontname");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -185,7 +185,7 @@ int scriptApi::WidgetSetCaptionFont(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetCaptionFont: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetCaptionFont: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -193,8 +193,8 @@ int scriptApi::WidgetSetCaptionFont(lua_State* L)
 
 int scriptApi::GetCaptionSize(lua_State* L)
 {
-	luaL_argcheck(L, lua_isstring(L, 1), 1, "Ожидается шрифт");
-	luaL_argcheck(L, lua_isstring(L, 2), 2, "Ожидается текст");
+	luaL_argcheck(L, lua_isstring(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ С€СЂРёС„С‚");
+	luaL_argcheck(L, lua_isstring(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ С‚РµРєСЃС‚");
 
 	Font* font = FontByName(lua_tostring(L, 1));
 	if (font)
@@ -210,8 +210,8 @@ int scriptApi::GetCaptionSize(lua_State* L)
 
 int scriptApi::WidgetUseTyper(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isboolean(L, 2), 2, "Ожидается bool");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isboolean(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ bool");
 	
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
@@ -220,8 +220,8 @@ int scriptApi::WidgetUseTyper(lua_State* L)
 		bool use = lua_toboolean(L, 2) != 0;
 		if (use)
 		{
-			luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается int");
-			luaL_argcheck(L, lua_isboolean(L, 4) || lua_isnil(L,4) || lua_isnone(L, 4), 4, "Ожидается bool или nil или none");
+			luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ int");
+			luaL_argcheck(L, lua_isboolean(L, 4) || lua_isnil(L,4) || lua_isnone(L, 4), 4, "РћР¶РёРґР°РµС‚СЃСЏ bool РёР»Рё nil РёР»Рё none");
 			bool pausable = lua_isboolean(L, 4) && lua_toboolean(L, 4);
 
 			wi->UseTyper((UINT)lua_tointeger(L, 3), pausable);
@@ -233,7 +233,7 @@ int scriptApi::WidgetUseTyper(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetUseTyper: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetUseTyper: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -241,7 +241,7 @@ int scriptApi::WidgetUseTyper(lua_State* L)
 
 int scriptApi::WidgetStartTyper(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -250,7 +250,7 @@ int scriptApi::WidgetStartTyper(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetStartTyper: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetStartTyper: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -258,7 +258,7 @@ int scriptApi::WidgetStartTyper(lua_State* L)
 
 int scriptApi::WidgetStopTyper(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -267,7 +267,7 @@ int scriptApi::WidgetStopTyper(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetStopTyper: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetStopTyper: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -275,7 +275,7 @@ int scriptApi::WidgetStopTyper(lua_State* L)
 
 int scriptApi::WidgetSetOnTyperEndedProc(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -284,7 +284,7 @@ int scriptApi::WidgetSetOnTyperEndedProc(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetMouseLeaveProc: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetMouseLeaveProc: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -293,8 +293,8 @@ int scriptApi::WidgetSetOnTyperEndedProc(lua_State* L)
 
 int scriptApi::WidgetSetVisible(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isboolean(L, 2), 2, "Ожидается bool");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isboolean(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ bool");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -303,7 +303,7 @@ int scriptApi::WidgetSetVisible(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetVisible: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetVisible: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -311,7 +311,7 @@ int scriptApi::WidgetSetVisible(lua_State* L)
 
 int scriptApi::WidgetGetVisible(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -321,7 +321,7 @@ int scriptApi::WidgetGetVisible(lua_State* L)
 	else
 	{
 		lua_pushnil(L);
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetGetVisible: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetGetVisible: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 1;
@@ -329,8 +329,8 @@ int scriptApi::WidgetGetVisible(lua_State* L)
 
 int scriptApi::WidgetSetFixedPosition(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isboolean(L, 2), 2, "Ожидается bool");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isboolean(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ bool");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -339,7 +339,7 @@ int scriptApi::WidgetSetFixedPosition(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetFixedPosition: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetFixedPosition: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -347,7 +347,7 @@ int scriptApi::WidgetSetFixedPosition(lua_State* L)
 
 int scriptApi::WidgetGetSize(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -359,7 +359,7 @@ int scriptApi::WidgetGetSize(lua_State* L)
 	{
 		lua_pushnil(L);
 		lua_pushnil(L);
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetGetSize: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetGetSize: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 2;
@@ -367,7 +367,7 @@ int scriptApi::WidgetGetSize(lua_State* L)
 
 int scriptApi::WidgetGetPos(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -379,7 +379,7 @@ int scriptApi::WidgetGetPos(lua_State* L)
 	{
 		lua_pushnil(L);
 		lua_pushnil(L);
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetGetSize: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetGetSize: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 2;
@@ -387,8 +387,8 @@ int scriptApi::WidgetGetPos(lua_State* L)
 
 int scriptApi::WidgetSetFocusable(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isboolean(L, 2), 2, "Ожидается bool");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isboolean(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ bool");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -397,7 +397,7 @@ int scriptApi::WidgetSetFocusable(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetFocusable: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetFocusable: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -407,7 +407,7 @@ int scriptApi::WidgetSetFocusable(lua_State* L)
 
 int scriptApi::WidgetSetLMouseClickProc(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -416,7 +416,7 @@ int scriptApi::WidgetSetLMouseClickProc(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetLMouseClickProc: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetLMouseClickProc: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -424,7 +424,7 @@ int scriptApi::WidgetSetLMouseClickProc(lua_State* L)
 
 int scriptApi::WidgetSetRMouseClickProc(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -433,7 +433,7 @@ int scriptApi::WidgetSetRMouseClickProc(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetRMouseClickProc: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetRMouseClickProc: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -441,7 +441,7 @@ int scriptApi::WidgetSetRMouseClickProc(lua_State* L)
 
 int scriptApi::WidgetSetMouseEnterProc(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 	
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -450,7 +450,7 @@ int scriptApi::WidgetSetMouseEnterProc(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetMouseEnterProc: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetMouseEnterProc: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -458,7 +458,7 @@ int scriptApi::WidgetSetMouseEnterProc(lua_State* L)
 
 int scriptApi::WidgetSetMouseLeaveProc(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -467,7 +467,7 @@ int scriptApi::WidgetSetMouseLeaveProc(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetMouseLeaveProc: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetMouseLeaveProc: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -475,7 +475,7 @@ int scriptApi::WidgetSetMouseLeaveProc(lua_State* L)
 
 int scriptApi::WidgetSetKeyDownProc(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -484,7 +484,7 @@ int scriptApi::WidgetSetKeyDownProc(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetKeyDownProc: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetKeyDownProc: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -492,7 +492,7 @@ int scriptApi::WidgetSetKeyDownProc(lua_State* L)
 
 int scriptApi::WidgetSetKeyPressProc(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -501,7 +501,7 @@ int scriptApi::WidgetSetKeyPressProc(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetKeyPressProc: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetKeyPressProc: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -509,7 +509,7 @@ int scriptApi::WidgetSetKeyPressProc(lua_State* L)
 
 int scriptApi::WidgetSetKeyInputProc(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -518,7 +518,7 @@ int scriptApi::WidgetSetKeyInputProc(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetKeyInputProc: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetKeyInputProc: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -526,7 +526,7 @@ int scriptApi::WidgetSetKeyInputProc(lua_State* L)
 
 int scriptApi::WidgetSetFocusProc(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -535,7 +535,7 @@ int scriptApi::WidgetSetFocusProc(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetFocusProc: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetFocusProc: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -543,7 +543,7 @@ int scriptApi::WidgetSetFocusProc(lua_State* L)
 
 int scriptApi::WidgetSetUnFocusProc(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -552,7 +552,7 @@ int scriptApi::WidgetSetUnFocusProc(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetUnFocusProc: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetUnFocusProc: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -560,7 +560,7 @@ int scriptApi::WidgetSetUnFocusProc(lua_State* L)
 
 int scriptApi::WidgetSetResizeProc(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -569,7 +569,7 @@ int scriptApi::WidgetSetResizeProc(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetResizeProc: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetResizeProc: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -577,7 +577,7 @@ int scriptApi::WidgetSetResizeProc(lua_State* L)
 
 int scriptApi::WidgetGainFocus(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 	UINT id = (UINT)lua_tointeger(L, 1);
 
 	gui->SetFocus(id);
@@ -587,9 +587,9 @@ int scriptApi::WidgetGainFocus(lua_State* L)
 
 int scriptApi::WidgetBringToFront(lua_State* L)
 {
-	luaL_error(L, "WidgetBringToFront не работает");
+	luaL_error(L, "WidgetBringToFront РЅРµ СЂР°Р±РѕС‚Р°РµС‚");
 	return 0;
-	//luaL_argcheck(L, lua_islightuserdata(L, 1), 1, "Ожидается виджет");
+	//luaL_argcheck(L, lua_islightuserdata(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ РІРёРґР¶РµС‚");
 
 	//void* p = lua_touserdata(L, 1);
 	//GuiWidget* wi = (GuiWidget*)p;
@@ -601,9 +601,9 @@ int scriptApi::WidgetBringToFront(lua_State* L)
 
 int scriptApi::WidgetSetSize(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1) || lua_isnil(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается ширина");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается высота");
+	luaL_argcheck(L, lua_isnumber(L, 1) || lua_isnil(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ С€РёСЂРёРЅР°");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ РІС‹СЃРѕС‚Р°");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -614,13 +614,13 @@ int scriptApi::WidgetSetSize(lua_State* L)
 		float top = wi->aabb.Top();
 		float left = wi->aabb.Left();
 		wi->aabb = CAABB(left, top, left + w, top + h);
-		// TODO: Вроде бы будет тоже самое, но быстрее. Надо протестить.
+		// TODO: Р’СЂРѕРґРµ Р±С‹ Р±СѓРґРµС‚ С‚РѕР¶Рµ СЃР°РјРѕРµ, РЅРѕ Р±С‹СЃС‚СЂРµРµ. РќР°РґРѕ РїСЂРѕС‚РµСЃС‚РёС‚СЊ.
 		//wi->aabb.W = w/2;
 		//wi->aabb.H = w/2;
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetSize: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetSize: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 
@@ -629,9 +629,9 @@ int scriptApi::WidgetSetSize(lua_State* L)
 
 int scriptApi::WidgetSetPos(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1) || lua_isnil(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается x1");
-	luaL_argcheck(L, lua_isnumber(L, 3), 3, "Ожидается y1");
+	luaL_argcheck(L, lua_isnumber(L, 1) || lua_isnil(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ x1");
+	luaL_argcheck(L, lua_isnumber(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ y1");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -644,13 +644,13 @@ int scriptApi::WidgetSetPos(lua_State* L)
 		float bottom = wi->aabb.Bottom();
 		float right = wi->aabb.Right();
 		wi->aabb = CAABB(x1, y1, x1 + (right - left), y1 + (bottom - top));
-		// TODO: Вроде бы будет тоже самое, но быстрее. Надо протестить.
+		// TODO: Р’СЂРѕРґРµ Р±С‹ Р±СѓРґРµС‚ С‚РѕР¶Рµ СЃР°РјРѕРµ, РЅРѕ Р±С‹СЃС‚СЂРµРµ. РќР°РґРѕ РїСЂРѕС‚РµСЃС‚РёС‚СЊ.
 		//wi->aabb.p.x = x1 - wi->aabb.W;
 		//wi->aabb.p.y = y1 - wi->aabb.H;
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetPos: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetPos: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -658,8 +658,8 @@ int scriptApi::WidgetSetPos(lua_State* L)
 
 int scriptApi::WidgetSetZ(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается z");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ z");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -668,7 +668,7 @@ int scriptApi::WidgetSetZ(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetZ: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetZ: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -676,9 +676,9 @@ int scriptApi::WidgetSetZ(lua_State* L)
 
 int scriptApi::WidgetSetSprite(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isstring(L, 2), 2, "Ожидается proto_name");
-	luaL_argcheck(L, lua_isstring(L, 3) || lua_isnone(L, 3), 3, "Ожидается start_anim");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isstring(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ proto_name");
+	luaL_argcheck(L, lua_isstring(L, 3) || lua_isnone(L, 3), 3, "РћР¶РёРґР°РµС‚СЃСЏ start_anim");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -687,7 +687,7 @@ int scriptApi::WidgetSetSprite(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetSprite: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetSprite: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -695,8 +695,8 @@ int scriptApi::WidgetSetSprite(lua_State* L)
 
 int scriptApi::WidgetSetColorBox(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_istable(L, 2), 2, "Ожидается таблица color");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_istable(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ С‚Р°Р±Р»РёС†Р° color");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	RGBAf color;
@@ -707,15 +707,15 @@ int scriptApi::WidgetSetColorBox(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetColorBox: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetColorBox: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 	return 0;
 }
 
 int scriptApi::WidgetSetSpriteRenderMethod(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isnumber(L, 2), 2, "Ожидается render_method (constants.rsm*");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isnumber(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ render_method (constants.rsm*");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi)
@@ -724,7 +724,7 @@ int scriptApi::WidgetSetSpriteRenderMethod(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetSpriteRenderMethod: Виджет id=%ud не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetSpriteRenderMethod: Р’РёРґР¶РµС‚ id=%ud РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -732,8 +732,8 @@ int scriptApi::WidgetSetSpriteRenderMethod(lua_State* L)
 
 int scriptApi::WidgetSetAnim(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
-	luaL_argcheck(L, lua_isstring(L, 2), 2, "Ожидается anim_name");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
+	luaL_argcheck(L, lua_isstring(L, 2), 2, "РћР¶РёРґР°РµС‚СЃСЏ anim_name");
 
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (wi && wi->sprite)
@@ -742,7 +742,7 @@ int scriptApi::WidgetSetAnim(lua_State* L)
 	}
 	else
 	{
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetAnim: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetAnim: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 	}
 
 	return 0;
@@ -803,12 +803,12 @@ int scriptApi::GlobalGetMouseKeyReleaseProc(lua_State* L)
 
 int scriptApi::PushWidget(lua_State* L)
 {
-	luaL_argcheck(L, lua_isnumber(L, 1), 1, "Ожидается id виджета");
+	luaL_argcheck(L, lua_isnumber(L, 1), 1, "РћР¶РёРґР°РµС‚СЃСЏ id РІРёРґР¶РµС‚Р°");
 	GuiWidget* wi = gui->GetWidget((UINT)lua_tointeger(L, 1));
 	if (!wi)
 	{
 		lua_pushnil(L);
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Ошибка WidgetSetAnim: Виджет id=%d не существует", (UINT)lua_tointeger(L, 1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "РћС€РёР±РєР° WidgetSetAnim: Р’РёРґР¶РµС‚ id=%d РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚", (UINT)lua_tointeger(L, 1));
 		return 1;
 	}
 
@@ -825,13 +825,13 @@ int scriptApi::PushWidget(lua_State* L)
 
 	if(wi->sprite)
 	{
-		lua_newtable(L);	// Стек: obj sprite
+		lua_newtable(L);	// РЎС‚РµРє: obj sprite
 		lua_pushboolean(L, wi->sprite->IsMirrored());	lua_setfield(L, -2, "mirrored");
 		lua_pushboolean(L, wi->sprite->IsFixed());		lua_setfield(L, -2, "fixed");
 		lua_pushboolean(L, wi->sprite->IsVisible());	lua_setfield(L, -2, "visible");
 		lua_pushboolean(L, wi->sprite->IsAnimDone());	lua_setfield(L, -2, "animDone");
 		lua_pushstring(L, wi->sprite->cur_anim.c_str()); lua_setfield(L, -2, "cur_anim");
-		lua_setfield(L, -2, "sprite");	// Стек: obj
+		lua_setfield(L, -2, "sprite");	// РЎС‚РµРє: obj
 	}
 
 	lua_pushboolean(L, wi->border);					lua_setfield(L, -2, "border");

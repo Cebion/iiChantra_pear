@@ -8,17 +8,17 @@ class Ribbon
 public:
 	UINT id;
 
-	Sprite* sprite;		// Спрайт ленты
-	CAABB aabb;			// Положени спрайта ленты
+	Sprite* sprite;		// РЎРїСЂР°Р№С‚ Р»РµРЅС‚С‹
+	CAABB aabb;			// РџРѕР»РѕР¶РµРЅРё СЃРїСЂР°Р№С‚Р° Р»РµРЅС‚С‹
 
-	float speed_factor;	// Фактор скорости
+	float speed_factor;	// Р¤Р°РєС‚РѕСЂ СЃРєРѕСЂРѕСЃС‚Рё
 	float speed_factor_y;
 
-	bool use_bounds;	// Надо ли использовать границы
+	bool use_bounds;	// РќР°РґРѕ Р»Рё РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РіСЂР°РЅРёС†С‹
 
 	bool y_attached;
 
-	// Координаты сторон границ
+	// РљРѕРѕСЂРґРёРЅР°С‚С‹ СЃС‚РѕСЂРѕРЅ РіСЂР°РЅРёС†
 	// left, right, top, bottom
 	float bl, br, bt, bb;	
 

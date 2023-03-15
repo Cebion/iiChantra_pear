@@ -36,9 +36,9 @@ ObjEnemy* CreateEnemy(const char* protoname, Vector2 coord, const char* start_an
 	enemy->aabb.p = coord;
 
 
-	// TODO: Êðèâîé õàê. Õîÿ âåðîÿòíî è ïåðåðàñòåò â ïîñòîÿíûé. Íî ëó÷øå íè÷åãî íå ïðèäóìàë.
-	// Â ýòîò ìîìåíò îáúåêòâ â SAP åùå íå äîáàâëåí, ïîýòîìó â SetAnimation íåëüçÿ åùå îáíîâëÿòü
-	// åãî ñîñòîÿíèå â SAP.
+	// TODO: ÐšÑ€Ð¸Ð²Ð¾Ð¹ Ñ…Ð°Ðº. Ð¥Ð¾Ñ Ð²ÐµÑ€Ð¾ÑÑ‚Ð½Ð¾ Ð¸ Ð¿ÐµÑ€ÐµÑ€Ð°ÑÑ‚ÐµÑ‚ Ð² Ð¿Ð¾ÑÑ‚Ð¾ÑÐ½Ñ‹Ð¹. ÐÐ¾ Ð»ÑƒÑ‡ÑˆÐµ Ð½Ð¸Ñ‡ÐµÐ³Ð¾ Ð½Ðµ Ð¿Ñ€Ð¸Ð´ÑƒÐ¼Ð°Ð».
+	// Ð’ ÑÑ‚Ð¾Ñ‚ Ð¼Ð¾Ð¼ÐµÐ½Ñ‚ Ð¾Ð±ÑŠÐµÐºÑ‚Ð² Ð² SAP ÐµÑ‰Ðµ Ð½Ðµ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½, Ð¿Ð¾ÑÑ‚Ð¾Ð¼Ñƒ Ð² SetAnimation Ð½ÐµÐ»ÑŒÐ·Ñ ÐµÑ‰Ðµ Ð¾Ð±Ð½Ð¾Ð²Ð»ÑÑ‚ÑŒ
+	// ÐµÐ³Ð¾ ÑÐ¾ÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Ð² SAP.
 	enemy->ClearPhysic();
 	enemy->SetAnimation(start_anim ? start_anim : "init", true);
 	enemy->SetPhysic();
@@ -141,7 +141,7 @@ void ObjEnemy::Process()
 	{
 		ObjWaypoint* wp = NULL;
 
-		if ( waypoint_mode & 1 ) //Áåð¸ì òî÷êó ñ àáñîëþòíûì íîìåðîì
+		if ( waypoint_mode & 1 ) //Ð‘ÐµÑ€Ñ‘Ð¼ Ñ‚Ð¾Ñ‡ÐºÑƒ Ñ Ð°Ð±ÑÐ¾Ð»ÑŽÑ‚Ð½Ñ‹Ð¼ Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð¼
 			wp = GetWaypoint( waypoint_global );
 		else
 			wp = (ObjWaypoint*)GetGameObject( current_waypoint );
@@ -158,7 +158,7 @@ void ObjEnemy::Process()
 
 		float accuracy_x = wp->aabb.W;
 		float accuracy_y = wp->aabb.H;
-		if ( waypoint_mode & 64 ) //Äîñòàòî÷íî êîñíóòüñÿ.
+		if ( waypoint_mode & 64 ) //Ð”Ð¾ÑÑ‚Ð°Ñ‚Ð¾Ñ‡Ð½Ð¾ ÐºÐ¾ÑÐ½ÑƒÑ‚ÑŒÑÑ.
 		{
 				accuracy_x += aabb.W;
 				accuracy_y += aabb.H;
@@ -175,7 +175,7 @@ void ObjEnemy::Process()
 			float speed = waypoint_speed; 
 			if ( waypoint_mode & 16 && (wp->aabb.p - aabb.p).Length() < vel.Length() + acc.Length()/2 )
 				speed = -speed;
-			if ( waypoint_mode & 128 ) //Òåì áîëåå çàìåäëÿåìñÿ, ÷åì áëèæå ìû ê öåëè.
+			if ( waypoint_mode & 128 ) //Ð¢ÐµÐ¼ Ð±Ð¾Ð»ÐµÐµ Ð·Ð°Ð¼ÐµÐ´Ð»ÑÐµÐ¼ÑÑ, Ñ‡ÐµÐ¼ Ð±Ð»Ð¸Ð¶Ðµ Ð¼Ñ‹ Ðº Ñ†ÐµÐ»Ð¸.
 			{
 				{
 					float path = abs( (wp->aabb.p - waypoint_start).Length() );
@@ -183,14 +183,14 @@ void ObjEnemy::Process()
 					if ( dist < path/4 )
 					{
 						float k = 4*dist/path;
-						if ( waypoint_mode & 8 ) //Åñëè ñêîðîñòü, òî íå ìîæåì ïîçâîëèòü ïàäàòü äî íóëÿ.
+						if ( waypoint_mode & 8 ) //Ð•ÑÐ»Ð¸ ÑÐºÐ¾Ñ€Ð¾ÑÑ‚ÑŒ, Ñ‚Ð¾ Ð½Ðµ Ð¼Ð¾Ð¶ÐµÐ¼ Ð¿Ð¾Ð·Ð²Ð¾Ð»Ð¸Ñ‚ÑŒ Ð¿Ð°Ð´Ð°Ñ‚ÑŒ Ð´Ð¾ Ð½ÑƒÐ»Ñ.
 							k = max( k, 0.25f );
 						speed *= k;
 					}
 					else if ( dist > 3*path/4 && dist < path )
 					{
 						float k = 4*( path/4 - ( dist - 3*path/4 ))/path;
-						if ( waypoint_mode & 8 ) //Åñëè ñêîðîñòü, òî íå ìîæåì ïîçâîëèòü ïàäàòü äî íóëÿ.
+						if ( waypoint_mode & 8 ) //Ð•ÑÐ»Ð¸ ÑÐºÐ¾Ñ€Ð¾ÑÑ‚ÑŒ, Ñ‚Ð¾ Ð½Ðµ Ð¼Ð¾Ð¶ÐµÐ¼ Ð¿Ð¾Ð·Ð²Ð¾Ð»Ð¸Ñ‚ÑŒ Ð¿Ð°Ð´Ð°Ñ‚ÑŒ Ð´Ð¾ Ð½ÑƒÐ»Ñ.
 							k = max( k, 0.25f );
 						speed *= k;
 					}
@@ -200,7 +200,7 @@ void ObjEnemy::Process()
 			Vector2 speed_bonus = Vector2();
 			speed_bonus.x = cos(angle) * speed;
 			speed_bonus.y = sin(angle) * speed;
-			if ( waypoint_mode & 32 ) //Íå ïðîëåòàåì ìèìî.
+			if ( waypoint_mode & 32 ) //ÐÐµ Ð¿Ñ€Ð¾Ð»ÐµÑ‚Ð°ÐµÐ¼ Ð¼Ð¸Ð¼Ð¾.
 			{
 				Vector2 approx_point = aabb.p + vel + 0.5f*speed_bonus;
 				if ( waypoint_mode & 8 )
@@ -232,7 +232,7 @@ void ObjEnemy::Process()
 				speed_bonus.x = 0;
 			if ( (speed_bonus.y > 0 && vel.y > speed_limit) || (speed_bonus.y < 0 && vel.y < -speed_limit) )
 				speed_bonus.y = 0;
-			if ( waypoint_mode & 8 )	//Ñêîðîñòü, à íå óñêîðåíèå
+			if ( waypoint_mode & 8 )	//Ð¡ÐºÐ¾Ñ€Ð¾ÑÑ‚ÑŒ, Ð° Ð½Ðµ ÑƒÑÐºÐ¾Ñ€ÐµÐ½Ð¸Ðµ
 			{
 				if ( gravity.y != 0 )
 					vel.x = speed_bonus.x;
@@ -283,7 +283,7 @@ void ObjEnemy::Process()
 		movement = omtWalking;
 	}
 
-	// Çàïóñê àíèìàöèé
+	// Ð—Ð°Ð¿ÑƒÑÐº Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸Ð¹
 	if ( this->gravity.y != 0.0f && this->activity != oatDying )
 	{
 		if ( this->movement == omtJumping && old_movement != omtJumping  )

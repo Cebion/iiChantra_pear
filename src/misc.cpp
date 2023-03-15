@@ -40,9 +40,9 @@ bool IsFileExists(const char* path)
 	//return (GetFileAttributes(path) != INVALID_FILE_ATTRIBUTES);
 }
 
-// Âîçâðàùàåò èìÿ ôàéëà áåç ðàñøèðåíèÿ,
-// ò.å. äëÿ ñòðîêó "textures/sky.bmp" âåðíåò "sky".
-// Âûäåëÿåò â ïàìÿòè íîâóþ ñòðîêó, íå çàáûâàòü óäàëèòü.
+// Ð’Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ð¸Ð¼Ñ Ñ„Ð°Ð¹Ð»Ð° Ð±ÐµÐ· Ñ€Ð°ÑÑˆÐ¸Ñ€ÐµÐ½Ð¸Ñ,
+// Ñ‚.Ðµ. Ð´Ð»Ñ ÑÑ‚Ñ€Ð¾ÐºÑƒ "textures/sky.bmp" Ð²ÐµÑ€Ð½ÐµÑ‚ "sky".
+// Ð’Ñ‹Ð´ÐµÐ»ÑÐµÑ‚ Ð² Ð¿Ð°Ð¼ÑÑ‚Ð¸ Ð½Ð¾Ð²ÑƒÑŽ ÑÑ‚Ñ€Ð¾ÐºÑƒ, Ð½Ðµ Ð·Ð°Ð±Ñ‹Ð²Ð°Ñ‚ÑŒ ÑƒÐ´Ð°Ð»Ð¸Ñ‚ÑŒ.
 char* GetNameFromPath(const char* path)
 {
 	if(!path)
@@ -80,8 +80,8 @@ char* GetNameFromPath(const char* path)
 	return NULL;
 }
 
-// Âîçðàùàåò ðàñøèðåíèå ôàéëà (èùåò ïåðâóþ òî÷êó îò êîíöà).
-// Íå ôîðìèðóåò íîâóþ ñòðîêó, à âîçâðàùàåò óêàçàòåëü íà ïîäñòðîêó â èñõîäíîé.
+// Ð’Ð¾Ð·Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ñ€Ð°ÑÑˆÐ¸Ñ€ÐµÐ½Ð¸Ðµ Ñ„Ð°Ð¹Ð»Ð° (Ð¸Ñ‰ÐµÑ‚ Ð¿ÐµÑ€Ð²ÑƒÑŽ Ñ‚Ð¾Ñ‡ÐºÑƒ Ð¾Ñ‚ ÐºÐ¾Ð½Ñ†Ð°).
+// ÐÐµ Ñ„Ð¾Ñ€Ð¼Ð¸Ñ€ÑƒÐµÑ‚ Ð½Ð¾Ð²ÑƒÑŽ ÑÑ‚Ñ€Ð¾ÐºÑƒ, Ð° Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ ÑƒÐºÐ°Ð·Ð°Ñ‚ÐµÐ»ÑŒ Ð½Ð° Ð¿Ð¾Ð´ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ð¸ÑÑ…Ð¾Ð´Ð½Ð¾Ð¹.
 char* ExtFromPath(const char* path)
 {
 	if(!path)
@@ -122,11 +122,11 @@ int ChangeDir(const char* path)
 #endif // WIN32
 }
 
-// Èùåò ôàéë â ïàïêå è âñåõ ïîäïàïêàõ
-// file_name - èìÿ ôàéëà
-// path - ïóòü ê ïàïêå, â êîòîðîé ïðîèçâîäèòñÿ ïîèñê
-// buffer - áóôåðíàÿ ñòðîêà, â íåé áóäåò âîçâðàùåí ïîëíûé ïóòü ê íàéäåííîì ôàéëó
-// Ôóíêöèÿ âîçâðàùàåò true, åñëè ôàéë íàéäåí. 
+// Ð˜Ñ‰ÐµÑ‚ Ñ„Ð°Ð¹Ð» Ð² Ð¿Ð°Ð¿ÐºÐµ Ð¸ Ð²ÑÐµÑ… Ð¿Ð¾Ð´Ð¿Ð°Ð¿ÐºÐ°Ñ…
+// file_name - Ð¸Ð¼Ñ Ñ„Ð°Ð¹Ð»Ð°
+// path - Ð¿ÑƒÑ‚ÑŒ Ðº Ð¿Ð°Ð¿ÐºÐµ, Ð² ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¹ Ð¿Ñ€Ð¾Ð¸Ð·Ð²Ð¾Ð´Ð¸Ñ‚ÑÑ Ð¿Ð¾Ð¸ÑÐº
+// buffer - Ð±ÑƒÑ„ÐµÑ€Ð½Ð°Ñ ÑÑ‚Ñ€Ð¾ÐºÐ°, Ð² Ð½ÐµÐ¹ Ð±ÑƒÐ´ÐµÑ‚ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰ÐµÐ½ Ð¿Ð¾Ð»Ð½Ñ‹Ð¹ Ð¿ÑƒÑ‚ÑŒ Ðº Ð½Ð°Ð¹Ð´ÐµÐ½Ð½Ð¾Ð¼ Ñ„Ð°Ð¹Ð»Ñƒ
+// Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ true, ÐµÑÐ»Ð¸ Ñ„Ð°Ð¹Ð» Ð½Ð°Ð¹Ð´ÐµÐ½. 
 bool FindFile(const char * const file_name, const char * path, char * const buffer)
 {
 	strcpy(buffer, path);
@@ -208,9 +208,9 @@ bool FindAllFiles(const char * path, char * const buffer, void (*callback)(const
 }
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-// Ñëóæåáíûå ôóíêöèè ïðîãðàììû
+// Ð¡Ð»ÑƒÐ¶ÐµÐ±Ð½Ñ‹Ðµ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹
 
-// Î÷èùàåò ëîãè
+// ÐžÑ‡Ð¸Ñ‰Ð°ÐµÑ‚ Ð»Ð¾Ð³Ð¸
 void CleanupLogs()
 {
 	CreateLogFile(DEFAULT_LOG_NAME);
@@ -219,7 +219,7 @@ void CleanupLogs()
 	CreateLogFile(DEFAULT_NET_LOG_NAME);
 }
 
-// Âñòàâëÿåò â ëîãè ñòðîêó, óêàçûâàþùóþ íà çàâåðøåíèå ëîãèðîâàíèÿ
+// Ð’ÑÑ‚Ð°Ð²Ð»ÑÐµÑ‚ Ð² Ð»Ð¾Ð³Ð¸ ÑÑ‚Ñ€Ð¾ÐºÑƒ, ÑƒÐºÐ°Ð·Ñ‹Ð²Ð°ÑŽÑ‰ÑƒÑŽ Ð½Ð° Ð·Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð¸Ðµ Ð»Ð¾Ð³Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ
 void EndupLogs()
 {
 	static const char* endup_msg = "Finished logging";
@@ -233,7 +233,7 @@ void EndupLogs()
 	sLog(DEFAULT_NET_LOG_NAME, LOG_INFO_EV, "%s", endup_msg);
 }
 
-// Óäàëÿåò èìÿ ôàéëà èç ñòðîêè, ñîäåðæàùåé ïîëíîå èìÿ ôàéëà
+// Ð£Ð´Ð°Ð»ÑÐµÑ‚ Ð¸Ð¼Ñ Ñ„Ð°Ð¹Ð»Ð° Ð¸Ð· ÑÑ‚Ñ€Ð¾ÐºÐ¸, ÑÐ¾Ð´ÐµÑ€Ð¶Ð°Ñ‰ÐµÐ¹ Ð¿Ð¾Ð»Ð½Ð¾Ðµ Ð¸Ð¼Ñ Ñ„Ð°Ð¹Ð»Ð°
 void DeleteFileNameFromEndOfPathToFile(char *src)
 {
 	UINT i = strlen(src)-1;
@@ -243,7 +243,7 @@ void DeleteFileNameFromEndOfPathToFile(char *src)
 }
 
 
-// Çàäàåò ïóòè
+// Ð—Ð°Ð´Ð°ÐµÑ‚ Ð¿ÑƒÑ‚Ð¸
 void InitPaths(void)
 {
 #ifdef WIN32
@@ -254,7 +254,7 @@ void InitPaths(void)
 
 	GetCurrentDirectory(MAX_PATH, path_app);
 #else
-	// TODO: Ìåòîä  òîëüêî äëÿ linux. Ïîìåíÿòü äë äðóãèõ *nix-ñèñòåì.
+	// TODO: ÐœÐµÑ‚Ð¾Ð´  Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð´Ð»Ñ linux. ÐŸÐ¾Ð¼ÐµÐ½ÑÑ‚ÑŒ Ð´Ð» Ð´Ñ€ÑƒÐ³Ð¸Ñ… *nix-ÑÐ¸ÑÑ‚ÐµÐ¼.
 	ssize_t count = readlink("/proc/self/exe", path_app, MAX_PATH );
 	if (count > 0)
 	{
@@ -317,8 +317,8 @@ void InitPaths(void)
 #define _mkdir(x) mkdir(x, S_IRWXU)
 #endif // WIN32
 
-// Ïðîöåäóðà ïðîâåðÿåò ñóùåñòâóåò ëè óêàçàííûå ïóòè.
-// Åñëè èõ íåò, ñîçäàåò èõ.
+// ÐŸÑ€Ð¾Ñ†ÐµÐ´ÑƒÑ€Ð° Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÑ‚ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚ Ð»Ð¸ ÑƒÐºÐ°Ð·Ð°Ð½Ð½Ñ‹Ðµ Ð¿ÑƒÑ‚Ð¸.
+// Ð•ÑÐ»Ð¸ Ð¸Ñ… Ð½ÐµÑ‚, ÑÐ¾Ð·Ð´Ð°ÐµÑ‚ Ð¸Ñ….
 void CheckPaths()
 {
 	if(!IsFileExists(path_log))
@@ -364,7 +364,7 @@ void CheckPaths()
 }
 
 
-// Çàíåñåíèå â ëîã ïóòåé
+// Ð—Ð°Ð½ÐµÑÐµÐ½Ð¸Ðµ Ð² Ð»Ð¾Ð³ Ð¿ÑƒÑ‚ÐµÐ¹
 void LogPaths(void)
 {
 #ifdef DISABLE_LOG
@@ -385,8 +385,8 @@ void LogPaths(void)
 }
 
 
-// Ïðîöåäóðà ïðîâåðÿåò ñóùåñòâóåò ëè êîíôèã DEFAULT_CONFIG_NAME â äèðåêòîðèè path_config.
-// Åñëè êîíôèãà íåò, ñîçäàåò åãî, óêàçûâàÿ ñòàòè÷åñêèå äàííûå.
+// ÐŸÑ€Ð¾Ñ†ÐµÐ´ÑƒÑ€Ð° Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÑ‚ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚ Ð»Ð¸ ÐºÐ¾Ð½Ñ„Ð¸Ð³ DEFAULT_CONFIG_NAME Ð² Ð´Ð¸Ñ€ÐµÐºÑ‚Ð¾Ñ€Ð¸Ð¸ path_config.
+// Ð•ÑÐ»Ð¸ ÐºÐ¾Ð½Ñ„Ð¸Ð³Ð° Ð½ÐµÑ‚, ÑÐ¾Ð·Ð´Ð°ÐµÑ‚ ÐµÐ³Ð¾, ÑƒÐºÐ°Ð·Ñ‹Ð²Ð°Ñ ÑÑ‚Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸Ðµ Ð´Ð°Ð½Ð½Ñ‹Ðµ.
 void CheckDefaultConfig()
 {
 	char path_to_cfg[MAX_PATH];
@@ -401,8 +401,8 @@ void CheckDefaultConfig()
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Ñîçäàåò êîïèþ ñòðîêè. ßâëÿåòñÿ àíàëîãîì ôóíêöèè strdup, íî ïîëüçóåòñÿ íå malloc,
-// à new[]. Òàêóþ ñòðîêó òîãäà ìîæíî óäàëÿòü ñ ïîìîùüþ DELETEARRAY.
+// Ð¡Ð¾Ð·Ð´Ð°ÐµÑ‚ ÐºÐ¾Ð¿Ð¸ÑŽ ÑÑ‚Ñ€Ð¾ÐºÐ¸. Ð¯Ð²Ð»ÑÐµÑ‚ÑÑ Ð°Ð½Ð°Ð»Ð¾Ð³Ð¾Ð¼ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ strdup, Ð½Ð¾ Ð¿Ð¾Ð»ÑŒÐ·ÑƒÐµÑ‚ÑÑ Ð½Ðµ malloc,
+// Ð° new[]. Ð¢Ð°ÐºÑƒÑŽ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ñ‚Ð¾Ð³Ð´Ð° Ð¼Ð¾Ð¶Ð½Ð¾ ÑƒÐ´Ð°Ð»ÑÑ‚ÑŒ Ñ Ð¿Ð¾Ð¼Ð¾Ñ‰ÑŒÑŽ DELETEARRAY.
 char* StrDupl (const char *str)
 {
 	if (!str)
@@ -440,13 +440,13 @@ const char* LogLevelGetName( LogLevel ll )
 
 // Satanlog
 bool LogEnabled = true;
-char LogFile[2048];				// Áóôåð äëÿ ïîëíîãî èìåíè ôàéëà ëîãà
+char LogFile[2048];				// Ð‘ÑƒÑ„ÐµÑ€ Ð´Ð»Ñ Ð¿Ð¾Ð»Ð½Ð¾Ð³Ð¾ Ð¸Ð¼ÐµÐ½Ð¸ Ñ„Ð°Ð¹Ð»Ð° Ð»Ð¾Ð³Ð°
 CDummy InitLog = CDummy();
 
 CDummy::CDummy(void)
 {
-	// DEBUG_STOP_ON_ALLOC_NUM îïðåäåëÿåòñÿ â misc.h
-	// Òàì åå èñêàòü ëåã÷å :)
+	// DEBUG_STOP_ON_ALLOC_NUM Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÑÐµÑ‚ÑÑ Ð² misc.h
+	// Ð¢Ð°Ð¼ ÐµÐµ Ð¸ÑÐºÐ°Ñ‚ÑŒ Ð»ÐµÐ³Ñ‡Ðµ :)
 #ifdef DEBUG_STOP_ON_ALLOC_NUM
 	_CrtSetBreakAlloc(DEBUG_STOP_ON_ALLOC_NUM);
 #endif // DEBUG_STOP_ON_ALLOC_NUM
@@ -456,8 +456,8 @@ CDummy::~CDummy(void)
 {
 }
 
-// Ñîçäàåò íîâûé ôàéë ëîãà (èëè î÷èùàåò ñòàðûé)
-// fname - èìÿ ôàéëà âèäà "\\file_name.log"
+// Ð¡Ð¾Ð·Ð´Ð°ÐµÑ‚ Ð½Ð¾Ð²Ñ‹Ð¹ Ñ„Ð°Ð¹Ð» Ð»Ð¾Ð³Ð° (Ð¸Ð»Ð¸ Ð¾Ñ‡Ð¸Ñ‰Ð°ÐµÑ‚ ÑÑ‚Ð°Ñ€Ñ‹Ð¹)
+// fname - Ð¸Ð¼Ñ Ñ„Ð°Ð¹Ð»Ð° Ð²Ð¸Ð´Ð° "\\file_name.log"
 void CreateLogFile(const char *fname)
 {
 #ifdef DISABLE_LOG
@@ -525,10 +525,10 @@ const char* GetLogLevelName( LogLevel ll )
 	}
 }
 
-// Çàïèñü â ëîã
-// fname - èìÿ ôàéëà âèäà "\\file_name.log"
-// Event - îïèñàíèå çàïèñè â ëîãå
-// Format - ñòðîêà ôîðìàòà ñîîáùåíèÿ (ïîäîáíî printf)
+// Ð—Ð°Ð¿Ð¸ÑÑŒ Ð² Ð»Ð¾Ð³
+// fname - Ð¸Ð¼Ñ Ñ„Ð°Ð¹Ð»Ð° Ð²Ð¸Ð´Ð° "\\file_name.log"
+// Event - Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ðµ Ð·Ð°Ð¿Ð¸ÑÐ¸ Ð² Ð»Ð¾Ð³Ðµ
+// Format - ÑÑ‚Ñ€Ð¾ÐºÐ° Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ð° ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ñ (Ð¿Ð¾Ð´Ð¾Ð±Ð½Ð¾ printf)
 void sLog(const char* fname, LogLevel Event, const char* Format,...)
 {
 #ifdef DISABLE_LOG
@@ -585,9 +585,9 @@ void sLog(const char* fname, LogLevel Event, const char* Format,...)
 
 }
 
-// Ïðîâåðêà, îêàí÷èâàåòñÿ ëè ñòðîêà íà ïîäñòðîêó
-// Àíàëîã ïèòîíîâñêîãî endswith
-// Ñòûðèë ñ http://stackoverflow.com/questions/874134/find-if-string-endswith-another-string-c
+// ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ°, Ð¾ÐºÐ°Ð½Ñ‡Ð¸Ð²Ð°ÐµÑ‚ÑÑ Ð»Ð¸ ÑÑ‚Ñ€Ð¾ÐºÐ° Ð½Ð° Ð¿Ð¾Ð´ÑÑ‚Ñ€Ð¾ÐºÑƒ
+// ÐÐ½Ð°Ð»Ð¾Ð³ Ð¿Ð¸Ñ‚Ð¾Ð½Ð¾Ð²ÑÐºÐ¾Ð³Ð¾ endswith
+// Ð¡Ñ‚Ñ‹Ñ€Ð¸Ð» Ñ http://stackoverflow.com/questions/874134/find-if-string-endswith-another-string-c
 bool endswith(std::string const &fullString, std::string const &ending)
 {
     if (fullString.length() > ending.length()) {

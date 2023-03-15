@@ -42,8 +42,8 @@ void GuiButton::OnMouseEnter()
 		lua_pushinteger(lua, this->id);
 		if (SCRIPT::ExecChunkFromReg(this->onMouseEnterProc, 1))
 		{
-			// Â ñêðèïòå ïðîèçîøëà êàêàÿ-òî îøèáêà.
-			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Â îáðàáîò÷èêå OnMouseEnter() êíîïêè %s ïðîèçîøëà îøèáêà", this->name);
+			// Ð’ ÑÐºÑ€Ð¸Ð¿Ñ‚Ðµ Ð¿Ñ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° ÐºÐ°ÐºÐ°Ñ-Ñ‚Ð¾ Ð¾ÑˆÐ¸Ð±ÐºÐ°.
+			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Ð’ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸ÐºÐµ OnMouseEnter() ÐºÐ½Ð¾Ð¿ÐºÐ¸ %s Ð¿Ñ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ°", this->name);
 		}
 	}
 }
@@ -58,8 +58,8 @@ void GuiButton::OnMouseLeave()
 		lua_pushinteger(lua, this->id);
 		if (SCRIPT::ExecChunkFromReg(this->onMouseLeaveProc, 1))
 		{
-			// Â ñêðèïòå ïðîèçîøëà êàêàÿ-òî îøèáêà.
-			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Â îáðàáîò÷èêå OnMouseLeave() êíîïêè %s ïðîèçîøëà îøèáêà", this->name);
+			// Ð’ ÑÐºÑ€Ð¸Ð¿Ñ‚Ðµ Ð¿Ñ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° ÐºÐ°ÐºÐ°Ñ-Ñ‚Ð¾ Ð¾ÑˆÐ¸Ð±ÐºÐ°.
+			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Ð’ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸ÐºÐµ OnMouseLeave() ÐºÐ½Ð¾Ð¿ÐºÐ¸ %s Ð¿Ñ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ°", this->name);
 		}
 	}
 }
@@ -76,8 +76,8 @@ void GuiButton::OnLMouseClick()
 		lua_pushinteger(lua, this->id);
 		if (SCRIPT::ExecChunkFromReg(this->onMouseLClickProc, 1))
 		{
-			// Â ñêðèïòå ïðîèçîøëà êàêàÿ-òî îøèáêà.
-			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Â îáðàáîò÷èêå OnLMouseClick() êíîïêè %s ïðîèçîøëà îøèáêà", this->name);
+			// Ð’ ÑÐºÑ€Ð¸Ð¿Ñ‚Ðµ Ð¿Ñ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° ÐºÐ°ÐºÐ°Ñ-Ñ‚Ð¾ Ð¾ÑˆÐ¸Ð±ÐºÐ°.
+			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Ð’ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸ÐºÐµ OnLMouseClick() ÐºÐ½Ð¾Ð¿ÐºÐ¸ %s Ð¿Ñ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ°", this->name);
 		}
 	}
 }
@@ -91,8 +91,8 @@ void GuiButton::OnRMouseClick()
 		lua_pushinteger(lua, this->id);
 		if (SCRIPT::ExecChunkFromReg(this->onMouseRClickProc, 1))
 		{
-			// Â ñêðèïòå ïðîèçîøëà êàêàÿ-òî îøèáêà.
-			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Â îáðàáîò÷èêå OnRMouseClick() êíîïêè %s ïðîèçîøëà îøèáêà", this->name);
+			// Ð’ ÑÐºÑ€Ð¸Ð¿Ñ‚Ðµ Ð¿Ñ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° ÐºÐ°ÐºÐ°Ñ-Ñ‚Ð¾ Ð¾ÑˆÐ¸Ð±ÐºÐ°.
+			sLog(DEFAULT_GUI_LOG_NAME, LOG_WARNING_EV, "Ð’ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸ÐºÐµ OnRMouseClick() ÐºÐ½Ð¾Ð¿ÐºÐ¸ %s Ð¿Ñ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ°", this->name);
 		}
 	}
 }

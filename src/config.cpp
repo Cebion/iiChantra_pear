@@ -10,7 +10,7 @@ extern config cfg;
 extern char path_config[MAX_PATH];
 
 
-// Это названия полей в таблице в файле. Порядок тот же, что и в ConfigActionKeys.
+// Р­С‚Рѕ РЅР°Р·РІР°РЅРёСЏ РїРѕР»РµР№ РІ С‚Р°Р±Р»РёС†Рµ РІ С„Р°Р№Р»Рµ. РџРѕСЂСЏРґРѕРє С‚РѕС‚ Р¶Рµ, С‡С‚Рѕ Рё РІ ConfigActionKeys.
 const char* configKeysNames[] = 
 {	
 	"left", "right", "down", "up", "jump", "sit", "fire",
@@ -28,7 +28,7 @@ const char* GetConfigKeyName(ConfigActionKeys key)
 }
 
 
-// Это названия кнопок для стандартной раскладки управления. Порядок тот же, что и в ConfigActionKeys.
+// Р­С‚Рѕ РЅР°Р·РІР°РЅРёСЏ РєРЅРѕРїРѕРє РґР»СЏ СЃС‚Р°РЅРґР°СЂС‚РЅРѕР№ СЂР°СЃРєР»Р°РґРєРё СѓРїСЂР°РІР»РµРЅРёСЏ. РџРѕСЂСЏРґРѕРє С‚РѕС‚ Р¶Рµ, С‡С‚Рѕ Рё РІ ConfigActionKeys.
 const char* standardKeys[KEY_SETS_NUMBER][cakLastKey] = 
 {
 	{
@@ -67,13 +67,13 @@ void CheckConfigKeySanity( size_t s, ConfigActionKeys key )
 
 		STACK_CHECK_INIT(lua);
 
-		lua_getglobal(lua, "CONFIG");		// Стек: config
+		lua_getglobal(lua, "CONFIG");		// РЎС‚РµРє: config
 		if (lua_istable(lua, -1))
 		{
-			lua_getfield(lua, -1, "key_conf");		// Стек: config key_conf
+			lua_getfield(lua, -1, "key_conf");		// РЎС‚РµРє: config key_conf
 			if (lua_istable(lua, -1))
 			{
-				lua_rawgeti(lua, -1, s+1);			// Стек: config key_conf key_conf[s]
+				lua_rawgeti(lua, -1, s+1);			// РЎС‚РµРє: config key_conf key_conf[s]
 				if (lua_istable(lua, -1))
 				{
 					lua_pushinteger(lua, val);
@@ -93,14 +93,14 @@ void CheckConfigKeySanity( size_t s, ConfigActionKeys key )
 void LoadKeysConfig() 
 {
 	STACK_CHECK_INIT(lua);
-	lua_getfield(lua, -1, "key_conf");		// Стек: config
+	lua_getfield(lua, -1, "key_conf");		// РЎС‚РµРє: config
 	if (lua_istable(lua, -1))
 	{
 		size_t i = 0;
 		lua_pushnil(lua);
 		while (lua_next(lua, -2) != 0 && i < KEY_SETS_NUMBER) 
 		{
-			luaL_argcheck(lua, lua_istable(lua, -1), -1, "В таблице key_conf должны быть таблицы");
+			luaL_argcheck(lua, lua_istable(lua, -1), -1, "Р’ С‚Р°Р±Р»РёС†Рµ key_conf РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ С‚Р°Р±Р»РёС†С‹");
 
 			for (size_t j = 0; j < cakLastKey; j++)
 			{
@@ -113,7 +113,7 @@ void LoadKeysConfig()
 
 		}
 	}
-	lua_pop(lua, 1);						// Стек: config
+	lua_pop(lua, 1);						// РЎС‚РµРє: config
 
 	STACK_CHECK(lua);
 }
@@ -121,7 +121,7 @@ bool LoadConfig()
 {
 	bool res = false;
 
-	lua_getglobal(lua, "CONFIG");		// Стек: config
+	lua_getglobal(lua, "CONFIG");		// РЎС‚РµРє: config
 
 	if (lua_istable(lua, -1))
 	{
@@ -186,9 +186,9 @@ bool LoadConfig()
 
 	}
 	else
-		luaL_error(lua, "Ошибка. Таблица CONFIG не существует.");
+		luaL_error(lua, "РћС€РёР±РєР°. РўР°Р±Р»РёС†Р° CONFIG РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚.");
 
-	lua_pop(lua, 1); // Стек:
+	lua_pop(lua, 1); // РЎС‚РµРє:
 
 	return res;
 }

@@ -90,14 +90,14 @@ GameObject* CreateSprite(const Proto* proto, Vector2 coord, bool fixed, const ch
 		for ( i = 0; i < object->sprite->mpCount; i++ )
 			object->sprite->mp[i] = Vector2(0, 0);
 	}
-	if (object->type != objEffect) object->type = objSprite;  //Åðóíäà êàêàÿ-òî. Íàäî ïîèñêàòü, ãäå ñîçäàþòñÿ íå ñïðàéòû.
+	if (object->type != objEffect) object->type = objSprite;  //Ð•Ñ€ÑƒÐ½Ð´Ð° ÐºÐ°ÐºÐ°Ñ-Ñ‚Ð¾. ÐÐ°Ð´Ð¾ Ð¿Ð¾Ð¸ÑÐºÐ°Ñ‚ÑŒ, Ð³Ð´Ðµ ÑÐ¾Ð·Ð´Ð°ÑŽÑ‚ÑÑ Ð½Ðµ ÑÐ¿Ñ€Ð°Ð¹Ñ‚Ñ‹.
 
 	if (fixed) object->sprite->SetFixed();
 	object->aabb.p = coord;
 
-	// TODO: Êðèâîé õàê. Õîÿ âåðîÿòíî è ïåðåðàñòåò â ïîñòîÿíûé. Íî ëó÷øå íè÷åãî íå ïðèäóìàë.
-	// Â ýòîò ìîìåíò îáúåêòâ â SAP åùå íå äîáàâëåí, ïîýòîìó â SetAnimation íåëüçÿ åùå îáíîâëÿòü
-	// åãî ñîñòîÿíèå â SAP.
+	// TODO: ÐšÑ€Ð¸Ð²Ð¾Ð¹ Ñ…Ð°Ðº. Ð¥Ð¾Ñ Ð²ÐµÑ€Ð¾ÑÑ‚Ð½Ð¾ Ð¸ Ð¿ÐµÑ€ÐµÑ€Ð°ÑÑ‚ÐµÑ‚ Ð² Ð¿Ð¾ÑÑ‚Ð¾ÑÐ½Ñ‹Ð¹. ÐÐ¾ Ð»ÑƒÑ‡ÑˆÐµ Ð½Ð¸Ñ‡ÐµÐ³Ð¾ Ð½Ðµ Ð¿Ñ€Ð¸Ð´ÑƒÐ¼Ð°Ð».
+	// Ð’ ÑÑ‚Ð¾Ñ‚ Ð¼Ð¾Ð¼ÐµÐ½Ñ‚ Ð¾Ð±ÑŠÐµÐºÑ‚Ð² Ð² SAP ÐµÑ‰Ðµ Ð½Ðµ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½, Ð¿Ð¾ÑÑ‚Ð¾Ð¼Ñƒ Ð² SetAnimation Ð½ÐµÐ»ÑŒÐ·Ñ ÐµÑ‰Ðµ Ð¾Ð±Ð½Ð¾Ð²Ð»ÑÑ‚ÑŒ
+	// ÐµÐ³Ð¾ ÑÐ¾ÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Ð² SAP.
 	object->ClearPhysic();
 	object->SetAnimation(start_anim ? start_anim : "idle", true);
 

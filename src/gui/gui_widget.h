@@ -14,7 +14,7 @@ enum MousePosition { MouseIsOut, MouseIsIn };
 enum MouseButtonState { MouseButtonUnpresed, MouseButtonPressed };
 
 
-// Сферический виджет
+// РЎС„РµСЂРёС‡РµСЃРєРёР№ РІРёРґР¶РµС‚
 class GuiWidget
 {
 public:
@@ -22,9 +22,9 @@ public:
 
 	char* name;
 
-	bool fully_added;			// Добавлен ли виджет в основной список (прошел ли BatchCreate)
+	bool fully_added;			// Р”РѕР±Р°РІР»РµРЅ Р»Рё РІРёРґР¶РµС‚ РІ РѕСЃРЅРѕРІРЅРѕР№ СЃРїРёСЃРѕРє (РїСЂРѕС€РµР» Р»Рё BatchCreate)
 
-	bool active;				// активность, фокус
+	bool active;				// Р°РєС‚РёРІРЅРѕСЃС‚СЊ, С„РѕРєСѓСЃ
 	bool visible;
 	bool dead;
 	bool staticWidget;
@@ -38,11 +38,11 @@ public:
 	//RGBAf active_color;
 	//RGBAf inactive_color;
 
-	bool border;				// Рисовать ли рамку
+	bool border;				// Р РёСЃРѕРІР°С‚СЊ Р»Рё СЂР°РјРєСѓ
 	RGBAf border_active_color;
 	RGBAf border_inactive_color;
 
-	char* caption;				// Надпись на виджете
+	char* caption;				// РќР°РґРїРёСЃСЊ РЅР° РІРёРґР¶РµС‚Рµ
 	RGBAf caption_act_color;
 	RGBAf caption_inact_color;
 	Font* caption_font;
@@ -50,8 +50,8 @@ public:
 
 	TextTyper* typer;
 
-	MousePosition lastMousePos;					// Предыдущее положение мышки (на виджете или вне его)
-	MouseButtonState lastmouseButtonState[InputMgr::mousebtns_count];	// Предыдущее состояние клавиш мышки
+	MousePosition lastMousePos;					// РџСЂРµРґС‹РґСѓС‰РµРµ РїРѕР»РѕР¶РµРЅРёРµ РјС‹С€РєРё (РЅР° РІРёРґР¶РµС‚Рµ РёР»Рё РІРЅРµ РµРіРѕ)
+	MouseButtonState lastmouseButtonState[InputMgr::mousebtns_count];	// РџСЂРµРґС‹РґСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РєР»Р°РІРёС€ РјС‹С€РєРё
 
 	GuiWidget()
 	{

@@ -31,18 +31,18 @@ void GuiTextfield::Draw()
 
 void GuiTextfield::OnKeyInput( Uint16 symbol )
 {
-	//Бывают разные кодировки, а у нас однобайтово всё.
+	//Р‘С‹РІР°СЋС‚ СЂР°Р·РЅС‹Рµ РєРѕРґРёСЂРѕРІРєРё, Р° Сѓ РЅР°СЃ РѕРґРЅРѕР±Р°Р№С‚РѕРІРѕ РІСЃС‘.
 	if ( symbol == 127 )	//TODO: some clever way to figure out bad symbols
 		return;
 	Uint16 symbol_bits = symbol;
-	int char_size = (symbol & 0xFF00) ? 2 : 1;		// Пока испольуется Uint16, цикл не нужен
+	int char_size = (symbol & 0xFF00) ? 2 : 1;		// РџРѕРєР° РёСЃРїРѕР»СЊСѓРµС‚СЃСЏ Uint16, С†РёРєР» РЅРµ РЅСѓР¶РµРЅ
 
 	if ( max_size == 0 || used_size + char_size <= max_size )
 	{
-		if ( used_size + char_size + 1 > reserved_size ) // Строка бесконечная, необходимо перевыделить память
+		if ( used_size + char_size + 1 > reserved_size ) // РЎС‚СЂРѕРєР° Р±РµСЃРєРѕРЅРµС‡РЅР°СЏ, РЅРµРѕР±С…РѕРґРёРјРѕ РїРµСЂРµРІС‹РґРµР»РёС‚СЊ РїР°РјСЏС‚СЊ
 		{
-			// Так как caption это строка, в которую тут добавляются символы, набиаремые руками, 
-			// считаю, что достаточно добавлять линейно по 64 байта.
+			// РўР°Рє РєР°Рє caption СЌС‚Рѕ СЃС‚СЂРѕРєР°, РІ РєРѕС‚РѕСЂСѓСЋ С‚СѓС‚ РґРѕР±Р°РІР»СЏСЋС‚СЃСЏ СЃРёРјРІРѕР»С‹, РЅР°Р±РёР°СЂРµРјС‹Рµ СЂСѓРєР°РјРё, 
+			// СЃС‡РёС‚Р°СЋ, С‡С‚Рѕ РґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РґРѕР±Р°РІР»СЏС‚СЊ Р»РёРЅРµР№РЅРѕ РїРѕ 64 Р±Р°Р№С‚Р°.
 			size_t new_size = reserved_size + 64;
 			char* new_caption = new char[new_size];
 			memcpy(new_caption, caption, reserved_size);
@@ -51,9 +51,9 @@ void GuiTextfield::OnKeyInput( Uint16 symbol )
 			reserved_size = new_size;
 		}
 
-		// TODO: Считаю, что код ниже - какая-то неведомая херня и работать не будет для смеси двубайтовых и
-		// однобайтовых символов. Думаю, те строки придется обрабатывать как-то иначе.
-		// Но раз пока работает для однобайтовых, то пускай остается. kernel_bug
+		// TODO: РЎС‡РёС‚Р°СЋ, С‡С‚Рѕ РєРѕРґ РЅРёР¶Рµ - РєР°РєР°СЏ-С‚Рѕ РЅРµРІРµРґРѕРјР°СЏ С…РµСЂРЅСЏ Рё СЂР°Р±РѕС‚Р°С‚СЊ РЅРµ Р±СѓРґРµС‚ РґР»СЏ СЃРјРµСЃРё РґРІСѓР±Р°Р№С‚РѕРІС‹С… Рё
+		// РѕРґРЅРѕР±Р°Р№С‚РѕРІС‹С… СЃРёРјРІРѕР»РѕРІ. Р”СѓРјР°СЋ, С‚Рµ СЃС‚СЂРѕРєРё РїСЂРёРґРµС‚СЃСЏ РѕР±СЂР°Р±Р°С‚С‹РІР°С‚СЊ РєР°Рє-С‚Рѕ РёРЅР°С‡Рµ.
+		// РќРѕ СЂР°Р· РїРѕРєР° СЂР°Р±РѕС‚Р°РµС‚ РґР»СЏ РѕРґРЅРѕР±Р°Р№С‚РѕРІС‹С…, С‚Рѕ РїСѓСЃРєР°Р№ РѕСЃС‚Р°РµС‚СЃСЏ. kernel_bug
 		for (size_t i = used_size+char_size; i > cursor_position; i-- )
 			caption[i] = caption[i-1];
 		for ( int i = 1; i <= char_size; i++ )
@@ -75,7 +75,7 @@ void GuiTextfield::OnKeyInput( Uint16 symbol )
 
 void GuiTextfield::OnKeyDown( USHORT vkey )
 {
-	//TODO: кнопки из конфига?
+	//TODO: РєРЅРѕРїРєРё РёР· РєРѕРЅС„РёРіР°?
 	if ( vkey == SDLK_LEFT && cursor_position > 0 )
 		cursor_position--;
 	else if ( vkey == SDLK_RIGHT && cursor_position < used_size )
@@ -128,7 +128,7 @@ void GuiTextfield::DrawCaption()
 		}
 
 		caption_font->z = this->z + 0.000003f;
-		int cp = this->active ? (int)this->cursor_position : -1;		// Курсор только у активного виджета
+		int cp = this->active ? (int)this->cursor_position : -1;		// РљСѓСЂСЃРѕСЂ С‚РѕР»СЊРєРѕ Сѓ Р°РєС‚РёРІРЅРѕРіРѕ РІРёРґР¶РµС‚Р°
 		caption_font->PrintMultiline(this->caption, this->aabb, cp);
 	}
 }
@@ -141,10 +141,10 @@ void GuiTextfield::SetCaption(const char *cap, bool multiline)
 	//this->caption[used_size] = '\0';
 	
 	size_t new_len = strlen(cap);
-	// TODO:  тут никак не учитывается max_size
+	// TODO:  С‚СѓС‚ РЅРёРєР°Рє РЅРµ СѓС‡РёС‚С‹РІР°РµС‚СЃСЏ max_size
 	if (new_len < reserved_size)
 	{
-		// Памяти хватает, просто копируем надпись
+		// РџР°РјСЏС‚Рё С…РІР°С‚Р°РµС‚, РїСЂРѕСЃС‚Рѕ РєРѕРїРёСЂСѓРµРј РЅР°РґРїРёСЃСЊ
 		memcpy(caption, cap, new_len+1);
 	}
 	else

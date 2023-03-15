@@ -112,10 +112,10 @@ bool CGLImageData::MakeTexture()
 {
 	if (data == NULL)
 		return false;
-	if ((width&(width-1)) != 0)		//	Тут мы просто выходим, если ширина или высота  не является степенью двойки.
-		return false;				//	Ultimate - это использовать NOT_POWER_OF_TWO екстеншон, если он доступен;
-	if ((height&(height-1)) != 0)	//	Иначе - дописывать в память кусок прозрачного цвета, по размеру такой, чтобы
-		return false;				//	Ширина и выстоа стали ближайшими степенями двойки. Но это потом. И это TODO.
+	if ((width&(width-1)) != 0)		//	РўСѓС‚ РјС‹ РїСЂРѕСЃС‚Рѕ РІС‹С…РѕРґРёРј, РµСЃР»Рё С€РёСЂРёРЅР° РёР»Рё РІС‹СЃРѕС‚Р°  РЅРµ СЏРІР»СЏРµС‚СЃСЏ СЃС‚РµРїРµРЅСЊСЋ РґРІРѕР№РєРё.
+		return false;				//	Ultimate - СЌС‚Рѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ NOT_POWER_OF_TWO РµРєСЃС‚РµРЅС€РѕРЅ, РµСЃР»Рё РѕРЅ РґРѕСЃС‚СѓРїРµРЅ;
+	if ((height&(height-1)) != 0)	//	РРЅР°С‡Рµ - РґРѕРїРёСЃС‹РІР°С‚СЊ РІ РїР°РјСЏС‚СЊ РєСѓСЃРѕРє РїСЂРѕР·СЂР°С‡РЅРѕРіРѕ С†РІРµС‚Р°, РїРѕ СЂР°Р·РјРµСЂСѓ С‚Р°РєРѕР№, С‡С‚РѕР±С‹
+		return false;				//	РЁРёСЂРёРЅР° Рё РІС‹СЃС‚РѕР° СЃС‚Р°Р»Рё Р±Р»РёР¶Р°Р№С€РёРјРё СЃС‚РµРїРµРЅСЏРјРё РґРІРѕР№РєРё. РќРѕ СЌС‚Рѕ РїРѕС‚РѕРј. Р СЌС‚Рѕ TODO.
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glGenTextures(1, &TexID);
 	glBindTexture(GL_TEXTURE_2D, TexID);
@@ -161,7 +161,7 @@ GLuint CGLImageData::GetTexID()
 
 
 //! Takes a screenshot of the current OpenGL window.
-// Взята из ilut_opengl.cpp
+// Р’Р·СЏС‚Р° РёР· ilut_opengl.cpp
 ILboolean GLScreenToIL()
 {
 	ILuint	ViewPort[4];
@@ -186,7 +186,7 @@ bool CGLImageData::SaveScreenshot(const char *filename)
 	unsigned int ILID = ilGenImage();
 	ilBindImage(ILID);
 
-	// Чтобы не тянуть еще и ILUT рази одной функции ilutGLScreen, я ее взял как GLScreenToIL.
+	// Р§С‚РѕР±С‹ РЅРµ С‚СЏРЅСѓС‚СЊ РµС‰Рµ Рё ILUT СЂР°Р·Рё РѕРґРЅРѕР№ С„СѓРЅРєС†РёРё ilutGLScreen, СЏ РµРµ РІР·СЏР» РєР°Рє GLScreenToIL.
 	//if (ilutGLScreen())
 	if ( GLScreenToIL() )
 	{

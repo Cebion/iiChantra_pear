@@ -21,17 +21,17 @@ bool GenTexCoords(Texture* tex, FrameInfo* f, lua_State* L)
 	if (!tex && !f && !L)
 		return false;
 
-	// Стек: fname env main
+	// РЎС‚РµРє: fname env main
 	UINT i = 0;
 	float x1 = 0.0f, y1 = 0.0f, x2 = 0.0f, y2 = 0.0f, w = 0.0f, h = 0.0f, ox = 0.0f, oy = 0.0f;
 
-	lua_pushnil(L);  // Стек: fname env main nil
+	lua_pushnil(L);  // РЎС‚РµРє: fname env main nil
 	FrameInfo* fi = NULL;
 	while (lua_next(L, -2) != 0 && i < tex->framesCount)
 	{
 		fi = f + i;
 
-		// Стек: fname env main key main[i]
+		// РЎС‚РµРє: fname env main key main[i]
 		SCRIPT::GetFloatFieldByName(L, "x", &x1);
 		SCRIPT::GetFloatFieldByName(L, "y", &y1);
 		SCRIPT::GetFloatFieldByName(L, "w", &w);
@@ -78,7 +78,7 @@ bool GenTexCoords(Texture* tex, FrameInfo* f, lua_State* L)
 		}
 
 
-		lua_pop(L, 1);	// Стек: fname env main key
+		lua_pop(L, 1);	// РЎС‚РµРє: fname env main key
 		i++;
 	}
 
@@ -101,38 +101,38 @@ bool Texture::LoadTexFramesDescr()
 	memset(fname, '\0', strlen(path_textures) + strlen(this->name.c_str()) + 5);
 	sprintf(fname, "%s%s.lua", path_textures, this->name.c_str());
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Загружаем описание кадров текстуры: %s", fname);
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Р—Р°РіСЂСѓР¶Р°РµРј РѕРїРёСЃР°РЅРёРµ РєР°РґСЂРѕРІ С‚РµРєСЃС‚СѓСЂС‹: %s", fname);
 
-	// Файл протоипа будет выполнен в защищенном окружении, чтобы не запороть что-нить глобальное.
-	// Окружение создается как здесь: http://community.livejournal.com/ru_lua/402.html
-	lua_newtable(lua);				// Стек: env
-	lua_newtable(lua);				// Стек: env meta
-	lua_getglobal(lua, "_G");			// Стек: env meta _G
-	lua_setfield(lua, -2, "__index");	// Стек: env meta
-	lua_setmetatable(lua, -2);		// Стек: env
+	// Р¤Р°Р№Р» РїСЂРѕС‚РѕРёРїР° Р±СѓРґРµС‚ РІС‹РїРѕР»РЅРµРЅ РІ Р·Р°С‰РёС‰РµРЅРЅРѕРј РѕРєСЂСѓР¶РµРЅРёРё, С‡С‚РѕР±С‹ РЅРµ Р·Р°РїРѕСЂРѕС‚СЊ С‡С‚Рѕ-РЅРёС‚СЊ РіР»РѕР±Р°Р»СЊРЅРѕРµ.
+	// РћРєСЂСѓР¶РµРЅРёРµ СЃРѕР·РґР°РµС‚СЃСЏ РєР°Рє Р·РґРµСЃСЊ: http://community.livejournal.com/ru_lua/402.html
+	lua_newtable(lua);				// РЎС‚РµРє: env
+	lua_newtable(lua);				// РЎС‚РµРє: env meta
+	lua_getglobal(lua, "_G");			// РЎС‚РµРє: env meta _G
+	lua_setfield(lua, -2, "__index");	// РЎС‚РµРє: env meta
+	lua_setmetatable(lua, -2);		// РЎС‚РµРє: env
 	if(luaL_loadfile(lua, fname))
 	{
-		// Какая-то ошибка загрузки файла
-		const char* err = lua_tostring(lua, -1);	// Стек: env err
+		// РљР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё С„Р°Р№Р»Р°
+		const char* err = lua_tostring(lua, -1);	// РЎС‚РµРє: env err
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "%s", err);
 		DELETEARRAY(fname);
-		lua_pop(lua, 2);	// Стек: 
+		lua_pop(lua, 2);	// РЎС‚РµРє: 
 
 		STACK_CHECK(lua);
 
 		return false;
 	}
 
-	// Стек: env loadfile
-	lua_pushvalue(lua, -2);			// Стек: env loadfile env
-	lua_setfenv(lua, -2);				// Стек: env loadfile
+	// РЎС‚РµРє: env loadfile
+	lua_pushvalue(lua, -2);			// РЎС‚РµРє: env loadfile env
+	lua_setfenv(lua, -2);				// РЎС‚РµРє: env loadfile
 
 	if(lua_pcall(lua, 0, 0, 0))
 	{
-		// Какая-то ошибка выполнения файла
-		const char* err = lua_tostring(lua, -1);	// Стек: env err
+		// РљР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР° РІС‹РїРѕР»РЅРµРЅРёСЏ С„Р°Р№Р»Р°
+		const char* err = lua_tostring(lua, -1);	// РЎС‚РµРє: env err
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, err );
-		lua_pop(lua, 2);	// Стек: 
+		lua_pop(lua, 2);	// РЎС‚РµРє: 
 		DELETEARRAY(fname);
 
 		STACK_CHECK(lua);
@@ -141,20 +141,20 @@ bool Texture::LoadTexFramesDescr()
 	}
 	else
 	{
-		// Стек: env
+		// РЎС‚РµРє: env
 		SCRIPT::GetUIntFieldByName(lua, "count", (UINT*)&this->framesCount);
 
 		if (!this->framesCount)
 		{
 			DELETEARRAY(fname);
-			lua_pop(lua, 1);	// Стек: 
+			lua_pop(lua, 1);	// РЎС‚РµРє: 
 
 			STACK_CHECK(lua);
 
-			return true;	// Если вдруг для текстуры создавать кадры не надо
+			return true;	// Р•СЃР»Рё РІРґСЂСѓРі РґР»СЏ С‚РµРєСЃС‚СѓСЂС‹ СЃРѕР·РґР°РІР°С‚СЊ РєР°РґСЂС‹ РЅРµ РЅР°РґРѕ
 		}
 
-		lua_getfield(lua, -1, "main");	// Стек: env main
+		lua_getfield(lua, -1, "main");	// РЎС‚РµРє: env main
 		if (lua_istable(lua, -1))
 		{
 			this->frame = new FrameInfo[this->framesCount];
@@ -162,14 +162,14 @@ bool Texture::LoadTexFramesDescr()
 
 			if(!GenTexCoords(this, this->frame, lua))
 			{
-				sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "В файле %s количество описанных кадров не соответствует значению переменной count", fname);
+				sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Р’ С„Р°Р№Р»Рµ %s РєРѕР»РёС‡РµСЃС‚РІРѕ РѕРїРёСЃР°РЅРЅС‹С… РєР°РґСЂРѕРІ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ Р·РЅР°С‡РµРЅРёСЋ РїРµСЂРµРјРµРЅРЅРѕР№ count", fname);
 			}
 		}
 		else
-			sLog(DEFAULT_SCRIPT_LOG_NAME, logLevelWarning, "В файле %s main - не таблица", fname);
-		lua_pop(lua, 1);	// Стек: env
+			sLog(DEFAULT_SCRIPT_LOG_NAME, logLevelWarning, "Р’ С„Р°Р№Р»Рµ %s main - РЅРµ С‚Р°Р±Р»РёС†Р°", fname);
+		lua_pop(lua, 1);	// РЎС‚РµРє: env
 
-		lua_getfield(lua, -1, "overlay");	// Стек: env overlay
+		lua_getfield(lua, -1, "overlay");	// РЎС‚РµРє: env overlay
 		if (lua_istable(lua, -1))
 		{
 			this->overlayCount = (UINT)lua_objlen(lua, -1);
@@ -183,23 +183,23 @@ bool Texture::LoadTexFramesDescr()
 				{
 					if(!GenTexCoords(this, &this->overlay[i*this->framesCount], lua))
 					{
-						sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "В файле %s количество описанных оверлеев кадров не соответствует значению переменной count", fname);
+						sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "Р’ С„Р°Р№Р»Рµ %s РєРѕР»РёС‡РµСЃС‚РІРѕ РѕРїРёСЃР°РЅРЅС‹С… РѕРІРµСЂР»РµРµРІ РєР°РґСЂРѕРІ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ Р·РЅР°С‡РµРЅРёСЋ РїРµСЂРµРјРµРЅРЅРѕР№ count", fname);
 					}
 				}			
 			}
 			else
 			{
-				sLog(DEFAULT_SCRIPT_LOG_NAME, logLevelWarning, "В файле %s таблица overlay пустая", fname);
+				sLog(DEFAULT_SCRIPT_LOG_NAME, logLevelWarning, "Р’ С„Р°Р№Р»Рµ %s С‚Р°Р±Р»РёС†Р° overlay РїСѓСЃС‚Р°СЏ", fname);
 			}
 		}
-		lua_pop(lua, 1);	// Стек: env
+		lua_pop(lua, 1);	// РЎС‚РµРє: env
 
 
 
 	}
 
 	DELETEARRAY(fname);
-	lua_pop(lua, 1);	// Стек: 
+	lua_pop(lua, 1);	// РЎС‚РµРє: 
 
 	STACK_CHECK(lua);
 
@@ -220,7 +220,7 @@ bool Texture::Load()
 
 		if (!LoadTexFramesDescr())
 		{
-			sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Ошибка загрузки описания кадров для текстуры %s. Используем стандартное.", this->name.c_str());
+			sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё РѕРїРёСЃР°РЅРёСЏ РєР°РґСЂРѕРІ РґР»СЏ С‚РµРєСЃС‚СѓСЂС‹ %s. РСЃРїРѕР»СЊР·СѓРµРј СЃС‚Р°РЅРґР°СЂС‚РЅРѕРµ.", this->name.c_str());
 			this->framesCount = 1;
 			this->frame = new FrameInfo[1];
 

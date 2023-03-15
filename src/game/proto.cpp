@@ -21,35 +21,35 @@ bool Proto::Load()
 {
 	STACK_CHECK_INIT(lua);
 
-	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Загружаем прототип: %s", this->name.c_str());
+	sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Р—Р°РіСЂСѓР¶Р°РµРј РїСЂРѕС‚РѕС‚РёРї: %s", this->name.c_str());
 
-	// Файл протоипа будет выполнен в защищенном окружении, чтобы не запороть что-нить глобальное.
-	// Окружение создается как здесь: http://community.livejournal.com/ru_lua/402.html
-	lua_newtable(lua);				// Стек: env
-	lua_newtable(lua);				// Стек: env meta
-	lua_getglobal(lua, "_G");			// Стек: env meta _G
-	lua_setfield(lua, -2, "__index");	// Стек: env meta
-	lua_setmetatable(lua, -2);		// Стек: env
+	// Р¤Р°Р№Р» РїСЂРѕС‚РѕРёРїР° Р±СѓРґРµС‚ РІС‹РїРѕР»РЅРµРЅ РІ Р·Р°С‰РёС‰РµРЅРЅРѕРј РѕРєСЂСѓР¶РµРЅРёРё, С‡С‚РѕР±С‹ РЅРµ Р·Р°РїРѕСЂРѕС‚СЊ С‡С‚Рѕ-РЅРёС‚СЊ РіР»РѕР±Р°Р»СЊРЅРѕРµ.
+	// РћРєСЂСѓР¶РµРЅРёРµ СЃРѕР·РґР°РµС‚СЃСЏ РєР°Рє Р·РґРµСЃСЊ: http://community.livejournal.com/ru_lua/402.html
+	lua_newtable(lua);				// РЎС‚РµРє: env
+	lua_newtable(lua);				// РЎС‚РµРє: env meta
+	lua_getglobal(lua, "_G");			// РЎС‚РµРє: env meta _G
+	lua_setfield(lua, -2, "__index");	// РЎС‚РµРє: env meta
+	lua_setmetatable(lua, -2);		// РЎС‚РµРє: env
 
 	if( luaL_loadfile(lua, this->file_name.c_str()) )
 	{
-		// Стек: env err
+		// РЎС‚РµРє: env err
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "%s", lua_tostring(lua, -1));
-		lua_pop(lua, 2);	// Стек: 
+		lua_pop(lua, 2);	// РЎС‚РµРє: 
 		STACK_CHECK(lua);
 		return false;
 	}
-	// Стек: env loadfile
-	lua_pushvalue(lua, -2);			// Стек: env loadfile env
-	lua_setfenv(lua, -2);				// Стек: env loadfile
+	// РЎС‚РµРє: env loadfile
+	lua_pushvalue(lua, -2);			// РЎС‚РµРє: env loadfile env
+	lua_setfenv(lua, -2);				// РЎС‚РµРє: env loadfile
 
 	if(lua_pcall(lua, 0, 0, 0))
 	{
-		// Какая-то ошибка выполнения файла
-		const char* err = lua_tostring(lua, -1);	// Стек: env err
+		// РљР°РєР°СЏ-С‚Рѕ РѕС€РёР±РєР° РІС‹РїРѕР»РЅРµРЅРёСЏ С„Р°Р№Р»Р°
+		const char* err = lua_tostring(lua, -1);	// РЎС‚РµРє: env err
 		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_ERROR_EV, err );
-		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Не удалось загрузить прототип %s", file_name.c_str() );
-		lua_pop(lua, 2);	// Стек: 
+		sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ РїСЂРѕС‚РѕС‚РёРї %s", file_name.c_str() );
+		lua_pop(lua, 2);	// РЎС‚РµРє: 
 
 		STACK_CHECK(lua);
 
@@ -59,10 +59,10 @@ bool Proto::Load()
 	{
 		//char* proto_name = NULL;
 		//SCRIPT::GetStringFieldByName(lua, "name", &proto_name);
-		//sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "В прото %s записано имя %s", this->name.c_str(), proto_name);
+		//sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Р’ РїСЂРѕС‚Рѕ %s Р·Р°РїРёСЃР°РЅРѕ РёРјСЏ %s", this->name.c_str(), proto_name);
 		//if (this->name != string(proto_name))
 		//{
-		//	sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "!!!!!!!!!!!!!!!!!! имена не совпадают");
+		//	sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "!!!!!!!!!!!!!!!!!! РёРјРµРЅР° РЅРµ СЃРѕРІРїР°РґР°СЋС‚");
 		//}
 		//DELETE_ARRAY(proto_name);
 		
@@ -70,7 +70,7 @@ bool Proto::Load()
 		SCRIPT::GetStringFieldByName(lua, "parent", &temp_str);
 		if (temp_str)
 		{
-			sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "Пытаемся получить прототип-родитель %s", temp_str);
+			sLog(DEFAULT_LOG_NAME, LOG_INFO_EV, "РџС‹С‚Р°РµРјСЃСЏ РїРѕР»СѓС‡РёС‚СЊ РїСЂРѕС‚РѕС‚РёРї-СЂРѕРґРёС‚РµР»СЊ %s", temp_str);
 			const Proto* parent = protoMgr->GetByName(temp_str);
 			if (parent)
 			{
@@ -78,14 +78,14 @@ bool Proto::Load()
 			}
 			else
 			{
-				sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Невозможно получить прототип-родитель %s", temp_str);
+				sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "РќРµРІРѕР·РјРѕР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РїСЂРѕС‚РѕС‚РёРї-СЂРѕРґРёС‚РµР»СЊ %s", temp_str);
 			}
 		}
 		DELETEARRAY(temp_str);
 
 #define GET_STR(a, b) SCRIPT::GetStringFieldByName(lua, a, &temp_str); if (temp_str) { DELETEARRAY(b); b = temp_str; temp_str = NULL; }
 
-		// Стек: env
+		// РЎС‚РµРє: env
 		SCRIPT::GetUIntFieldByName(lua, "damage_type", &this->damage_type);
 		SCRIPT::GetUIntFieldByName(lua, "behaviour", (UINT*)&this->behaviour);
 		
@@ -194,8 +194,8 @@ bool Proto::Load()
 		#undef GET_STR
 
 		// overlay
-		// Стек: env
-		lua_getfield(lua, -1, "overlay");	// Стек: env overlayCount
+		// РЎС‚РµРє: env
+		lua_getfield(lua, -1, "overlay");	// РЎС‚РµРє: env overlayCount
 		if (lua_istable(lua, -1))
 		{
 			this->overlayCount = (UINT)lua_objlen(lua, -1);
@@ -219,27 +219,27 @@ bool Proto::Load()
 					{
 						SCRIPT::GetColorFromTable(lua, -1, this->ocolor[i]);
 					}
-					// Этот settop нужен на случай, если мы обхожим не весь ocolor - lua_next тогда не удаляет последний элемент со стека.
+					// Р­С‚РѕС‚ settop РЅСѓР¶РµРЅ РЅР° СЃР»СѓС‡Р°Р№, РµСЃР»Рё РјС‹ РѕР±С…РѕР¶РёРј РЅРµ РІРµСЃСЊ ocolor - lua_next С‚РѕРіРґР° РЅРµ СѓРґР°Р»СЏРµС‚ РїРѕСЃР»РµРґРЅРёР№ СЌР»РµРјРµРЅС‚ СЃРѕ СЃС‚РµРєР°.
 					lua_settop(lua, top);
 				}
-				lua_pop(lua, 1);						// Стек: env
+				lua_pop(lua, 1);						// РЎС‚РµРє: env
 				
 				if (i < this->overlayCount)
 				{
-					sLog(DEFAULT_LOG_NAME, logLevelWarning, "В прототипе %s не указаны цвета всех оверлеев. Дополняем стандартными", this->name.c_str());
+					sLog(DEFAULT_LOG_NAME, logLevelWarning, "Р’ РїСЂРѕС‚РѕС‚РёРїРµ %s РЅРµ СѓРєР°Р·Р°РЅС‹ С†РІРµС‚Р° РІСЃРµС… РѕРІРµСЂР»РµРµРІ. Р”РѕРїРѕР»РЅСЏРµРј СЃС‚Р°РЅРґР°СЂС‚РЅС‹РјРё", this->name.c_str());
 					for (; i < this->overlayCount; i++)
 						this->ocolor[i] = RGBAf(1.0f, 1.0f, 1.0f, 1.0f);
 				}
 			}
 			else
 			{
-				sLog(DEFAULT_LOG_NAME, logLevelError, "В прототипе %s таблица overlayCount - пуста", this->name.c_str());
+				sLog(DEFAULT_LOG_NAME, logLevelError, "Р’ РїСЂРѕС‚РѕС‚РёРїРµ %s С‚Р°Р±Р»РёС†Р° overlayCount - РїСѓСЃС‚Р°", this->name.c_str());
 			}
 		}
-		lua_pop(lua, 1);						// Стек: env
+		lua_pop(lua, 1);						// РЎС‚РµРє: env
 
-		// Стек: env
-		lua_getfield(lua, -1, "sprites");		// Стек: env sprites
+		// РЎС‚РµРє: env
+		lua_getfield(lua, -1, "sprites");		// РЎС‚РµРє: env sprites
 		if (lua_istable(lua, -1))
 		{
 			lua_pushnil(lua);
@@ -252,9 +252,9 @@ bool Proto::Load()
 				lua_pop(lua, 1);
 			}
 		}
-		lua_pop(lua, 1);						// Стек: env
+		lua_pop(lua, 1);						// РЎС‚РµРє: env
 
-		lua_getfield(lua, -1, "sounds");		// Стек: env sounds
+		lua_getfield(lua, -1, "sounds");		// РЎС‚РµРє: env sounds
 		if (lua_istable(lua, -1))
 		{
 			lua_pushnil(lua);
@@ -267,14 +267,14 @@ bool Proto::Load()
 				lua_pop(lua, 1);
 			}
 		}
-		lua_pop(lua, 1);						// Стек: env
+		lua_pop(lua, 1);						// РЎС‚РµРє: env
 
-		// Загрузка массива прототипов анимаций
+		// Р—Р°РіСЂСѓР·РєР° РјР°СЃСЃРёРІР° РїСЂРѕС‚РѕС‚РёРїРѕРІ Р°РЅРёРјР°С†РёР№
 		LoadAnimProtos();
 
 	} // if lua_pcall
 
-	lua_pop(lua, 1);						// Стек: 
+	lua_pop(lua, 1);						// РЎС‚РµРє: 
 
 	STACK_CHECK(lua);
 
@@ -285,14 +285,14 @@ bool Proto::Load()
 void Proto::LoadAnimProtos() 
 {
 	STACK_CHECK_INIT(lua);
-	// Стек: env
-	lua_getfield(lua, -1, "animations");	// Стек: env animations
+	// РЎС‚РµРє: env
+	lua_getfield(lua, -1, "animations");	// РЎС‚РµРє: env animations
 	if (lua_istable(lua, -1))
 	{
 		const size_t count = lua_objlen(lua, -1);
 		if (count == 0)
 		{
-			lua_pop(lua, 1);						// Стек: env
+			lua_pop(lua, 1);						// РЎС‚РµРє: env
 			return;
 		}
 
@@ -302,22 +302,22 @@ void Proto::LoadAnimProtos()
 		AnimationFrame* af = NULL;
 		map<string, size_t> names;
 
-		// Цикл по массиву анимаций
+		// Р¦РёРєР» РїРѕ РјР°СЃСЃРёРІСѓ Р°РЅРёРјР°С†РёР№
 		size_t i = 0;
-		// Если в массиве было что-то, отличное от таблиц, часть нормальных таблиц может не прочитаться
+		// Р•СЃР»Рё РІ РјР°СЃСЃРёРІРµ Р±С‹Р»Рѕ С‡С‚Рѕ-С‚Рѕ, РѕС‚Р»РёС‡РЅРѕРµ РѕС‚ С‚Р°Р±Р»РёС†, С‡Р°СЃС‚СЊ РЅРѕСЂРјР°Р»СЊРЅС‹С… С‚Р°Р±Р»РёС† РјРѕР¶РµС‚ РЅРµ РїСЂРѕС‡РёС‚Р°С‚СЊСЃСЏ
 		//for (UINT i = 1; i <= count; i++)
-		// Стек: env animations nil
+		// РЎС‚РµРє: env animations nil
 		for(lua_pushnil(lua); lua_next(lua, -2); lua_pop(lua, 1), i++)
 		{
-			// Стек: env animations key animations[key]
+			// РЎС‚РµРє: env animations key animations[key]
 			if (lua_istable(lua, -1))
 			{
-				// Получили таблицу прототипа анимации, читаем ее
+				// РџРѕР»СѓС‡РёР»Рё С‚Р°Р±Р»РёС†Сѓ РїСЂРѕС‚РѕС‚РёРїР° Р°РЅРёРјР°С†РёРё, С‡РёС‚Р°РµРј РµРµ
 				
-				// name_buf будет храниться в анимации, если все будет ОК. Только иначе освобождаем его в этой функции.
+				// name_buf Р±СѓРґРµС‚ С…СЂР°РЅРёС‚СЊСЃСЏ РІ Р°РЅРёРјР°С†РёРё, РµСЃР»Рё РІСЃРµ Р±СѓРґРµС‚ РћРљ. РўРѕР»СЊРєРѕ РёРЅР°С‡Рµ РѕСЃРІРѕР±РѕР¶РґР°РµРј РµРіРѕ РІ СЌС‚РѕР№ С„СѓРЅРєС†РёРё.
 				SCRIPT::GetStringFieldByName(lua, "name", &name_buf);
 
-				lua_getfield(lua, -1, "frames");	// Стек: env animations key animations[key] frames
+				lua_getfield(lua, -1, "frames");	// РЎС‚РµРє: env animations key animations[key] frames
 				if (lua_istable(lua, -1))
 				{
 					nbFrames = lua_objlen(lua, -1);
@@ -326,43 +326,43 @@ void Proto::LoadAnimProtos()
 						af = new AnimationFrame[nbFrames];
 
 						size_t j = 0;
-						// Стек: env animations key animations[key] frames nil
+						// РЎС‚РµРє: env animations key animations[key] frames nil
 						for(lua_pushnil(lua); lua_next(lua, -2); lua_pop(lua, 1), j++)
 						{
-							// Стек: env animations key animations[key] frames key frame
+							// РЎС‚РµРє: env animations key animations[key] frames key frame
 							assert(j < nbFrames);
 							if (lua_istable(lua, -1))
 							{
 								SCRIPT::GetUIntFieldByName(lua, "num", &af[j].num);
 								SCRIPT::GetUIntFieldByName(lua, "dur", &af[j].duration);
-								SCRIPT::GetUIntFieldByName(lua, "com", (UINT*)&(af[j].command) );		// TODO: хз, возможно опасно
+								SCRIPT::GetUIntFieldByName(lua, "com", (UINT*)&(af[j].command) );		// TODO: С…Р·, РІРѕР·РјРѕР¶РЅРѕ РѕРїР°СЃРЅРѕ
 								SCRIPT::GetIntFieldByName(lua, "param", &af[j].param);
 								SCRIPT::GetStringFieldByName(lua, "txt", &af[j].txt_param);
 							}
 							else
 							{
-								sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "В прототипе %s в анимации %s кадр %d - %s. Отменяем загрузку кадров.", 
+								sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Р’ РїСЂРѕС‚РѕС‚РёРїРµ %s РІ Р°РЅРёРјР°С†РёРё %s РєР°РґСЂ %d - %s. РћС‚РјРµРЅСЏРµРј Р·Р°РіСЂСѓР·РєСѓ РєР°РґСЂРѕРІ.", 
 									this->name.c_str(), name_buf, j, lua_typename(lua, lua_type(lua, -1)) );
 
 								DELETEARRAY(af);
 								nbFrames = 0;
 							}
-							//lua_pop(lua, 1);	// Стек: env animations key animations[key] frames key
+							//lua_pop(lua, 1);	// РЎС‚РµРє: env animations key animations[key] frames key
 						}
 					}
 					else
 					{						
-						sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "В анимации %s %d кадров. Пропускаем.", name_buf, nbFrames);
+						sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Р’ Р°РЅРёРјР°С†РёРё %s %d РєР°РґСЂРѕРІ. РџСЂРѕРїСѓСЃРєР°РµРј.", name_buf, nbFrames);
 						nbFrames = 0;
 						DELETEARRAY(name_buf);
 					}
 
-					// Стек: env animations key animations[key] frames	
+					// РЎС‚РµРє: env animations key animations[key] frames	
 
 				} // if (lua_istable(lua, -1))	frames
 				else
 				{						
-					sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "В анимации %s нет таблицы frames. Пропускаем.", name_buf);
+					sLog(DEFAULT_LOG_NAME, LOG_ERROR_EV, "Р’ Р°РЅРёРјР°С†РёРё %s РЅРµС‚ С‚Р°Р±Р»РёС†С‹ frames. РџСЂРѕРїСѓСЃРєР°РµРј.", name_buf);
 					nbFrames = 0;
 					DELETEARRAY(name_buf);
 				}
@@ -376,17 +376,17 @@ void Proto::LoadAnimProtos()
 
 					if (name_buf)
 					{
-						// TODO: проверка на повторения
+						// TODO: РїСЂРѕРІРµСЂРєР° РЅР° РїРѕРІС‚РѕСЂРµРЅРёСЏ
 						names[string(name_buf)] = i;
 					}
 				}
 
-				// Стек: env animations key animations[key] frames
-				lua_pop(lua, 1);	// Стек: env animations key animations[key]
+				// РЎС‚РµРє: env animations key animations[key] frames
+				lua_pop(lua, 1);	// РЎС‚РµРє: env animations key animations[key]
 			}
 			else
 			{
-				sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "В прототипе %s animations[%d] - %s", 
+				sLog(DEFAULT_LOG_NAME, LOG_WARNING_EV, "Р’ РїСЂРѕС‚РѕС‚РёРїРµ %s animations[%d] - %s", 
 					this->name.c_str(), i, lua_typename(lua, lua_type(lua, -1)) );
 			}
 
@@ -400,14 +400,14 @@ void Proto::LoadAnimProtos()
 
 			map<string, size_t>::iterator fit;
 			ASSERT(names.size() == count);
-			// Тут анимации родителя заменяются на те, что объявлены в ребенке.
+			// РўСѓС‚ Р°РЅРёРјР°С†РёРё СЂРѕРґРёС‚РµР»СЏ Р·Р°РјРµРЅСЏСЋС‚СЃСЏ РЅР° С‚Рµ, С‡С‚Рѕ РѕР±СЉСЏРІР»РµРЅС‹ РІ СЂРµР±РµРЅРєРµ.
 			for(map<string, size_t>::iterator it = names.begin(); 
 				it != names.end(); )
 			{
 				fit = this->animNames.find(it->first);
 				if (fit != this->animNames.end())
 				{
-					// Тут происходит копирование новой анимации в старую, так что новая замещает старую.
+					// РўСѓС‚ РїСЂРѕРёСЃС…РѕРґРёС‚ РєРѕРїРёСЂРѕРІР°РЅРёРµ РЅРѕРІРѕР№ Р°РЅРёРјР°С†РёРё РІ СЃС‚Р°СЂСѓСЋ, С‚Р°Рє С‡С‚Рѕ РЅРѕРІР°СЏ Р·Р°РјРµС‰Р°РµС‚ СЃС‚Р°СЂСѓСЋ.
 					this->animations[fit->second] = a[it->second];
 					copy_anim[it->second] = false;
 					nbCopy--;
@@ -421,18 +421,18 @@ void Proto::LoadAnimProtos()
 
 			if (nbCopy > 0)
 			{
-				// В ребенке объявлены совсем новые анимации
-				// Тут создается массив большео размера и в него копируются и старые, и совсем новые.
+				// Р’ СЂРµР±РµРЅРєРµ РѕР±СЉСЏРІР»РµРЅС‹ СЃРѕРІСЃРµРј РЅРѕРІС‹Рµ Р°РЅРёРјР°С†РёРё
+				// РўСѓС‚ СЃРѕР·РґР°РµС‚СЃСЏ РјР°СЃСЃРёРІ Р±РѕР»СЊС€РµРѕ СЂР°Р·РјРµСЂР° Рё РІ РЅРµРіРѕ РєРѕРїРёСЂСѓСЋС‚СЃСЏ Рё СЃС‚Р°СЂС‹Рµ, Рё СЃРѕРІСЃРµРј РЅРѕРІС‹Рµ.
 				size_t new_size =  this->animationsCount + nbCopy;
 				Animation* new_arr = new Animation[new_size];
 				size_t i = 0;
-				// Копируем в новый массив старые и новые, заместившие старые.
+				// РљРѕРїРёСЂСѓРµРј РІ РЅРѕРІС‹Р№ РјР°СЃСЃРёРІ СЃС‚Р°СЂС‹Рµ Рё РЅРѕРІС‹Рµ, Р·Р°РјРµСЃС‚РёРІС€РёРµ СЃС‚Р°СЂС‹Рµ.
 				for (; i < this->animationsCount; i++)
 				{
 					new_arr[i] = this->animations[i];
 				}
 
-				// Копируем совсем новые.
+				// РљРѕРїРёСЂСѓРµРј СЃРѕРІСЃРµРј РЅРѕРІС‹Рµ.
 				for(size_t j = 0; j < count && nbCopy > 0; j++)
 				{
 					if (copy_anim[j])
@@ -445,7 +445,7 @@ void Proto::LoadAnimProtos()
 				}
 
 				this->animationsCount = new_size;
-				// Добавляем к старым именам совсем новые.
+				// Р”РѕР±Р°РІР»СЏРµРј Рє СЃС‚Р°СЂС‹Рј РёРјРµРЅР°Рј СЃРѕРІСЃРµРј РЅРѕРІС‹Рµ.
 				this->animNames.insert(names.begin(), names.end());
 				DELETEARRAY(this->animations);
 				this->animations = new_arr;
@@ -462,11 +462,11 @@ void Proto::LoadAnimProtos()
 
 		
 
-		// Стек: env animations
+		// РЎС‚РµРє: env animations
 
 	} // if (lua_istable(lua, -1))   animations	
 
-	lua_pop(lua, 1);						// Стек: env
+	lua_pop(lua, 1);						// РЎС‚РµРє: env
 	STACK_CHECK(lua);
 }
 
@@ -491,11 +491,11 @@ void Proto::Copy(const Proto& src)
 	bounce_bonus = src.bounce_bonus;	
 	gravity_bonus = src.gravity_bonus;
 	ghost_to = src.ghost_to;
-	//Поведение за границами экрана для ObjCharacter
+	//РџРѕРІРµРґРµРЅРёРµ Р·Р° РіСЂР°РЅРёС†Р°РјРё СЌРєСЂР°РЅР° РґР»СЏ ObjCharacter
 	offscreen_distance = src.offscreen_distance;
 	offscreen_behavior = src.offscreen_behavior;
 	facing = src.facing;
-	//Количество "точек крепления" спрайта
+	//РљРѕР»РёС‡РµСЃС‚РІРѕ "С‚РѕС‡РµРє РєСЂРµРїР»РµРЅРёСЏ" СЃРїСЂР°Р№С‚Р°
 	mpCount = src.mpCount;
 	phys_walk_acc = src.phys_walk_acc;
 	phys_jump_vel = src.phys_jump_vel;
@@ -555,7 +555,7 @@ void Proto::Copy(const Proto& src)
 	trajectory_param1 = src.trajectory_param1;
 	trajectory_param2 = src.trajectory_param2;
 	affected_by_wind = src.affected_by_wind;
-	gravity_x = src.gravity_x;	//Пока только для частиц.
+	gravity_x = src.gravity_x;	//РџРѕРєР° С‚РѕР»СЊРєРѕ РґР»СЏ С‡Р°СЃС‚РёС†.
 	gravity_y = src.gravity_y;
 	env_material = src.env_material;
 	DELETEARRAY(env_onenter);

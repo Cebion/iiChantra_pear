@@ -4,24 +4,24 @@
 #include "objects/object_player.h"
 
 
-// Класс, хранящий ссылки наобъектыы игрока и управляющий ими
+// РљР»Р°СЃСЃ, С…СЂР°РЅСЏС‰РёР№ СЃСЃС‹Р»РєРё РЅР°РѕР±СЉРµРєС‚С‹С‹ РёРіСЂРѕРєР° Рё СѓРїСЂР°РІР»СЏСЋС‰РёР№ РёРјРё
 class Player
 {
 public:
 	
-	ObjPlayer* first;		// Первый игрок
-	char* first_proto;		// Прототип первого игрока
-	ObjPlayer* second;		// Второй игрок
-	char* second_proto;		// Прототип второго игрока
-	ObjPlayer* current;		// Текущий игрок
+	ObjPlayer* first;		// РџРµСЂРІС‹Р№ РёРіСЂРѕРє
+	char* first_proto;		// РџСЂРѕС‚РѕС‚РёРї РїРµСЂРІРѕРіРѕ РёРіСЂРѕРєР°
+	ObjPlayer* second;		// Р’С‚РѕСЂРѕР№ РёРіСЂРѕРє
+	char* second_proto;		// РџСЂРѕС‚РѕС‚РёРї РІС‚РѕСЂРѕРіРѕ РёРіСЂРѕРєР°
+	ObjPlayer* current;		// РўРµРєСѓС‰РёР№ РёРіСЂРѕРє
 	
 	
-	Vector2 revivePoint;	// Точка, в которой игрок будет оживлен
+	Vector2 revivePoint;	// РўРѕС‡РєР°, РІ РєРѕС‚РѕСЂРѕР№ РёРіСЂРѕРє Р±СѓРґРµС‚ РѕР¶РёРІР»РµРЅ
 
-	bool change_blocked;	// Блокировка переключения между игроками
+	bool change_blocked;	// Р‘Р»РѕРєРёСЂРѕРІРєР° РїРµСЂРµРєР»СЋС‡РµРЅРёСЏ РјРµР¶РґСѓ РёРіСЂРѕРєР°РјРё
 
-	int onChangePlayerProcessor;	// Луа-обработчик смены игрока
-	int onPlayerDeathProcessor;		// Луа-обработчик смерти игрока
+	int onChangePlayerProcessor;	// Р›СѓР°-РѕР±СЂР°Р±РѕС‚С‡РёРє СЃРјРµРЅС‹ РёРіСЂРѕРєР°
+	int onPlayerDeathProcessor;		// Р›СѓР°-РѕР±СЂР°Р±РѕС‚С‡РёРє СЃРјРµСЂС‚Рё РёРіСЂРѕРєР°
 
 	Player()
 	{

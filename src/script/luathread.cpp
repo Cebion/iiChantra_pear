@@ -13,11 +13,11 @@ extern lua_State* lua;
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-// Список тредов
+// РЎРїРёСЃРѕРє С‚СЂРµРґРѕРІ
 list<LuaThread*> threads;
-typedef list<LuaThread*>::iterator ThreadIter;	// Тип итератора по списку тредов
+typedef list<LuaThread*>::iterator ThreadIter;	// РўРёРї РёС‚РµСЂР°С‚РѕСЂР° РїРѕ СЃРїРёСЃРєСѓ С‚СЂРµРґРѕРІ
 
-// Возвращает итератор на тред в списке
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РёС‚РµСЂР°С‚РѕСЂ РЅР° С‚СЂРµРґ РІ СЃРїРёСЃРєРµ
 ThreadIter GetThread(lua_State* c)
 {
 	list<LuaThread*>::iterator it;
@@ -32,12 +32,12 @@ ThreadIter GetThread(lua_State* c)
 	return threads.end();
 }
 
-// Создает новый тред, беря в качестве базового L/
-// Действует аналогично coroutine.create, помещая в стек созданный coroutine.
-// Возвращает ссылку на coroutine, сохраненную в реестре луа.
+// РЎРѕР·РґР°РµС‚ РЅРѕРІС‹Р№ С‚СЂРµРґ, Р±РµСЂСЏ РІ РєР°С‡РµСЃС‚РІРµ Р±Р°Р·РѕРІРѕРіРѕ L/
+// Р”РµР№СЃС‚РІСѓРµС‚ Р°РЅР°Р»РѕРіРёС‡РЅРѕ coroutine.create, РїРѕРјРµС‰Р°СЏ РІ СЃС‚РµРє СЃРѕР·РґР°РЅРЅС‹Р№ coroutine.
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃСЃС‹Р»РєСѓ РЅР° coroutine, СЃРѕС…СЂР°РЅРµРЅРЅСѓСЋ РІ СЂРµРµСЃС‚СЂРµ Р»СѓР°.
 UINT NewThread(lua_State* L)
 {	
-	// Стек L: func pausable
+	// РЎС‚РµРє L: func pausable
 	ASSERT(lua_gettop(L) == 1 || lua_gettop(L) == 2);
 	bool pausable = false;
 	if (lua_gettop(L) == 2)
@@ -46,29 +46,29 @@ UINT NewThread(lua_State* L)
 		lua_pop(L, 1);
 	}
 
-	// Код из функции luaB_cocreate файла lbaselib.c
-	// Стек L: func
-	lua_State *NL = lua_newthread(L);	// Стек L: func thread
-										// Стек NL: 
+	// РљРѕРґ РёР· С„СѓРЅРєС†РёРё luaB_cocreate С„Р°Р№Р»Р° lbaselib.c
+	// РЎС‚РµРє L: func
+	lua_State *NL = lua_newthread(L);	// РЎС‚РµРє L: func thread
+										// РЎС‚РµРє NL: 
 
 	luaL_argcheck(L, lua_isfunction(L, 1) && !lua_iscfunction(L, 1), 1,
 		"Lua function expected");
 
-	lua_pushvalue(L, 1);  // Стек L: func thread func
+	lua_pushvalue(L, 1);  // РЎС‚РµРє L: func thread func
 	lua_xmove(L, NL, 1);  /* move function from L to NL */
 	
-	// Конец кода из функции luaB_cocreate файла lbaselib.c
+	// РљРѕРЅРµС† РєРѕРґР° РёР· С„СѓРЅРєС†РёРё luaB_cocreate С„Р°Р№Р»Р° lbaselib.c
 
-	// Стек L: func thread
-	// Стек NL: func
+	// РЎС‚РµРє L: func thread
+	// РЎС‚РµРє NL: func
 	
 	LuaThread* lt = new LuaThread();
 
-	lua_pushvalue(L, -1);					// Стек L: func thread thread 
-	// А если L == lua, то переноса не будет, с вершины стека просто снимется 1 копия thread
-	lua_xmove(L, lua, 1);					// Стек L: func thread
-											// Стек lua: thread
-	lt->refKey = SCRIPT::AddToRegistry();	// Стек lua: 
+	lua_pushvalue(L, -1);					// РЎС‚РµРє L: func thread thread 
+	// Рђ РµСЃР»Рё L == lua, С‚Рѕ РїРµСЂРµРЅРѕСЃР° РЅРµ Р±СѓРґРµС‚, СЃ РІРµСЂС€РёРЅС‹ СЃС‚РµРєР° РїСЂРѕСЃС‚Рѕ СЃРЅРёРјРµС‚СЃСЏ 1 РєРѕРїРёСЏ thread
+	lua_xmove(L, lua, 1);					// РЎС‚РµРє L: func thread
+											// РЎС‚РµРє lua: thread
+	lt->refKey = SCRIPT::AddToRegistry();	// РЎС‚РµРє lua: 
 	lt->lThread = NL;
 	lt->pausable = pausable;
 	threads.push_back(lt);
@@ -78,20 +78,20 @@ UINT NewThread(lua_State* L)
 	return lt->refKey;
 }
 
-// Создает новую coroutine. Аналогична команде базовой библиотеки
-// lua coroutines.create, за исключением того, что
-// запоминает созданную coroutine.
+// РЎРѕР·РґР°РµС‚ РЅРѕРІСѓСЋ coroutine. РђРЅР°Р»РѕРіРёС‡РЅР° РєРѕРјР°РЅРґРµ Р±Р°Р·РѕРІРѕР№ Р±РёР±Р»РёРѕС‚РµРєРё
+// lua coroutines.create, Р·Р° РёСЃРєР»СЋС‡РµРЅРёРµРј С‚РѕРіРѕ, С‡С‚Рѕ
+// Р·Р°РїРѕРјРёРЅР°РµС‚ СЃРѕР·РґР°РЅРЅСѓСЋ coroutine.
 int scriptApi::NewThread(lua_State* L)
 {
 	luaL_argcheck(L, lua_isfunction(L, 1), 1, "function expected");
 	luaL_argcheck(L, lua_isboolean(L, 2) || lua_isnoneornil(L, 2), 2, "boolean or none expected");
-	// Стек L: func pausable
+	// РЎС‚РµРє L: func pausable
 	::NewThread(L);
-	// Стек L: func thread
+	// РЎС‚РµРє L: func thread
 	return 1;
 }
 
-// Удаляет тред и его события таймера.
+// РЈРґР°Р»СЏРµС‚ С‚СЂРµРґ Рё РµРіРѕ СЃРѕР±С‹С‚РёСЏ С‚Р°Р№РјРµСЂР°.
 void RemoveThread(ThreadIter it)
 {
 	LuaThread* lt = *it;
@@ -102,10 +102,10 @@ void RemoveThread(ThreadIter it)
 	threads.erase(it);
 }
 
-// Удаляет все треды.
+// РЈРґР°Р»СЏРµС‚ РІСЃРµ С‚СЂРµРґС‹.
 void RemoveAllThreads()
 {
-	sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_INFO_EV, "Уничтожаем существующие потоки." );
+	sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_INFO_EV, "РЈРЅРёС‡С‚РѕР¶Р°РµРј СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРµ РїРѕС‚РѕРєРё." );
 
 	LuaThread* lt = NULL;
 	ThreadIter it;
@@ -123,7 +123,7 @@ void RemoveAllThreads()
 	DeleteAllThreadEvents();
 }
 
-// Удаляет все треды. Биндинг для луа. 
+// РЈРґР°Р»СЏРµС‚ РІСЃРµ С‚СЂРµРґС‹. Р‘РёРЅРґРёРЅРі РґР»СЏ Р»СѓР°. 
 int scriptApi::StopAllThreads(lua_State* L)
 {
 	UNUSED_ARG(L);
@@ -131,8 +131,8 @@ int scriptApi::StopAllThreads(lua_State* L)
 	return 0;
 }
 
-// Удаляет тред. Биндинг для луа.
-// Возвращает true или false.
+// РЈРґР°Р»СЏРµС‚ С‚СЂРµРґ. Р‘РёРЅРґРёРЅРі РґР»СЏ Р»СѓР°.
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ true РёР»Рё false.
 int scriptApi::StopThread(lua_State* L)
 {
 	luaL_argcheck(L, lua_isthread(L, 1), 1, "Thread expected");
@@ -153,10 +153,10 @@ int scriptApi::StopThread(lua_State* L)
 }
 
 
-// Функция приостанавливает coroutine, из которой вызвана. Аналогична
-// команде базовой библиотеки lua coroutines.yield, но требует первый
-// аргумент - число милисекунд, на которое coroutine будет приостановлена.
-// Однако, передавать параметры для возврата бессмысленно, resume ничего не вернет.
+// Р¤СѓРЅРєС†РёСЏ РїСЂРёРѕСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ coroutine, РёР· РєРѕС‚РѕСЂРѕР№ РІС‹Р·РІР°РЅР°. РђРЅР°Р»РѕРіРёС‡РЅР°
+// РєРѕРјР°РЅРґРµ Р±Р°Р·РѕРІРѕР№ Р±РёР±Р»РёРѕС‚РµРєРё lua coroutines.yield, РЅРѕ С‚СЂРµР±СѓРµС‚ РїРµСЂРІС‹Р№
+// Р°СЂРіСѓРјРµРЅС‚ - С‡РёСЃР»Рѕ РјРёР»РёСЃРµРєСѓРЅРґ, РЅР° РєРѕС‚РѕСЂРѕРµ coroutine Р±СѓРґРµС‚ РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅР°.
+// РћРґРЅР°РєРѕ, РїРµСЂРµРґР°РІР°С‚СЊ РїР°СЂР°РјРµС‚СЂС‹ РґР»СЏ РІРѕР·РІСЂР°С‚Р° Р±РµСЃСЃРјС‹СЃР»РµРЅРЅРѕ, resume РЅРёС‡РµРіРѕ РЅРµ РІРµСЂРЅРµС‚.
 int scriptApi::Wait(lua_State* L)
 {
 	luaL_argcheck(L, lua_isnumber(L, 1), 1,
@@ -164,15 +164,15 @@ int scriptApi::Wait(lua_State* L)
 
 	if (lua_pushthread(L))
 	{
-		// lua_pushthread вернет true, если мы пытаемся остановить основной поток
+		// lua_pushthread РІРµСЂРЅРµС‚ true, РµСЃР»Рё РјС‹ РїС‹С‚Р°РµРјСЃСЏ РѕСЃС‚Р°РЅРѕРІРёС‚СЊ РѕСЃРЅРѕРІРЅРѕР№ РїРѕС‚РѕРє
 		luaL_where(L, 0);
-		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_SCRIPT_EV, "%s Попытка приостновить основной поток.", lua_tostring(L, -1));
+		sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_SCRIPT_EV, "%s РџРѕРїС‹С‚РєР° РїСЂРёРѕСЃС‚РЅРѕРІРёС‚СЊ РѕСЃРЅРѕРІРЅРѕР№ РїРѕС‚РѕРє.", lua_tostring(L, -1));
 		lua_pop(L, lua_gettop(L));
 		return 0;
 	}
 	else
 	{
-		// lua_pushthread вернула false, мы не в основном потоке, убираем из стека не нужное значение
+		// lua_pushthread РІРµСЂРЅСѓР»Р° false, РјС‹ РЅРµ РІ РѕСЃРЅРѕРІРЅРѕРј РїРѕС‚РѕРєРµ, СѓР±РёСЂР°РµРј РёР· СЃС‚РµРєР° РЅРµ РЅСѓР¶РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
 		lua_pop(L, 1);
 	}
 
@@ -187,9 +187,9 @@ int scriptApi::Wait(lua_State* L)
 	return lua_yield(L, lua_gettop(L));
 }
 
-// Продолжает выполнение приостановленной coroutine, являющейся
-// тредом, за котором следит игра.
-// В ОТЛИЧИЕ от coroutine.resume, ничего не возвращает.
+// РџСЂРѕРґРѕР»Р¶Р°РµС‚ РІС‹РїРѕР»РЅРµРЅРёРµ РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕР№ coroutine, СЏРІР»СЏСЋС‰РµР№СЃСЏ
+// С‚СЂРµРґРѕРј, Р·Р° РєРѕС‚РѕСЂРѕРј СЃР»РµРґРёС‚ РёРіСЂР°.
+// Р’ РћРўР›РР§РР• РѕС‚ coroutine.resume, РЅРёС‡РµРіРѕ РЅРµ РІРѕР·РІСЂР°С‰Р°РµС‚.
 int Resume(ThreadIter it, lua_State* L)
 {
 	LuaThread* lt = *it;
@@ -199,12 +199,12 @@ int Resume(ThreadIter it, lua_State* L)
 	
 	if (L)
 	{
-		// Стек L:		thread arg1 arg2 ... argN
-		// Cтек thread: [func]
-		// func на стеке только в первый раз
+		// РЎС‚РµРє L:		thread arg1 arg2 ... argN
+		// CС‚РµРє thread: [func]
+		// func РЅР° СЃС‚РµРєРµ С‚РѕР»СЊРєРѕ РІ РїРµСЂРІС‹Р№ СЂР°Р·
 		lua_xmove(L, lt->lThread, lua_gettop(L)-1);
-		// Стек L:		thread 
-		// Cтек thread: [func] arg1 arg2 ... argN
+		// РЎС‚РµРє L:		thread 
+		// CС‚РµРє thread: [func] arg1 arg2 ... argN
 	}
 
 
@@ -214,7 +214,7 @@ int Resume(ThreadIter it, lua_State* L)
 
 	if (lua_status(lt->lThread) != LUA_YIELD)
 	{
-		if (lua_status(lt->lThread) != 0)		// Всякие ошибки
+		if (lua_status(lt->lThread) != 0)		// Р’СЃСЏРєРёРµ РѕС€РёР±РєРё
 		{
 			const char* err = lua_tostring(lt->lThread, -1);
 			sLog(DEFAULT_SCRIPT_LOG_NAME, LOG_WARNING_EV, "thread 0x%p: %s", lt->lThread, err);
@@ -225,10 +225,10 @@ int Resume(ThreadIter it, lua_State* L)
 	return 0;
 }
 
-// Продолжает выполнение приостановленной coroutine.
-// Аналогична команде coroutines.resume, однако работает
-// несколько дольше, так как сначала ищет среди созданных игрой тредов.
-// Не возвращает аргументы, преданные через Wait
+// РџСЂРѕРґРѕР»Р¶Р°РµС‚ РІС‹РїРѕР»РЅРµРЅРёРµ РїСЂРёРѕСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕР№ coroutine.
+// РђРЅР°Р»РѕРіРёС‡РЅР° РєРѕРјР°РЅРґРµ coroutines.resume, РѕРґРЅР°РєРѕ СЂР°Р±РѕС‚Р°РµС‚
+// РЅРµСЃРєРѕР»СЊРєРѕ РґРѕР»СЊС€Рµ, С‚Р°Рє РєР°Рє СЃРЅР°С‡Р°Р»Р° РёС‰РµС‚ СЃСЂРµРґРё СЃРѕР·РґР°РЅРЅС‹С… РёРіСЂРѕР№ С‚СЂРµРґРѕРІ.
+// РќРµ РІРѕР·РІСЂР°С‰Р°РµС‚ Р°СЂРіСѓРјРµРЅС‚С‹, РїСЂРµРґР°РЅРЅС‹Рµ С‡РµСЂРµР· Wait
 int scriptApi::Resume(lua_State* L)
 {
 	lua_State *co = lua_tothread(L, 1);
@@ -243,7 +243,7 @@ int scriptApi::Resume(lua_State* L)
 	return luaB_coresume(L);
 }
 
-// Вызывается при настплении события таймера, вызывает продолжение работы треда
+// Р’С‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё РЅР°СЃС‚РїР»РµРЅРёРё СЃРѕР±С‹С‚РёСЏ С‚Р°Р№РјРµСЂР°, РІС‹Р·С‹РІР°РµС‚ РїСЂРѕРґРѕР»Р¶РµРЅРёРµ СЂР°Р±РѕС‚С‹ С‚СЂРµРґР°
 void ProcessThread(int r)
 {
 	LuaThread* lt = NULL;
