@@ -628,8 +628,8 @@ Menu:add(
 							LangChanger.LoadLanguage()
 						end,
 						"language",
-						{"english", "russian"},
-						{"ENGLISH", "RUSSIAN"}
+						{"english", "russian", "spanish"},
+						{"ENGLISH", "RUSSIAN", "SPANISH"}
 					)
 			),
 			6
