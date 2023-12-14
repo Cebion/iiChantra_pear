@@ -58,7 +58,7 @@ dictionary =
 	["MUTE_ON"] = "ACTIVADO",
 	["MUTE_OFF"] = "DESACTIVADO",
 
-	["TO MENU"] = "AL MANE",
+	["TO MENU"] = "AL MENU",
 	["CONTINUE"] = "CONTINUAR",
 	["WAVE"] = "OLA",
 	["OLOLO GHOST"] = "FANTASMA OLOLO",
